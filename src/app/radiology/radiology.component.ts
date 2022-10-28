@@ -111,62 +111,9 @@ export class RadiologyComponent implements OnInit {
     }
   }
 
-/*   public getNamedColor = (statName: string) => {
-    console.log(statName);
-    switch (statName) {
-      case 'Antelectasis':
-          return '#00ff00';
-      case 'Trend':
-          return '#D33F93';
-      case 'Average':
-          return '#9fa1a9';
-      case 'Total':
-          return '#CECB62';
-      default:
-          return '#1f3165';
-    }
-  }; */
-
- /*  customColors = (name: string, value: any) => {
-    console.log(name, value);
-    return "#9CCC65";
-  } */
-
   customColors(){}
 
   ngOnInit(): void {
     this.myColor();
   }
-
-  // grafica con colores por el valor: (lento rendimiento)
-  /* setCustomColors() {
-    let result: any[] = [];
-    for (let i = 0; i < this.diseasesService.diseasesData.length; i++) {
-       if (this.diseasesService.diseasesData[i].value <= 20) {
-          result.push({"name": this.diseasesService.diseasesData[i].name,"value": "#9CCC65"});
-       }
-       else if (this.diseasesService.diseasesData[i].value >= 21 && this.diseasesService.diseasesData[i].value <= 50){
-        result.push({"name": this.diseasesService.diseasesData[i].name,"value": "#FFEE58"});
-       }
-       else{
-          result.push({"name": this.diseasesService.diseasesData[i].name,"value": "#EF5350"});
-       }
-    }
-    return result;
-  } */
-
-  // grafica con colores por el valor: (lento rendimiento)
-  /* setCustomColors() {
-    let result: any[] = [];
-    this.diseases.forEach( resp =>{
-      if (resp.value <= 20) {
-        return result.push({"name": resp.name,"value": "#9CCC65"});
-      }else if (resp.value >= 21 && resp.value <= 50){
-       return result.push({"name": resp.name,"value": "#FFEE58"});
-      }else{
-       return result.push({"name": resp.name,"value": "#EF5350"});
-      }
-    });
-    return result;
-  } */
 }
