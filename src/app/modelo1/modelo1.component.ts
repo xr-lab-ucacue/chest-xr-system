@@ -36,7 +36,7 @@ export class Modelo1Component implements OnInit {
       this.displayButton = false;
     }
     console.log(this.displayButton);
-    
+
   }
 
   // Bar progress
@@ -45,7 +45,7 @@ export class Modelo1Component implements OnInit {
     setTimeout(() => {
       console.log("Redireccionando a otra pag")
       this.router.navigateByUrl('/radiology');
-    }, 3000);
+    }, 2000);
   }
 
 }
