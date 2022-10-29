@@ -1,0 +1,120 @@
+*,
+*:before,
+*:after{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.fondo{
+    /* background-color: #000000; */
+    min-height: 100vh;
+    background-image: url('../../assets/PortadaX-Ray.jpg');
+    background-size: cover;
+    background-position: center;
+    background-color: rgba(0, 0, 0, 0.308);
+    background-blend-mode: darken;
+    /* transform: perspective( 400px ) rotateY( -45deg ) rotateX(30deg) rotateZ(50deg); */
+
+}
+.background{
+    width: 430px;
+    height: 520px;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    left: 50%;
+    top: 50%;
+}
+.background .shape{
+    height: 150px;
+    width: 150px;
+    position: absolute;
+    border-radius: 50%;
+}
+.shape:first-child{
+    background: linear-gradient(
+        #1845ad,
+        #23a2f6
+    );
+    left: -80px;
+    top: -80px;
+}
+.shape:last-child{
+    background: linear-gradient(
+        to right,
+        #ff512f,
+        #f09819
+    );
+    right: -30px;
+    bottom: -80px;
+}
+img{
+    height: 150px;
+    width: 150px;
+}
+form{
+    /* height: 520px;
+    width: 400px; */
+    background-color: rgba(255,255,255,0.13);
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 1px solid #ccc;
+    box-shadow: 0px 0px 15px 5px #4b4a49;
+    padding: 15px 15px;
+}
+form *{
+    color: #f8f5f5;
+    letter-spacing: 0.5px;
+    outline: none;
+    /* border: none; */
+}
+form h3{
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 42px;
+    text-align: center;
+    cursor: default;
+}
+
+label{
+    display: block;
+    margin-top: 30px;
+    font-size: 16px;
+    font-weight: 500;
+}
+input{
+    display: block;
+    height: 50px;
+    width: 100%;
+    background-color: rgba(255,255,255,0.07);
+    border-radius: 3px;
+    padding: 0 10px;
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 300;
+}
+::placeholder{
+    color: #e5e5e5;
+}
+button{
+    cursor: pointer;
+    margin-top: 25px;
+    width: 50%;
+    background-color: #1d1c1c;
+    padding: 15px 0;
+    font-size: 14px;
+    font-weight: 400;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-shadow: 0px 0px 15px 2px #4b4a49;
+}
+
+button:hover{
+    background-color: #292929;
+    border: 1px solid #ccc;
+    box-shadow: 0px 0px 15px 7px #555554;
+}
+
+/* Config Boostrap */
+.form-control:focus {
+    background-color: #464646;
+}
