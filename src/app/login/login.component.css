@@ -10,7 +10,6 @@
     min-height: 100vh;
     background-image: url('../../assets/PortadaX-Ray.jpg');
     background-size: cover;
-    /* background-repeat: round; */
     background-position: center;
     background-color: rgba(0, 0, 0, 0.308);
     background-blend-mode: darken;
@@ -18,16 +17,16 @@
 
 }
 .background{
-    width: 430px;
-    height: 520px;
+    width: 400px;
+    height: 585px;
     position: absolute;
     transform: translate(-50%,-50%);
     left: 50%;
     top: 50%;
 }
 .background .shape{
-    height: 150px;
-    width: 150px;
+    height: 200px;
+    width: 200px;
     position: absolute;
     border-radius: 50%;
 }
@@ -37,7 +36,7 @@
         #23a2f6
     );
     left: -80px;
-    top: -80px;
+    top: 20px;
 }
 .shape:last-child{
     background: linear-gradient(
@@ -45,8 +44,8 @@
         #ff512f,
         #f09819
     );
-    right: -30px;
-    bottom: -80px;
+    right: -70px;
+    bottom: -90px;
 }
 div a{
    color: #23a2f6; 
@@ -56,8 +55,8 @@ img{
     width: 150px;
 }
 form{
-    /* height: 520px;
-    width: 400px; */
+    height: 585px;
+    width: 400px;
     background-color: rgba(255,255,255,0.13);
     border-radius: 10px;
     backdrop-filter: blur(10px);
@@ -99,7 +98,17 @@ input{
 ::placeholder{
     color: #e5e5e5;
 }
-button{
+
+input:hover{
+    /* border: 1px solid #ccc; */
+    border-top: 1px solid #ccc;
+    border-inline: 1px solid #ccc;
+    border-bottom: 3px solid;
+    border-bottom-color: #23a2f6;
+    box-shadow: 0px 0px 15px 2px #4b4a49;
+}
+
+.button-log{
     cursor: pointer;
     margin-top: 25px;
     width: 100%;
@@ -112,11 +121,56 @@ button{
     box-shadow: 0px 0px 15px 2px #4b4a49;
 }
 
-button:hover{
-    background-color: #292929;
+.button-log:hover{
+    /* background-color: #292929; */
+    background: linear-gradient(
+        to right,
+        #1845ad,
+        #23a2f6
+    );
     border: 1px solid #ccc;
     box-shadow: 0px 0px 15px 7px #555554;
 }
+
+.btn-eye{
+    background-color: transparent;
+    border: none;
+}
+
+.icon-label{
+    margin-right: 10px;
+    font-size: 1.5rem;
+}
+
+.icon--eye{
+    font-size: 1.3rem;
+    position: absolute;
+    width: 25px;
+    margin-left: 73%;
+}
+
+p{
+    color: rgba(0,0,0,.4);
+    font-weight: 400;
+    text-align: center;
+    position: relative;
+    margin-bottom: 0px !important;
+}
+    p::before, p::after {
+        content: " ";
+        position: absolute;
+        border-top: 2px solid rgba(0,0,0,.3);
+        top: 8px;
+        height: 5px;
+        width: 45%;
+      }
+      p::before {
+        left: 0px;
+      }
+      p::after {
+        right: 0px;
+      }
+      
 
 /* >>>>> Red social */
 .social{
