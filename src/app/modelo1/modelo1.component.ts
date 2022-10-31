@@ -45,7 +45,7 @@ export class Modelo1Component implements OnInit {
     setTimeout(() => {
       console.log("Redireccionando a otra pag")
       this.router.navigateByUrl('/radiology');
-    }, 2000);
+    }, 1000);
   }
 
 }

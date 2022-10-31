@@ -10,20 +10,23 @@ export class LoginComponent implements OnInit {
 
   constructor(private router: Router) { }
 
-  password: string = "password"
+  typePassword: string = "password"
   eyePassword: string = "bi bi-eye-slash"
   eyeColor: string = "color: black;"
+
+  email:string = '';
+  password:string = '';
 
   ngOnInit(): void {
   }
 
   showPassword(){
-    if (this.password === 'password') {
-      this.password = 'text'
+    if (this.typePassword === 'password') {
+      this.typePassword = 'text'
       this.eyePassword = 'bi bi-eye'
       this.eyeColor = 'color: rgb(115, 154, 225);'
     } else {
-      this.password = 'password'
+      this.typePassword = 'password'
       this.eyePassword = 'bi bi-eye-slash'
       this.eyeColor = 'color: #262626;'
 

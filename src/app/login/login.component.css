@@ -48,7 +48,7 @@
     bottom: -90px;
 }
 div a{
-   color: #23a2f6; 
+   color: #23a2f6;
 }
 img{
     height: 150px;
@@ -122,7 +122,6 @@ input:hover{
 }
 
 .button-log:hover{
-    /* background-color: #292929; */
     background: linear-gradient(
         to right,
         #111111,
@@ -171,7 +170,7 @@ p{
       p::after {
         right: 0px;
       }
-      
+
 
 /* >>>>> Red social */
 .social{
