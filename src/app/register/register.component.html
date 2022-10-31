@@ -1,0 +1,239 @@
+<div class="fondo">
+  <div class="containr">
+    <div class="row">
+
+      <!-- Card perspective -->
+      <div class="col-md-6 align-self-center contenedor-logo">
+        <div class="d-flex justify-content-center card-logo-3d">
+          <div class="row justify-content-center card-logo">
+            <div class="col-md-12 col align-self-center row justify-content-center card-logo-img">
+              <img
+                src="../../assets/lungs.png"
+                alt="Logo Pulmones"
+              />
+            </div>
+            <div class="col-md-12 text-center card-logo-txt">
+              <h1>Register Now</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Register -->
+      <div
+        class="col-md-5 align-self-center d-flex justify-content-center my-5"
+      >
+        <form class="was-validated">
+          <div class="row align-self-center d-flex justify-content-center">
+
+            <h3>Register</h3>
+
+
+            <div class="position-relative m-4" style="width: 70%;">
+              <div class="progress" style="height: 2px;">
+                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-label="Progress" [style]="progressBar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              <button type="button" [class]="btnProgress1" style="width: 2rem; height:2rem;" (click)="progress1()">1</button>
+              <button type="button" [class]="btnProgress2" style="width: 2rem; height:2rem;" (click)="progress2()">2</button>
+              <button type="button" [class]="btnProgress3" style="width: 2rem; height:2rem;" (click)="progress3()">3</button>
+            </div>
+
+            <div *ngIf="section == 1" class="col-md-12 px-1">
+              <label for="nombre" class="form-label">Nombre</label>
+              <input
+              [(ngModel)]="usuario.nombre"
+              [ngModelOptions]="{standalone: true}"
+                type="text"
+                class="form-control is-invalid"
+                id="nombre"
+                placeholder="Nombre"
+                required
+              />
+              <label for="apellido" class="form-label">Apellido</label>
+              <input
+              [(ngModel)]="usuario.apellido"
+              [ngModelOptions]="{standalone: true}"
+                type="text"
+                class="form-control is-invalid"
+                id="apellido"
+                placeholder="Apellido"
+                required
+              />
+            </div>
+
+            <div *ngIf="section == 2" class="col-md-12 px-1">
+              <label for="cedula" class="form-label">Cedula</label>
+              <input
+              [(ngModel)]="usuario.cedula"
+              [ngModelOptions]="{standalone: true}"
+                type="text"
+                class="form-control is-invalid"
+                id="cedula"
+                placeholder="Cedula"
+                required
+              />
+              <label for="telefono" class="form-label">Telefono</label>
+              <input
+              [(ngModel)]="usuario.telefono"
+              [ngModelOptions]="{standalone: true}"
+                type="text"
+                class="form-control is-invalid"
+                id="telefono"
+                placeholder="Telefono"
+                required
+              />
+              <label for="direccion" class="form-label">Dirección</label>
+              <input
+              [(ngModel)]="usuario.direccion"
+              [ngModelOptions]="{standalone: true}"
+                type="text"
+                class="form-control is-invalid"
+                id="direccion"
+                placeholder="Dirección"
+                required
+              />
+            </div>
+
+            <div *ngIf="section == 3" class="col-md-12 px-1">
+              <label for="email">Email</label>
+              <input
+              [(ngModel)]="usuario.email"
+              [ngModelOptions]="{standalone: true}"
+                type="email"
+                class="form-control is-invalid"
+                id="email"
+                placeholder="Email"
+                required
+              />
+              <label for="password">Password</label>
+              <input
+              [(ngModel)]="usuario.password"
+              [ngModelOptions]="{standalone: true}"
+                type="password"
+                class="form-control is-invalid"
+                id="password"
+                placeholder="Password"
+                required
+              />
+            </div>
+
+
+
+
+            <!-- <div class="d-flex justify-content-center my-1">
+              <img
+                src="../../assets/lungs.png"
+                class="card-img-top"
+                alt="Logo Pulmones"
+              />
+            </div>
+            <h3>Register</h3> -->
+
+
+            <!-- <div class="col-md-6 px-1 first-col">
+              <label for="nombre" class="form-label">Nombre</label>
+              <input
+              [(ngModel)]="usuario.nombre"
+              [ngModelOptions]="{standalone: true}"
+                type="text"
+                class="form-control is-invalid"
+                id="nombre"
+                placeholder="Nombre"
+                required
+              />
+              <label for="apellido" class="form-label">Apellido</label>
+              <input
+              [(ngModel)]="usuario.apellido"
+              [ngModelOptions]="{standalone: true}"
+                type="text"
+                class="form-control is-invalid"
+                id="apellido"
+                placeholder="Apellido"
+                required
+              />
+              <label for="cedula" class="form-label">Cedula</label>
+              <input
+              [(ngModel)]="usuario.cedula"
+              [ngModelOptions]="{standalone: true}"
+                type="text"
+                class="form-control is-invalid"
+                id="cedula"
+                placeholder="Cedula"
+                required
+              />
+              <label for="telefono" class="form-label">Telefono</label>
+              <input
+              [(ngModel)]="usuario.telefono"
+              [ngModelOptions]="{standalone: true}"
+                type="text"
+                class="form-control is-invalid"
+                id="telefono"
+                placeholder="Telefono"
+                required
+              />
+              <label for="direccion" class="form-label">Dirección</label>
+              <input
+              [(ngModel)]="usuario.direccion"
+              [ngModelOptions]="{standalone: true}"
+                type="text"
+                class="form-control is-invalid"
+                id="direccion"
+                placeholder="Dirección"
+                required
+              />
+            </div> -->
+
+            <!-- <div class="col-md-6 px-1 second-col">
+              <label for="email">Email</label>
+              <input
+              [(ngModel)]="usuario.email"
+              [ngModelOptions]="{standalone: true}"
+                type="email"
+                class="form-control is-invalid"
+                id="email"
+                placeholder="Email"
+                required
+              />
+              <label for="password">Password</label>
+              <input
+              [(ngModel)]="usuario.password"
+              [ngModelOptions]="{standalone: true}"
+                type="password"
+                class="form-control is-invalid"
+                id="password"
+                placeholder="Password"
+                required
+              />
+            </div> -->
+
+            <button *ngIf="section == 3" class="button-register" (click)="guardarUser()" >Create Acount</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--
+id
+cedula
+nombre
+Apellido
+email
+
+emailEncripted
+
+password
+telefono
+direccion
+
+estado
+estadoTokenRegistro
+revocarToken 
+
+roles
+fechaCreacion
+longitud
+latitud
+-->
+

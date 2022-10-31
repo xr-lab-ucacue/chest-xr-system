@@ -6,3 +6,10 @@ a, .nav-link{
   color: white;
 
 }
+
+@media (max-width: 991px) {
+  .btn-navbar{
+    margin-inline: -3px !important;
+    margin-bottom: 10px;
+  }
+}

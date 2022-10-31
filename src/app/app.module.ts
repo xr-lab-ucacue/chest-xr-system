@@ -13,6 +13,9 @@ import { RadiologysComponent } from './radiologys/radiologys.component';
 import { NgxChartsModule } from "@swimlane/ngx-charts";
 import { NgChartsModule } from 'ng2-charts';
 import { FormsModule } from '@angular/forms';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -22,7 +25,9 @@ import { FormsModule } from '@angular/forms';
     NavbarComponent,
     FooterComponent,
     RadiologyComponent,
-    RadiologysComponent
+    RadiologysComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +36,8 @@ import { FormsModule } from '@angular/forms';
     MatStepperModule,
     FormsModule,
     NgxChartsModule,
-    NgChartsModule
+    NgChartsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
