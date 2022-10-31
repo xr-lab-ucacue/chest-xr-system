@@ -15,6 +15,7 @@ import { NgChartsModule } from 'ng2-charts';
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { RegisterComponent } from './register/register.component';
     MatStepperModule,
     FormsModule,
     NgxChartsModule,
-    NgChartsModule
+    NgChartsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
