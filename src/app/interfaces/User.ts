@@ -19,6 +19,5 @@ export class Usuario {
     fechaCreacion?:       Date;
     longitud?:            null;
     latitud?:             null;
-    mensaje?: string;
-
+    mensaje?:             string;
 }

@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { Usuario } from './../interfaces/User';
+import { Usuario} from './../interfaces/User';
 import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from '../services/usuario.service';
 
@@ -79,7 +79,6 @@ export class RegisterComponent implements OnInit {
     }
     return
   }
-
   verificarCel(texto: string){
     const letras="abcdefghyjklmnñopqrstuvwxyz";
     texto = texto.toLowerCase();
@@ -90,7 +89,6 @@ export class RegisterComponent implements OnInit {
     }
     return 0;
   }
-
   progress3(){
     if (this.usuario.cedula === undefined || this.usuario.telefono === undefined || this.usuario.direccion === undefined) {
       const Toast = Swal.mixin({
@@ -155,7 +153,6 @@ export class RegisterComponent implements OnInit {
     }
     return
   }
-
   guardarUser() {
     const regex = /^(?:[^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*|"[^\n"]+")@(?:[^<>()[\].,;:\s@"]+\.)+[^<>()[\],;:\s@"]{2,63}$/i;
     if (this.usuario.email === undefined || this.usuario.password === undefined) {
@@ -167,20 +164,25 @@ export class RegisterComponent implements OnInit {
     } else {
       this.btnProgress3 = 'position-absolute top-0 start-100 translate-middle btn btn-sm btn-success rounded-pill'
 
-      this.router.navigateByUrl('/login')
-      
       this.serviceUsuario.registerUser(this.usuario).subscribe(
         () => {
           this.usuarioSave.push(this.usuario)
           this.usuario = new Usuario()
         }, (err) => {
           //Alerta de ERROR
-
           console.log('Error: ',err);
           console.log("Mensaje del Servidor: " + this.usuario.mensaje)
-          alert('ERROR')
+          Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: 'Usuario Registrado',
+            showConfirmButton: false,
+            timer: 1500
+          })
         }, async () => {
           //Alerta satisfactoria de usuario guardado
+
+          this.router.navigateByUrl('/login')
 
           Swal.fire({
             position: 'top-end',
@@ -192,8 +194,6 @@ export class RegisterComponent implements OnInit {
       })
     }
   }
-
-
 
   ngOnInit(): void {
   }
