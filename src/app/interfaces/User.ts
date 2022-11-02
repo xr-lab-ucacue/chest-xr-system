@@ -1,7 +1,7 @@
-// export interface Usuario {
-//     cliente: Cliente;
-//     mensaje?: string;
-// }
+export class ServidorMsg {
+    // cliente: Cliente;
+    mensaje?: string;
+}
 
 export class Usuario {
     id?:                  number;
@@ -19,5 +19,4 @@ export class Usuario {
     fechaCreacion?:       Date;
     longitud?:            null;
     latitud?:             null;
-    mensaje?:             string;
 }

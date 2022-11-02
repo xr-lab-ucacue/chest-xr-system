@@ -1,5 +1,7 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../services/auth.service';
+import { Usuario } from '../interfaces/User';
 
 @Component({
   selector: 'app-login',
@@ -8,7 +10,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private authService: AuthService) { }
+
+  usuario!: Usuario;
 
   typePassword: string = "password"
   eyePassword: string = "bi bi-eye-slash"
@@ -37,5 +41,16 @@ export class LoginComponent implements OnInit {
   go(){
     this.router.navigateByUrl('/modelo1')
   }
+
+  // login(){
+  //   this.authService.login(this.usuario).subscribe( () => {
+  //     console.log("Credenciales: ", this.usuario);
+  //   }, (err) => {
+  //     alert("Error")
+  //     console.log("Error: ", err);
+  //   }, () => {
+  //     alert("OK SUCCESS")
+  //   })
+  // }
 
 }

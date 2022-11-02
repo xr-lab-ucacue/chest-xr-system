@@ -1,9 +1,9 @@
 import { Router } from '@angular/router';
-import { Usuario} from './../interfaces/User';
+import { ServidorMsg, Usuario} from './../interfaces/User';
 import { Component, OnInit } from '@angular/core';
-import { UsuarioService } from '../services/usuario.service';
 
 import Swal from 'sweetalert2'
+import { AuthService } from '../services/auth.service';
 
 
 @Component({
@@ -13,7 +13,7 @@ import Swal from 'sweetalert2'
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(private serviceUsuario: UsuarioService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   section: number = 1;
   progressBar: string = "width: 8%;"
@@ -22,6 +22,7 @@ export class RegisterComponent implements OnInit {
   btnProgress3: string = "position-absolute top-0 start-100 translate-middle btn btn-sm btn-secondary rounded-pill"
 
   usuario: Usuario = new Usuario();
+  mensaje: ServidorMsg = new ServidorMsg();
   usuarioSave: Usuario[] = [];
 
   progress1(){
@@ -164,18 +165,20 @@ export class RegisterComponent implements OnInit {
     } else {
       this.btnProgress3 = 'position-absolute top-0 start-100 translate-middle btn btn-sm btn-success rounded-pill'
 
-      this.serviceUsuario.registerUser(this.usuario).subscribe(
+      this.authService.registerUser(this.usuario).subscribe(
         () => {
-          this.usuarioSave.push(this.usuario)
-          this.usuario = new Usuario()
+          // this.usuarioSave.push(this.usuario)
+          // this.usuario = new Usuario()
         }, (err) => {
           //Alerta de ERROR
+          console.log(this.usuario);
+          
           console.log('Error: ',err);
-          console.log("Mensaje del Servidor: " + this.usuario.mensaje)
+          console.log("Mensaje del Servidor: " + this.mensaje.mensaje)
           Swal.fire({
             position: 'top-end',
             icon: 'error',
-            title: 'Usuario Registrado',
+            title: 'Error',
             showConfirmButton: false,
             timer: 1500
           })
