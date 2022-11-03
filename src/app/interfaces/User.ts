@@ -5,14 +5,14 @@ export class ServidorMsg {
 
 export class Usuario {
     id?:                  number;
-    cedula?:              string;
-    nombre?:              string;
-    apellido?:            string;
-    email?:               string;
+    cedula?:              string ="1111";
+    nombre?:              string ="aaaa";
+    apellido?:            string ="aaaa";
+    email?:               string ="aaaa@gmail.com";
     emailEncripted?:      string;
-    password?:            string;
-    telefono?:            string;
-    direccion?:           string;
+    password?:            string ="123456";
+    telefono?:            string ="1111";
+    direccion?:           string ="aaaa";
     estado?:              boolean;
     estadoTokenRegistro?: boolean;
     roles?:               null[];

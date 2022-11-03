@@ -1,3 +1,4 @@
+import { Usuario2, Cliente2 } from './../interfaces/UserAuth';
 import { Router } from '@angular/router';
 import { ServidorMsg, Usuario} from './../interfaces/User';
 import { Component, OnInit } from '@angular/core';
@@ -22,6 +23,25 @@ export class RegisterComponent implements OnInit {
   btnProgress3: string = "position-absolute top-0 start-100 translate-middle btn btn-sm btn-secondary rounded-pill"
 
   usuario: Usuario = new Usuario();
+  // user: Usuario2 = {
+  //   cliente:{
+  //     id:  0,
+  //     cedula:             '',
+  //     nombre:             '',
+  //     apellido:           '',
+  //     email:              '',
+  //     emailEncripted:     '',
+  //     password:           '',
+  //     telefono:           '',
+  //     direccion:          '',
+  //     estado:              false,
+  //     estadoTokenRegistro: false,
+  //     roles:               [],
+  //     longitud:            null,
+  //     latitud:             null,
+  //   }
+  // };
+    
   mensaje: ServidorMsg = new ServidorMsg();
   usuarioSave: Usuario[] = [];
 
@@ -166,15 +186,15 @@ export class RegisterComponent implements OnInit {
       this.btnProgress3 = 'position-absolute top-0 start-100 translate-middle btn btn-sm btn-success rounded-pill'
 
       this.authService.registerUser(this.usuario).subscribe(
-        () => {
+        (resp) => {
+          console.log("Respuesta: ",resp);         
           // this.usuarioSave.push(this.usuario)
           // this.usuario = new Usuario()
         }, (err) => {
           //Alerta de ERROR
-          console.log(this.usuario);
-          
+          console.log("Datos Usuario: ", this.usuario);  
           console.log('Error: ',err);
-          console.log("Mensaje del Servidor: " + this.mensaje.mensaje)
+          // console.log("Mensaje del Servidor: " + this.mensaje.mensaje)
           Swal.fire({
             position: 'top-end',
             icon: 'error',
@@ -184,9 +204,7 @@ export class RegisterComponent implements OnInit {
           })
         }, async () => {
           //Alerta satisfactoria de usuario guardado
-
           this.router.navigateByUrl('/login')
-
           Swal.fire({
             position: 'top-end',
             icon: 'success',
@@ -197,6 +215,34 @@ export class RegisterComponent implements OnInit {
       })
     }
   }
+
+  // new(){
+  //   this.authService.registerUser2(this.user.cliente).subscribe(
+  //     (resp) => {
+  //       console.log("Datos Usuario: ", resp);
+  //     }, (err) => {
+  //       console.log('Error: ',err);
+  //       console.log("Mensaje del Servidor: ", err.mensaje)
+
+  //       Swal.fire({
+  //         position: 'top-end',
+  //         icon: 'error',
+  //         title: 'Error',
+  //         showConfirmButton: false,
+  //         timer: 1500
+  //       })
+  //     }, async () => {
+  //       console.log("Usuario Registrado");
+        
+  //       Swal.fire({
+  //         position: 'top-end',
+  //         icon: 'success',
+  //         title: 'Usuario Registrado',
+  //         showConfirmButton: false,
+  //         timer: 1500
+  //       })
+  //   })
+  // }
 
   ngOnInit(): void {
   }
