@@ -1,41 +1,59 @@
 
 <div class="fondo">
 
-        <div class="row ">
-          <!-- radiology -->
-          <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 d-flex justify-content-end">
-            <!-- type="text" readonly class="form-control-plaintext" -->
-              <div class="sombra2">
-                <input type="text"  class="form-control-plaintext form-control-lg text-center txt-diseases" readonly [value]="showDiseases">
-                  <img [src]="photo || 'https://prod-images-static.radiopaedia.org/images/27378259/387e16fe7024e1ad9b47b85b382b2e_gallery.jpeg'" class="img-flui" alt="radiology">
-              </div>
-          </div>
-
-          <!-- Model 3 -->
-          <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 d-flex">
-              <!-- Therd Model Horizontal Bar -->
-              <div class="sombra grafica">
-                  <ngx-charts-bar-horizontal
-                  [view]="view"
-                  [scheme]="colorScheme"
-                  [results]="single"
-                  [gradient]="gradient"
-                  [xAxis]="showXAxis"
-                  [yAxis]="showYAxis"
-                  [showXAxisLabel]="showXAxisLabel"
-                  [showYAxisLabel]="showYAxisLabel"
-                  [xAxisLabel]="showXAxisHorizontal"
-                  [yAxisLabel]="showYAxisVertical"
-                  [showDataLabel]="showDataLabel"
-                  [xAxisTickFormatting]='formatPercent'
-                  [tooltipDisabled]='tooltipDisabled'
-                  [trimYAxisTicks]="trimYAxisTicks"
-                  [activeEntries]="activeEntries"
-                  [customColors]="customColors()"
-                  [animations]="true"
-                  (select)="onSelect($event)">
-                  </ngx-charts-bar-horizontal>
-              </div>
+  <div class="row">
+    <!-- Cards of Radiologys -->
+    <div class="col-md-2 align-self-center cards-left" style="padding-left: 30px; padding-right: 20px;">
+      <div class="row justify-content-center">
+        <div class="card mt-3 row justify-content-center" style="width: 18rem;" *ngFor="let disease of onlyDiseases">
+          <img src="{{disease.photo}}" class="card-img-top img-card-radiology" alt="disease">
+          <div class="txt-card">
+            <h2 class="card-title">{{disease.name}}</h2>
+            <p>Percent: {{disease.value}}%</p>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- Content Radiology and Data -->
+    <div class="col-md-10">
+      <div class="row justify-content-center">
+        <!-- radiology-->
+        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 d-flex justify-content-center">
+          <div class="" style="padding-left: 10px;">
+            <div class="sombra-photo-radiology">
+              <input type="text"  class="form-control-plaintext form-control-lg text-center txt-diseases" readonly [value]="showDiseases">
+                <img [src]="photo || 'https://prod-images-static.radiopaedia.org/images/27378259/387e16fe7024e1ad9b47b85b382b2e_gallery.jpeg'" class="img-flui img-radiology" alt="radiology">
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Visual -->
+        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 d-flex">
+            <!-- Therd Model Horizontal Bar -->
+            <div class="sombra-card-data grafica">
+                <ngx-charts-bar-horizontal
+                [view]="view"
+                [scheme]="colorScheme"
+                [results]="single"
+                [gradient]="gradient"
+                [xAxis]="showXAxis"
+                [yAxis]="showYAxis"
+                [showXAxisLabel]="showXAxisLabel"
+                [showYAxisLabel]="showYAxisLabel"
+                [xAxisLabel]="showXAxisHorizontal"
+                [yAxisLabel]="showYAxisVertical"
+                [showDataLabel]="showDataLabel"
+                [xAxisTickFormatting]='formatPercent'
+                [tooltipDisabled]='tooltipDisabled'
+                [trimYAxisTicks]="trimYAxisTicks"
+                [activeEntries]="activeEntries"
+                [animations]="true"
+                (select)="onSelect($event)">
+                </ngx-charts-bar-horizontal>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

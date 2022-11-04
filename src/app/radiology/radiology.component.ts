@@ -18,7 +18,8 @@ export class RadiologyComponent implements OnInit {
   diseases: any[] = [];
 
   // Options Horizontal Bar
-  view: [number, number] = [575, 600];
+  // view: [number, number] = [575, 600];
+  view: [number, number] = [460, 600];
   gradient: boolean = true;
   showXAxis = true;
   showYAxis = true;
@@ -37,7 +38,6 @@ export class RadiologyComponent implements OnInit {
   trimYAxisTicks = false;
   //(No funcional)
   activeEntries = [{name: 'Edema', label: "Edema", value: 50}]
-
 
   backgroundColor:any[] = [];
    //Custom Color
@@ -90,6 +90,12 @@ export class RadiologyComponent implements OnInit {
     } else if (data.name === 'Edema' && data.value > 49) {
       this. photo = "../../assets/radiologyDiseases2.jpeg";
       this.showDiseases = data.name;
+    } else if (data.name === 'Effusion' && data.value > 49) {
+      this. photo = "../../assets/radiologyDiseases3.jpg";
+      this.showDiseases = data.name;
+    } else if (data.name === 'Cardiomegaly' && data.value > 49) {
+      this. photo = "../../assets/radiologyDiseases4.jpg";
+      this.showDiseases = data.name;
     } else {
       const Toast = Swal.mixin({
         toast: true,
@@ -111,9 +117,19 @@ export class RadiologyComponent implements OnInit {
     }
   }
 
-  customColors(){}
+  onlyDiseases: any[]=[];
+  diaseasesOnly(){
+    this.diseases.forEach( disease => {
+      if ( disease.value >= 51){
+        this.onlyDiseases.push(disease)
+      }
+    })
+    console.log(this.onlyDiseases);
+  }
+
 
   ngOnInit(): void {
     this.myColor();
+    this.diaseasesOnly();
   }
 }

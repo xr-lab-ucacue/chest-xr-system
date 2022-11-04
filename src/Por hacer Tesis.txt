@@ -1,13 +1,6 @@
 Radiology{
-- Mostrar tarjetas pequeñas abajo dependiendo de las enfermedades que se presentan (titulo enfermedad, porcentaje, pequena descrip.)
 - crear POPERS para un tutorial de que puede hacer las graficas
 }
-
-Guards{
-Proteger rutas()
-}
-
-interceptors()
 
 register(){
 - validar cedula
@@ -17,13 +10,10 @@ img-portada{
 Mejorar la perspectiva N
 }
 
-BACK-END{
-- No olvidar borrar la ruta donde MAPEO USUARIOS
-- quitar ruta desde el acceso de rutas no protegidas
-}
-
 crear Pag (Admin users)
 
-service(){
-traer el mensaje de error del servidor
+Guards{
+Proteger rutas()
 }
+
+interceptors()
