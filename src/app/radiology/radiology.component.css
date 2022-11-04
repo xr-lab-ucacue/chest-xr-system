@@ -70,8 +70,10 @@ body {overflow-x:hidden!important;}
 }
 
 .cards-left{
-  overflow-y: scroll;
   height: 650px;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: #686868 rgb(19, 19, 19);
 }
 
 .img-card-radiology{
@@ -79,6 +81,7 @@ body {overflow-x:hidden!important;}
   border: 1px solid  rgb(35, 52, 83);
   box-shadow: 0px 0px 15px 0.2px rgb(47, 46, 134);
   border-radius: 5px;
+  cursor: pointer;
 }
 
 /* Card-left */
@@ -98,4 +101,8 @@ body {overflow-x:hidden!important;}
   color: rgb(59, 86, 134);
   font-size: 11px;
   line-height:0.3;
+}
+
+.d{
+  color: rgba(0, 0, 0, 0.5);
 }

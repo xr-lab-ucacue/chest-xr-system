@@ -1,5 +1,5 @@
 Radiology{
-- crear POPERS para un tutorial de que puede hacer las graficas
+- redimencionar data-visual
 }
 
 register(){

@@ -6,7 +6,8 @@
     <div class="col-md-2 align-self-center cards-left" style="padding-left: 30px; padding-right: 20px;">
       <div class="row justify-content-center">
         <div class="card mt-3 row justify-content-center" style="width: 18rem;" *ngFor="let disease of onlyDiseases">
-          <img src="{{disease.photo}}" class="card-img-top img-card-radiology" alt="disease">
+            <!-- <input type="text" value="{{disease.photo}}" #valueInput> -->
+            <img src="{{disease.photo}}" class="card-img-top img-fluid img-card-radiology" [alt]="disease.name" (click)="expandCardRadiology(disease.photo, disease.name, disease.value)">
           <div class="txt-card">
             <h2 class="card-title">{{disease.name}}</h2>
             <p>Percent: {{disease.value}}%</p>

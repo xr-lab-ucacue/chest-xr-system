@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
 import { DiseasesService } from '../services/diseases.service';
 
+import { ViewChild, ElementRef } from '@angular/core';
 //Alertas sweealert
 import Swal from 'sweetalert2'
 
@@ -12,6 +13,10 @@ import Swal from 'sweetalert2'
   encapsulation: ViewEncapsulation.None,
 })
 export class RadiologyComponent implements OnInit {
+
+  /* @ViewChild('valueInput') valueInput!: ElementRef;
+  const urlPhoto =  this.valueInput.nativeElement.value;
+  console.log(urlPhoto); */
 
   constructor(private diseasesService: DiseasesService) {}
 
@@ -124,9 +129,24 @@ export class RadiologyComponent implements OnInit {
         this.onlyDiseases.push(disease)
       }
     })
-    console.log(this.onlyDiseases);
   }
 
+  expandCardRadiology(urlPhoto: string, nameDisease:string, percent: number){
+        Swal.fire({
+          html: //html
+          `<hr style="color: white;">
+          <h1 class="text-center" style="color: white; line-height:0.1;">${nameDisease}</h1>
+          <p class="text-start"  style="color: rgb(59, 86, 134); font-size: 15px; line-height:0.1;">Percent: ${percent}%</p>
+          `,
+          imageUrl:`${urlPhoto}`,
+          backdrop: 'rgba(0, 0, 0, 0.7)',
+          imageHeight: 600,
+          imageWidth: 600,
+          showConfirmButton: false,
+          imageAlt: 'Radiology',
+          background: '#000000',
+        })
+  }
 
   ngOnInit(): void {
     this.myColor();
