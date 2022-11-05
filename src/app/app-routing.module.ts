@@ -5,12 +5,14 @@ import { LoginComponent } from './login/login.component';
 import { Modelo1Component } from './modelo1/modelo1.component';
 import { RadiologyComponent } from './radiology/radiology.component';
 import { RadiologysComponent } from './radiologys/radiologys.component';
+import { AdminComponent } from './admin/admin.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'modelo1', component: Modelo1Component },
   { path: 'radiology', component: RadiologyComponent },
+  { path: 'admin', component: AdminComponent },
   { path: 'radiologys', component: RadiologysComponent },
   { path: '', pathMatch: 'full', component: LoginComponent },
   { path: '**', pathMatch: 'full', component: LoginComponent }

@@ -17,6 +17,8 @@ import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AdminComponent } from './admin/admin.component';
+import { MaterialModule } from './admin/shared/material.module';
 
 
 @NgModule({
@@ -28,7 +30,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
     RadiologyComponent,
     RadiologysComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +41,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
     FormsModule,
     NgxChartsModule,
     NgChartsModule,
-    HttpClientModule
+    HttpClientModule,
+    MaterialModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass:AuthInterceptor, multi:true}],
   bootstrap: [AppComponent]

@@ -23,6 +23,14 @@ export class AuthService {
     return this._http.post(this.url + '/usuario', params, { headers: headers }).pipe(map(data => { return data }));
   }
 
+  getUserRegisters(){
+    return this._http.get<Usuario>(this.url + "/personas")
+  }
+
+  tv(){
+    return this._http.get<TV>("https://swapi.dev/api/planets/3/")
+  }
+
 
   /* login(usuario: Usuario): Observable<any>{
     const urlEndpoint = this.url + "oauth/token";
@@ -72,3 +80,21 @@ export class AuthService {
   // }
 
 }
+
+export interface TV {
+  name?:            string;
+  rotation_period?: string;
+  orbital_period?:  string;
+  diameter?:        string;
+  climate?:         string;
+  gravity?:         string;
+  terrain?:         string;
+  surface_water?:   string;
+  population?:      string;
+  residents?:       any[];
+  films?:           string[];
+  created?:         Date;
+  edited?:          Date;
+  url?:             string;
+}
+

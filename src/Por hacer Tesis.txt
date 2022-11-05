@@ -2,8 +2,6 @@ img-portada{
 Mejorar la perspectiva N
 }
 
-crear Pag (Admin users)
-
 Guards{
 Proteger rutas()
 }
