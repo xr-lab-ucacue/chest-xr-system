@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
 import { DiseasesService } from '../services/diseases.service';
-
 import { ViewChild, ElementRef } from '@angular/core';
 //Alertas sweealert
 import Swal from 'sweetalert2'
@@ -18,13 +17,14 @@ export class RadiologyComponent implements OnInit {
   const urlPhoto =  this.valueInput.nativeElement.value;
   console.log(urlPhoto); */
 
-  constructor(private diseasesService: DiseasesService) {}
+  constructor(private diseasesService: DiseasesService) {
+      // this.view = [innerWidth / 1.60, 600];
+  }
 
   diseases: any[] = [];
 
   // Options Horizontal Bar
-  // view: [number, number] = [575, 600];
-  view: [number, number] = [460, 600];
+  view: [number, number] = [460, 660];
   gradient: boolean = true;
   showXAxis = true;
   showYAxis = true;

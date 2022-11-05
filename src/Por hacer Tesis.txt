@@ -1,11 +1,3 @@
-Radiology{
-- redimencionar data-visual
-}
-
-register(){
-- validar cedula
-}
-
 img-portada{
 Mejorar la perspectiva N
 }
