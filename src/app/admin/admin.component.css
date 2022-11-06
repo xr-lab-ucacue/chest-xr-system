@@ -5,13 +5,44 @@
 table {
     width: 100%;
 }
+
 th.mat-sort-header-sorted {
     color: black;
 }
-.txt-title-table{
+
+.txt-title-table {
     margin-right: 5px;
     margin-bottom: 0px;
     margin-top: 5%;
     font-size: 15px;
     font-weight: bolder;
 }
+
+.mat-row:nth-child(2n+1) {
+    background-color: #e4f0ec;
+}
+
+.mat-row:not(:nth-child(1n+1)) {
+    background-color: #ffffff;
+}
+
+.mat-row .mat-cell {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    cursor: pointer;
+    color: rgb(12, 12, 12);
+}
+
+.mat-row:hover .mat-cell {
+    border-color: blueviolet;
+    background-color: rgb(170, 169, 169);
+}
+
+/* .demo-row-is-clicked {
+    font-weight: bold;
+} */
+
+.make-gold {
+    background-color: rgb(252, 219, 33) !important;
+}
+

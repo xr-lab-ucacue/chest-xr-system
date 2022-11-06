@@ -23,7 +23,9 @@ export class AdminComponent implements AfterViewInit {
   // dataSource = new MatTableDataSource<any>(this.dataUsers);
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  clickedRows = new Set<PeriodicElement>();
+  
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   ngAfterViewInit() {
@@ -78,14 +80,15 @@ export class AdminComponent implements AfterViewInit {
     }
   }
 
+  backgroundFilter:string = "";
   //Filtro para el paginador
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+    return this.backgroundFilter = (event.target as HTMLInputElement).value;
   }
 }
 
@@ -117,4 +120,5 @@ const ELEMENT_DATA: PeriodicElement[] = [
   {position: 18, name: 'Argon', weight: 39.948, symbol: 'Ar'},
   {position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K'},
   {position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca'},
+  {position: 21, name: 'Boron1', weight: 30.078, symbol: 'Ca'},
 ];
