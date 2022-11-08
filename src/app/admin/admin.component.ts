@@ -1,3 +1,4 @@
+import { Usuario } from './../interfaces/User';
 import { Component, OnInit } from '@angular/core';
 import {AfterViewInit, ViewChild} from '@angular/core';
 import {LiveAnnouncer} from '@angular/cdk/a11y';
@@ -15,47 +16,34 @@ export class AdminComponent implements AfterViewInit {
 
   constructor(private _liveAnnouncer: LiveAnnouncer, private usersService: AuthService) {}
 
-  // displayedColumns: string[] = ['name', 'climate', 'diameter', 'gravity'];
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  displayedColumns: string [] = ['id','cedula', 'email', 'nombre', 'apellido', 'telefono', 'direccion', 'estado', 'roles']
+  // displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
 
   dataUsers: any[] = [];
+  rolesUser: any[] = [];
 
-  // dataSource = new MatTableDataSource<any>(this.dataUsers);
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  dataSource = new MatTableDataSource<any>(this.dataUsers);
+  // dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
 
-  clickedRows = new Set<PeriodicElement>();
-  
+  clickedRows = new Set<Usuario>();
+
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    // this.tv()
+    // this.dataSource.paginator = this.paginator;
+    // this.dataSource.sort = this.sort;
+    this.getUsers()
   }
 
   getUsers(){
     this.usersService.getUserRegisters().subscribe(
-      (res) => {
-        var {id, nombre, apellido, direccion} = res;
-        this.dataUsers.push({id, nombre, apellido, direccion});
-        
-        this.dataSource = new MatTableDataSource<any>(this.dataUsers);
-        this.dataSource.paginator = this.paginator
-        this.dataSource.sort = this.sort;
-      }, (err) => {
-        console.log(err);
-      }, () => {
-        console.log("EXITO");
-      }
-    )
-  }
+      (res:Usuario[]) => {
 
-  tv(){
-    this.usersService.tv().subscribe(
-      (res) => {
-        var {name, climate, diameter, gravity} = res;
-        this.dataUsers.push({name, climate, diameter, gravity});
+        this.dataUsers = res
+
+        console.log(res);
+
 
         this.dataSource = new MatTableDataSource<any>(this.dataUsers);
         this.dataSource.paginator = this.paginator
@@ -73,7 +61,7 @@ export class AdminComponent implements AfterViewInit {
     if (sortState.direction) {
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
       console.log("if: ", this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`));
-      
+
     } else {
       this._liveAnnouncer.announce('Sorting cleared');
       console.log( "else: ", this._liveAnnouncer.announce('Sorting cleared'));

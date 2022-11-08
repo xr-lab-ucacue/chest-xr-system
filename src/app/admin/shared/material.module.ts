@@ -23,7 +23,7 @@ import { MatSortModule } from '@angular/material/sort';
     MatTableModule,
     MatPaginatorModule,
     MatFormFieldModule,
-    MatInputModule, 
+    MatInputModule,
     MatChipsModule,
     MatSortModule
   ],

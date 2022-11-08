@@ -23,7 +23,7 @@
                     <div class="col-5">
                         <label for="username">Username</label>
                     </div>
-                    <input type="text" placeholder="@Email" id="username" [(ngModel)]="email" [ngModelOptions]="{standalone: true}">
+                    <input type="text" placeholder="@Email" id="username" [(ngModel)]="usuario.email" [ngModelOptions]="{standalone: true}">
                 </div>
 
                 <!-- Input Password -->
@@ -36,7 +36,7 @@
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <input [type]="typePassword" placeholder="Password" id="password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}">
+                            <input [type]="typePassword" placeholder="Password" id="password" [(ngModel)]="usuario.password" [ngModelOptions]="{standalone: true}">
                         </div>
                         <div class="d-flex align-self-center icon--eye">
                             <button class="btn-eye" (click)="showPassword()" >
@@ -47,7 +47,7 @@
                 </div>
 
                 <!-- Button Login -->
-                <button class="button-log" (click)="go()" >Log In</button>
+                <button class="button-log" (click)="login()" >Log In</button>
 
                 <p class="mt-1">OR</p>
 

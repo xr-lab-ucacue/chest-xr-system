@@ -12,14 +12,11 @@ export class LoginComponent implements OnInit {
 
   constructor(private router: Router, private authService: AuthService) { }
 
-  usuario!: Usuario;
+  usuario: Usuario = new Usuario;
 
   typePassword: string = "password"
   eyePassword: string = "bi bi-eye-slash"
   eyeColor: string = "color: black;"
-
-  email:string = '';
-  password:string = '';
 
   ngOnInit(): void {
   }
@@ -38,19 +35,17 @@ export class LoginComponent implements OnInit {
     return
   }
 
-  go(){
-    this.router.navigateByUrl('/modelo1')
+  login(){
+    this.authService.login(this.usuario).subscribe( (resp) => {
+      console.log("Credenciales: ", this.usuario);
+      console.log('Respuesta: ',resp);
+    }, (err) => {
+      console.log("Credenciales: ", this.usuario);
+      console.log("Error: ", err);
+    }, () => {
+      alert("OK SUCCESS")
+      this.router.navigateByUrl('/modelo1')
+    })
   }
-
-  // login(){
-  //   this.authService.login(this.usuario).subscribe( () => {
-  //     console.log("Credenciales: ", this.usuario);
-  //   }, (err) => {
-  //     alert("Error")
-  //     console.log("Error: ", err);
-  //   }, () => {
-  //     alert("OK SUCCESS")
-  //   })
-  // }
 
 }

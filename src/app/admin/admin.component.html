@@ -3,14 +3,14 @@
         <div class="row">
             <div class="col">
                 <div class="mat-elevation-z8">
-    
+
                     <div class="row justify-content-between">
                         <div class="col-8">
                             <!-- filtro -->
                             <div class="filtro">
                                 <i class="bi bi-search" style="margin-left: 5px;"></i>
                                 <mat-form-field style="margin-left: 10px;">
-                                    <mat-label>Buscar</mat-label>
+                                    <mat-label style="color: black;">Buscar</mat-label>
                                     <input matInput (keyup)="applyFilter($event)" #input>
                                 </mat-form-field>
                             </div>
@@ -19,45 +19,75 @@
                                     <p class="text-md-end txt-title-table">Usuarios Registrados</p>
                             </div>
                       </div>
-    
+
                     <!-- Tabla -->
                     <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
                     class="mat-elevation-z8 demo-table">
-                  
-                      <!-- Position Column -->
-                      <ng-container matColumnDef="position">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by position"> ID </th>
-                        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+
+                      <!-- Id Column -->
+                      <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by id"> ID </th>
+                        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
                       </ng-container>
-                  
-                      <!-- Name Column -->
-                      <ng-container matColumnDef="name">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name"> Name </th>
-                        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+
+                      <!-- Cedula Column -->
+                      <ng-container matColumnDef="cedula">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by cedula"> Cedula </th>
+                        <td mat-cell *matCellDef="let element"> {{element.cedula}} </td>
                       </ng-container>
-                  
-                      <!-- Weight Column -->
-                      <ng-container matColumnDef="weight">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by weight"> Apellido </th>
-                        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+
+                      <!-- Emial Column -->
+                      <ng-container matColumnDef="email">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by email"> Email </th>
+                        <td mat-cell *matCellDef="let element"> {{element.email}} </td>
                       </ng-container>
-                  
-                      <!-- Symbol Column -->
-                      <ng-container matColumnDef="symbol">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol"> Direccion </th>
-                        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+
+                      <!-- Nombre Column -->
+                      <ng-container matColumnDef="nombre">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by nombre"> Nombre </th>
+                        <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+                      </ng-container>nombre
+
+                      <!-- Apellido Column -->
+                      <ng-container matColumnDef="apellido">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by apellido"> Apellido </th>
+                        <td mat-cell *matCellDef="let element"> {{element.apellido}} </td>
                       </ng-container>
-                  
+
+                      <!-- Telefono Column -->
+                      <ng-container matColumnDef="telefono">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by telefono"> Telefono </th>
+                        <td mat-cell *matCellDef="let element"> {{element.telefono}} </td>
+                      </ng-container>
+
+                      <!-- Direccion Column -->
+                      <ng-container matColumnDef="direccion">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by direccion"> Direccion </th>
+                        <td mat-cell *matCellDef="let element"> {{element.direccion}} </td>
+                      </ng-container>
+
+                      <!-- Estado Column -->
+                      <ng-container matColumnDef="estado">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by estado"> Estado </th>
+                        <td mat-cell *matCellDef="let element"> {{element.estado}} </td>
+                      </ng-container>
+
+                      <!-- Roles Column -->
+                      <ng-container matColumnDef="roles">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by roles"> Roles </th>
+                        <td mat-cell *matCellDef="let element"> {{element.roles|json}} </td>
+                      </ng-container>
+
                       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                      <tr mat-row [ngClass]="{'make-gold': row.name == backgroundFilter}"
+                      <tr mat-row [ngClass]="{'make-gold': row.email == backgroundFilter}"
                         (click)="clickedRows.add(row)"
                         [class.demo-row-is-clicked]="clickedRows.has(row)"
                         *matRowDef="let row; columns: displayedColumns;"></tr>
                     </table>
-                    
+
                     <!-- Paginador -->
                     <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                                   showFirstLastButtons 
+                                   showFirstLastButtons
                                    aria-label="Select page of periodic elements">
                     </mat-paginator>
                 </div>
@@ -72,13 +102,13 @@
       Click Log
     </h3>
   </div>
-  
+
   <div *ngIf="!clickedRows.size">
     Clicked rows will be logged here
   </div>
-  
+
   <ul>
     <li *ngFor="let clickedRow of clickedRows">
-      Clicked on {{clickedRow.name}}
+      Clicked on {{clickedRow.email}}
     </li>
 </ul>

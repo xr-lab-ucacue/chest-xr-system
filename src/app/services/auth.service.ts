@@ -1,5 +1,5 @@
+import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
-import { Usuario2, Cliente2 } from './../interfaces/UserAuth';
 import { Usuario } from './../interfaces/User';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from "rxjs/operators";
@@ -13,27 +13,21 @@ export class AuthService {
   // private _usuario: Usuario;
   // private _token: string;
 
-  constructor(private _http:HttpClient) { }
-  url: string = "http://localhost:8080/api"
+  constructor(private _http:HttpClient) {}
 
   registerUser(usuario: Usuario) {
     let json = JSON.stringify(usuario);
     let params = json;
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this._http.post(this.url + '/usuario', params, { headers: headers }).pipe(map(data => { return data }));
+    return this._http.post(environment.Url + '/usuario', params, { headers: headers }).pipe(map(data => { return data }));
   }
 
   getUserRegisters(){
-    return this._http.get<Usuario>(this.url + "/personas")
+    return this._http.get<Usuario[]>(environment.Url + "/personas")
   }
 
-  tv(){
-    return this._http.get<TV>("https://swapi.dev/api/planets/3/")
-  }
-
-
-  /* login(usuario: Usuario): Observable<any>{
-    const urlEndpoint = this.url + "oauth/token";
+  login(usuario: Usuario): Observable<any>{
+    const urlEndpoint = environment.UrlAuth + "oauth/token";
 
     const credenciales = btoa("angularapp" + ":" + "12345");
 
@@ -43,16 +37,15 @@ export class AuthService {
     });
 
     let params = new URLSearchParams();
-    params.set("grant_type", "password");
-    params.set("username", usuario.email as string);
+    params.set("username", String(usuario.email));
     params.set("password", usuario.password as string);
-    console.log(params.toString());
+    params.set("grant_type", "password");
+    console.log('Parametros: ', params.toString());
 
-    return this._http.post<any>(urlEndpoint, params.toString(), {
+    return this._http.post<any>(urlEndpoint+ params.toString(), {
       headers: httpHeaders,
     });
-
-  } */
+  }
 
 
 
@@ -81,20 +74,4 @@ export class AuthService {
 
 }
 
-export interface TV {
-  name?:            string;
-  rotation_period?: string;
-  orbital_period?:  string;
-  diameter?:        string;
-  climate?:         string;
-  gravity?:         string;
-  terrain?:         string;
-  surface_water?:   string;
-  population?:      string;
-  residents?:       any[];
-  films?:           string[];
-  created?:         Date;
-  edited?:          Date;
-  url?:             string;
-}
 

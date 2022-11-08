@@ -5,7 +5,7 @@ export class ServidorMsg {
 
 export class Usuario {
     id?:                  number;
-    cedula?:              string ="1111";
+    cedula?:              string ="111";
     nombre?:              string ="aaaa";
     apellido?:            string ="aaaa";
     email?:               string ="aaaa@gmail.com";
