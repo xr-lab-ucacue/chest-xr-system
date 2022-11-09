@@ -19,7 +19,7 @@ import { RegisterComponent } from './register/register.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AdminComponent } from './admin/admin.component';
 import { MaterialModule } from './admin/shared/material.module';
-import { TokenInterceptor } from './login/iterceptors/token.interceptor';
+// import { TokenInterceptor } from './login/iterceptors/token.interceptor';
 
 
 @NgModule({
@@ -47,7 +47,7 @@ import { TokenInterceptor } from './login/iterceptors/token.interceptor';
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass:AuthInterceptor, multi:true},
-    {provide: HTTP_INTERCEPTORS, useClass:TokenInterceptor, multi:true},
+    // {provide: HTTP_INTERCEPTORS, useClass:TokenInterceptor, multi:true},
 
   ],
   bootstrap: [AppComponent]

@@ -10,14 +10,15 @@ import { Observable } from "rxjs";
 import { take, switchMap } from "rxjs/operators";
 import { AuthService } from "src/app/services/auth.service";
 
-// @Injectable()
+//  @Injectable()
 // export class TokenInterceptor implements HttpInterceptor {
 //   constructor(private authService: AuthService) {}
 
 //   intercept(
 //     req: HttpRequest<any>,
 //     next: HttpHandler
-//   ): Observable<HttpEvent<any>> {
+//   )
+//   : Observable<HttpEvent<any>> {
 //     return this.authService.token.pipe(
 //       take(1),
 //       switchMap((token) => {
@@ -31,4 +32,4 @@ import { AuthService } from "src/app/services/auth.service";
 //       })
 //     );
 //   }
-// }
+//  }
