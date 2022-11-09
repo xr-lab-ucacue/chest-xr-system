@@ -229,7 +229,8 @@ export class RegisterComponent implements OnInit {
         icon: 'info',
         title: 'Campo Telefono no permite letras'
       })
-    } else if(this.validarCedula(this.usuario.cedula) != true) {
+    } 
+    /* else if(this.validarCedula(this.usuario.cedula) != true) {
       const Toast = Swal.mixin({
         toast: true,
         position: 'top-end',
@@ -247,7 +248,8 @@ export class RegisterComponent implements OnInit {
         icon: 'error',
         title: 'Cedula no valida'
       })
-    } else {
+    }  */
+    else {
       this.btnProgress1 = 'position-absolute top-0 start-0 translate-middle btn btn-sm btn-success rounded-pill'
       this.btnProgress2 = 'position-absolute top-0 start-50 translate-middle btn btn-sm btn-success rounded-pill'
       this.btnProgress3 = 'position-absolute top-0 start-100 translate-middle btn btn-sm btn-primary rounded-pill'

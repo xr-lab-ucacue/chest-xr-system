@@ -30,7 +30,7 @@ body {overflow-x:hidden!important;}
     margin-inline: 10px;
     padding: 1rem;
     border: 1px solid rgb(47, 46, 134);
-    border-radius: 30px;
+    border-radius: 5px;
     box-shadow: 0px 0px 15px 1px rgb(47, 46, 134);
     /* border-top: 40px solid rgb(29, 29, 29); */
 }
