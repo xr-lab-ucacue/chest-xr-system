@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
   // private _usuario: Usuario;
-  // private _token: string;
+   private _token: string  = "";
 
   constructor(private _http:HttpClient) {}
 
@@ -27,7 +27,7 @@ export class AuthService {
   }
 
   login(usuario: Usuario): Observable<any>{
-    const urlEndpoint = environment.UrlAuth + "oauth/token";
+    const urlEndpoint = environment.UrlAuth + "oauth/token?";
 
     const credenciales = btoa("angularapp" + ":" + "12345");
 
@@ -37,8 +37,8 @@ export class AuthService {
     });
 
     let params = new URLSearchParams();
-    params.set("username", String(usuario.email));
-    params.set("password", usuario.password as string);
+    params.set("username", usuario.email);
+    params.set("password", usuario.password);
     params.set("grant_type", "password");
     console.log('Parametros: ', params.toString());
 
@@ -49,15 +49,18 @@ export class AuthService {
 
 
 
-  // public get token(): string {
-  //   if (this._token != null) {
-  //     return this._token;
-  //   } else if (this._token == null && sessionStorage.getItem("token") != null) {
-  //     this._token = sessionStorage.getItem("token");
-  //     return this._token;
-  //   }
-  //   return null;
-  // }
+    // public get token(): Observable<string > {
+
+    //   if (this._token != null) {
+    //     return new Promise((resolve)=>{
+    //       resolve("");
+    //     });
+    //   } else if (this._token == null && sessionStorage.getItem("token") != null) {
+    //     this._token = sessionStorage.getItem("token");
+    //     //return this._token;
+    //   }
+    //   //return null;
+    // }
 
 
   // guardarToken(accessToken: string): void {

@@ -8,14 +8,14 @@ export class Usuario {
     cedula?:              string ="111";
     nombre?:              string ="aaaa";
     apellido?:            string ="aaaa";
-    email?:               string ="aaaa@gmail.com";
+    email:               string ="aaaa@gmail.com";
     emailEncripted?:      string;
-    password?:            string ="123456";
+    password:            string ="123456";
     telefono?:            string ="1111";
     direccion?:           string ="aaaa";
     estado?:              boolean;
     estadoTokenRegistro?: boolean;
-    roles?:               null[];
+    roles?:               string[]=[];
     fechaCreacion?:       Date;
     longitud?:            null;
     latitud?:             null;

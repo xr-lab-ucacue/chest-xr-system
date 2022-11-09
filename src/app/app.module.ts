@@ -1,4 +1,4 @@
-import { AuthInterceptor } from './login/iterceptors/auth.iterceptor';
+import { AuthInterceptor } from './login/iterceptors/auth.interceptor';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -19,6 +19,7 @@ import { RegisterComponent } from './register/register.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AdminComponent } from './admin/admin.component';
 import { MaterialModule } from './admin/shared/material.module';
+import { TokenInterceptor } from './login/iterceptors/token.interceptor';
 
 
 @NgModule({
@@ -44,7 +45,11 @@ import { MaterialModule } from './admin/shared/material.module';
     HttpClientModule,
     MaterialModule
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass:AuthInterceptor, multi:true}],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass:AuthInterceptor, multi:true},
+    {provide: HTTP_INTERCEPTORS, useClass:TokenInterceptor, multi:true},
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
