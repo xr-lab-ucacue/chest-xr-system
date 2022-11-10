@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
       console.log("Credenciales: ", this.usuario);
       console.log('Respuesta: ',resp);
     }, (err) => {
-      console.log("Credenciales: ", this.usuario);
+      console.log("Credenciales: ", this.usuario.email, ' ', this.usuario.password);
       console.log("Error: ", err);
     }, () => {
       alert("OK SUCCESS")

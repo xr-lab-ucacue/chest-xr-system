@@ -29,22 +29,20 @@ export class AuthService {
   login(usuario: Usuario): Observable<any>{
     const urlEndpoint = environment.UrlAuth + "oauth/token?";
 
-    const credenciales = btoa("angularapp" + ":" + "12345");
+    const credenciales = btoa("angularapp" + ":" + "12345")
 
     const httpHeaders = new HttpHeaders({
       "Content-Type": "application/x-www-form-urlencoded",
-      Authorization: "Basic " + credenciales,
+      Authorization: "Basic " + credenciales
     });
 
     let params = new URLSearchParams();
     params.set("username", usuario.email);
     params.set("password", usuario.password);
     params.set("grant_type", "password");
-    console.log('Parametros: ', params.toString());
+    // console.log('Parametros: ', params.toString());
 
-    return this._http.post<any>(urlEndpoint+ params.toString(), {
-      headers: httpHeaders,
-    });
+    return this._http.post<any>(urlEndpoint + params.toString(), {headers: httpHeaders});
   }
 
 
