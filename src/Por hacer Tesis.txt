@@ -1,3 +1,12 @@
+tabla admin{
+  -separar filtros de busqueda por (Nombre, cedula, email, apellido...)// No olvidar goldselection cambiar tmb
+  -aumentar x para borrado rapido del filtro
+  -separar roles
+  -burbuja de colores dependiendo el estado (Rojo, verde)
+  -burbuja de colores dependiendo el rol (anaranjado, amarillo, morado)
+  -aumentar botones de (eliminar, editar)
+}
+
 img-portada{
 Mejorar la perspectiva N
 }
