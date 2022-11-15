@@ -37,7 +37,6 @@ export class LoginComponent implements OnInit {
 
   login(){
     this.authService.login(this.usuario).subscribe( (resp) => {
-      console.log("Credenciales: ", this.usuario);
       console.log('Respuesta: ',resp);
     }, (err) => {
       console.log("Credenciales: ", this.usuario.email, ' ', this.usuario.password);

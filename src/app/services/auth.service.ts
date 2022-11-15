@@ -2,8 +2,8 @@ import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import { Usuario } from './../interfaces/User';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map } from "rxjs/operators";
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable,from } from 'rxjs';
+import { switchMap, catchError, map, take } from "rxjs/operators";
 
 
 @Injectable({
@@ -11,9 +11,10 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
   // private _usuario: Usuario;
-   private _token: string  = "";
+  private _token = new BehaviorSubject<string | null>(null);
+   //private _token: string  = "";
 
-  constructor(private _http:HttpClient) {}
+  constructor(private _http:HttpClient, private storage: Storage) {}
 
   registerUser(usuario: Usuario) {
     let json = JSON.stringify(usuario);
@@ -26,39 +27,56 @@ export class AuthService {
     return this._http.get<Usuario[]>(environment.Url + "/personas")
   }
 
-  login(usuario: Usuario): Observable<any>{
-    const urlEndpoint = environment.UrlAuth + "oauth/token?";
+  login(usuario:Usuario): Observable<any>{
+    const urlEndpoint = environment.UrlAuth + "oauth/token";
 
     const credenciales = btoa("angularapp" + ":" + "12345")
 
     const httpHeaders = new HttpHeaders({
       "Content-Type": "application/x-www-form-urlencoded",
-      Authorization: "Basic " + credenciales
+      "Authorization": "Basic " + credenciales
     });
 
     let params = new URLSearchParams();
+    params.set("grant_type", "password");
     params.set("username", usuario.email);
     params.set("password", usuario.password);
-    params.set("grant_type", "password");
     // console.log('Parametros: ', params.toString());
 
-    return this._http.post<any>(urlEndpoint + params.toString(), {headers: httpHeaders});
+    return this._http.post<any>(urlEndpoint, params.toString(), {headers: httpHeaders});
   }
 
 
 
-    // public get token(): Observable<string > {
 
-    //   if (this._token != null) {
-    //     return new Promise((resolve)=>{
-    //       resolve("");
-    //     });
-    //   } else if (this._token == null && sessionStorage.getItem("token") != null) {
-    //     this._token = sessionStorage.getItem("token");
-    //     //return this._token;
-    //   }
-    //   //return null;
-    // }
+  public get token() {
+    return this._token.asObservable().pipe(
+      switchMap((token) => {
+        if (token != null) {
+          return token;
+        } else {
+          return this.tokenStorage();
+        }
+      }),
+      catchError((e) => {
+        return "";
+      })
+    );
+
+
+  }
+
+  public tokenStorage() {
+
+    return from(this.storage.getItem("token")!!).pipe(
+      map((storedData) => {
+        return storedData;
+      }),
+      catchError((e) => {
+        return "";
+      })
+    );
+  }
 
 
   // guardarToken(accessToken: string): void {
