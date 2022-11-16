@@ -1,4 +1,3 @@
-import { AuthInterceptor } from './login/iterceptors/auth.interceptor';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -19,7 +18,8 @@ import { RegisterComponent } from './register/register.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AdminComponent } from './admin/admin.component';
 import { MaterialModule } from './admin/shared/material.module';
-// import { TokenInterceptor } from './login/iterceptors/token.interceptor';
+import { TokenInterceptor } from './login/iterceptors/token.interceptor';
+import { AuthInterceptor } from './login/iterceptors/auth.interceptor';
 
 
 @NgModule({
@@ -47,7 +47,7 @@ import { MaterialModule } from './admin/shared/material.module';
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass:AuthInterceptor, multi:true},
-    // {provide: HTTP_INTERCEPTORS, useClass:TokenInterceptor, multi:true},
+    {provide: HTTP_INTERCEPTORS, useClass:TokenInterceptor, multi:true},
 
   ],
   bootstrap: [AppComponent]
