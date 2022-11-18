@@ -10,20 +10,17 @@ export class AuthGuard implements CanActivate {
   constructor(private authService: AuthService,
     private router: Router) { }
 
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     if (this.authService.isAuthenticated()) {
       if (this.isTokenExpirado()) {
         this.authService.logout();
-        this.router.navigate(['/']);
-        alert("no autorizado");
+        this.router.navigate(['/login']);
+        alert("No Autorizado");
         return false;
       }
-      //this.router.navigate(['/']);
       return true;
     }
-    this.router.navigate(['/']);
+    this.router.navigate(['/login']);
     return false;
   }
 

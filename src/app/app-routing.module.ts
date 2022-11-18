@@ -8,14 +8,15 @@ import { RadiologyComponent } from './radiology/radiology.component';
 import { RadiologysComponent } from './radiologys/radiologys.component';
 import { AdminComponent } from './admin/admin.component';
 import { AuthGuard } from './auth/auth.guard';
+import { RoleGuard } from './auth/role.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'modelo1', component: Modelo1Component },
+  { path: 'modelo1', component: Modelo1Component, canActivate: [AuthGuard] },
   { path: 'radiology', component: RadiologyComponent, canActivate: [AuthGuard] },
-  { path: 'admin', component: AdminComponent },
-  { path: 'radiologys', component: RadiologysComponent },
+  { path: 'admin', component: AdminComponent, canActivate: [RoleGuard] },
+  // { path: 'radiologys', component: RadiologysComponent },
   { path: '', pathMatch: 'full', component: LoginComponent },
   { path: '**', pathMatch: 'full', component: LoginComponent }
 ];

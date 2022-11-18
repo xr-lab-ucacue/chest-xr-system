@@ -77,7 +77,6 @@ export class AuthService {
   //Obtengo datos del token atraves del access_token
   obtenerDatosToken(accessToken: string): any {
     if (accessToken != null) {
-      console.log("obtenerDatosToken: ", JSON.parse(atob(accessToken.split('.')[1])));
       return JSON.parse(atob(accessToken.split('.')[1]));
     }
     return null;
@@ -85,7 +84,6 @@ export class AuthService {
 
   // compruebo si esta autenticado
   isAuthenticated(): boolean {
-    console.log("isAuthenticated-tokencito: ", this.tokencito)
     let payload = this.obtenerDatosToken(this.tokencito!);
     if (payload != null && payload.user_name && payload.user_name.length > 0) {
       return true;
@@ -101,6 +99,12 @@ export class AuthService {
     return false;
   }
 
+  //verifico si tiene rol admin
+  capturoRol(): boolean{
+    let payload = this.obtenerDatosToken(this.tokencito!);
+    let _rol = payload.authorities
+    return _rol.includes("ROLE_ADMIN")
+  }
 
   logout(): void {
     this._token = null;
@@ -109,6 +113,7 @@ export class AuthService {
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('usuario');
     localStorage.clear();
+    console.log("logout")
   }
 
 

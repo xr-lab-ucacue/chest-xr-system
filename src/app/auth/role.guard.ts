@@ -1,4 +1,4 @@
-//import { swal } from 'sweetalert2';
+import  Swal  from 'sweetalert2';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -8,27 +8,25 @@ import { AuthService } from '../services/auth.service';
   providedIn: 'root'
 })
 export class RoleGuard implements CanActivate {
+
   constructor(private authService: AuthService, private router: Router) {}
 
+
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    if (!this.authService.isAuthenticated()) {
+
+    // si no esta logueado redirecciono a login
+    if(!this.authService.isAuthenticated()){
+      this.router.navigate(["/login"]);
+      return false
+    }
+
+    // compruebo si tiene permisos de administrador
+    if(this.authService.capturoRol() == true){
+      return true
+    } else {
+      Swal.fire('Sin Acceso', 'No esta Disponible para usuarios', 'error');
       this.router.navigate(["/login"]);
       return false;
     }
-
-    let role = next.data["role"] as string;
-    if (this.authService.hasRole(role)) {
-      return true;
-    }
-
-    // swal.fire(
-    //   "Acceso denegado",
-    //   `Hola ${this.authService.usuario.email}  no tienes acceso a este recurso!`,
-    //   "warning"
-    // );
-    console.log("Acceso denegado")
-    this.router.navigate(["/login"]);
-    return false;
   }
-
 }

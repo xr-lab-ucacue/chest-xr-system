@@ -5,6 +5,7 @@ import { Usuario } from '../interfaces/User';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
+import { RoleGuard } from '../auth/role.guard';
 declare var $: any;
 
 @Component({
@@ -35,7 +36,7 @@ showPassword(){
 
 usuario: Usuario = new Usuario();
 
-constructor(private _route: Router, private authService: AuthService) {}
+constructor(private _route: Router, private authService: AuthService, private roleGuard: RoleGuard) {}
 
   login(){
     this.authService.login(this.usuario).subscribe( (resp) => {
@@ -54,7 +55,22 @@ constructor(private _route: Router, private authService: AuthService) {}
         Swal.fire('Servicio', 'No esta Disponible', 'error');
       }
     }, () => {
-      Swal.fire('Bienvenido', ':)', 'success');
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+      Toast.fire({
+        icon: 'success',
+        title: 'Bienvenido'
+      })
+      this._route.navigateByUrl('/modelo1');
     })
   }
 
@@ -86,7 +102,7 @@ constructor(private _route: Router, private authService: AuthService) {}
     if (this.authService.isAuthenticated()) {
       this._route.navigateByUrl('/modelo1');
     } else {
-      this._route.navigateByUrl('#');
+      this._route.navigateByUrl('/login');
     }
   }
 }
