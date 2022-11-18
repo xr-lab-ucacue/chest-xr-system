@@ -1,5 +1,4 @@
 import { AuthService } from 'src/app/services/auth.service';
-
 import { RegisterComponent } from './register/register.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';

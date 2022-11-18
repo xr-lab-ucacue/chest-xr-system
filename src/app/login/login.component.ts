@@ -33,33 +33,13 @@ showPassword(){
 }
 // <<<<<<<<<<<<
 
-
-
 usuario: Usuario = new Usuario();
 
-  // form!: FormGroup;
-  // form_recuperar!: FormGroup;
-  // messanealert:any;
-  // restablece: boolean = false;
-  // alerm_mensaje: boolean = false;
-  // router: any;
-  // cargado = false;
-
-  constructor(
-    // private _formBuilder: FormBuilder,
-    // private _userService: UserService,
-    // private route: ActivatedRoute,
-    private _route: Router,
-    private authService: AuthService
-  ) {
-    // this.formulario();
-    // this.formulario_recuperar_email();
-  }
+constructor(private _route: Router, private authService: AuthService) {}
 
   login(){
-
     this.authService.login(this.usuario).subscribe( (resp) => {
-      console.log('Respuesta Satisfactoria: ',resp);
+      // console.log('Respuesta: ',resp);
       this.usuario.password=btoa(this.usuario.password);
       this.authService.guardarUsuario(resp.access_token);
       this.authService.guardarToken(resp.access_token);
@@ -71,49 +51,13 @@ usuario: Usuario = new Usuario();
         Swal.fire('Error Login', 'Usuario o clave incorrectas!', 'error');
       }
       if (err.status == 0) {
-        Swal.fire('Servicio', 'Nod Disponible', 'error');
+        Swal.fire('Servicio', 'No esta Disponible', 'error');
       }
     }, () => {
-      alert("OK SUCCESS")
+      Swal.fire('Bienvenido', ':)', 'success');
     })
   }
 
-  /* loginsistema(event: Event): void {
-    this.cargado = true;
-    event.preventDefault();
-
-    if (this.form.valid) {
-      this.usuario.email = this.form.value.email;
-      this.usuario.password = btoa(this.form.value.password);
-      this.authService.login(this.usuario).subscribe(
-        (response) => {
-          this.authService.guardarUsuario(response.access_token);
-          this.authService.guardarToken(response.access_token);
-          let usuario = this.authService.usuario;
-          this._route.navigateByUrl('/modelo1');
-
-          Swal.fire(
-            'Login',
-            `Hola ${usuario.email}, has iniciado sesión con éxito!`,
-            'success'
-          );
-          this.cargado = false;
-        },
-        (err) => {
-          if (err.status == 401) {
-            Swal.fire('Error', 'Usuario no existe!!', 'error');
-          }
-          if (err.status == 400) {
-            Swal.fire('Error Login', 'Usuario o clave incorrectas!', 'error');
-          }
-          if (err.status == 0) {
-            Swal.fire('Servicio', 'Nod Disponible', 'error');
-          }
-          this.cargado = false;
-        }
-      );
-    }
-  } */
 
   /* recuperar_password(event: Event) {
     event.preventDefault();
@@ -139,25 +83,10 @@ usuario: Usuario = new Usuario();
 
 
   ngOnInit(): void {
-    // if (this.authService.isAuthenticated()) {
-    //   this._route.navigateByUrl('/modelo1');
-    // } else {
-    //   this._route.navigateByUrl('#');
-    // }
+    if (this.authService.isAuthenticated()) {
+      this._route.navigateByUrl('/modelo1');
+    } else {
+      this._route.navigateByUrl('#');
+    }
   }
-
- /*  private formulario() {
-    this.form = this._formBuilder.group({
-      email: ['', [Validators.email]],
-      password: ['', [Validators.required]],
-    });
-  }
-  private formulario_recuperar_email() {
-    this.form_recuperar = this._formBuilder.group({
-      email: ['', [Validators.email, Validators.required]],
-      cedula: ['',[Validators.required]],
-    });
-  } */
-
-
 }

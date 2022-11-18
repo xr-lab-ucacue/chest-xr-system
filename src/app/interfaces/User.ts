@@ -4,19 +4,19 @@ export class ServidorMsg {
 }
 
 export class Usuario {
-    id:                  number=0;
-    cedula:              string ="111";
-    nombre:              string ="aaaa";
-    apellido:            string ="aaaa";
-    email:               string ="aaaa";
-    emailEncripted:      string="";
-    password:            string ="123456";
-    telefono:            string ="1111";
-    direccion:           string ="aaaa";
-    estado:              boolean=true;
-    estadoTokenRegistro: boolean=true;
-    roles:               string[]=[];
-    fechaCreacion:       Date=new Date();
-    longitud:            number=0;
-    latitud:             number=0;
+    id?:                  number;
+    cedula?:              string;
+    nombre?:              string;
+    apellido?:            string;
+    email!:               string;
+    emailEncripted?:      string;
+    password!:             string;
+    telefono?:            string;
+    direccion?:           string;
+    estado?:              boolean;
+    estadoTokenRegistro?: boolean;
+    roles:                string[]=[];
+    fechaCreacion:        Date=new Date();
+    longitud:             number=0;
+    latitud:              number=0;
 }

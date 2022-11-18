@@ -1,3 +1,8 @@
+navbar{
+  desaparecer boton login una vez logueado y solo mostrar logout
+  desaparecer boton logout sin estar logueado y solo mostrar login
+}
+
 tabla admin{
   -separar filtros de busqueda por (Nombre, cedula, email, apellido...)// No olvidar goldselection cambiar tmb
   -aumentar x para borrado rapido del filtro

@@ -22,22 +22,17 @@ export class AuthInterceptor implements HttpInterceptor {
         if (e.status == 401) {
           //this.authService.loginAutomatico();
           console.log(e);
-         // alert("ERRO 401");
           if (this.authService.isAuthenticated()) {
             this.authService.logout();
-          //  localStorage.removeItem('tipo_productos');
             localStorage.clear();
           }
           this.router.navigate(["/"]);
         }
         if(e.status == 200){
-          this.router.navigate(["/radiology"]);
+          this.router.navigate(["/modelo1"]);
         }
         if(e.status == 423){
-         // alert("");
-
           this.authService.logout();
-
         }
         if(e.status == 500){
           swal.fire(
@@ -45,19 +40,13 @@ export class AuthInterceptor implements HttpInterceptor {
             'Estamos trabajando en ello ' ,
             "warning"
           );
-          //console.log(e);
-
-
-        }
-
-        if (e.status == 403) {
+        }if (e.status == 403) {
           swal.fire(
             "Acceso denegado",
             `Hola ${this.authService.usuario.email} no tienes acceso a este recurso!`,
             "warning"
           );
-         // alert("ERRO 403");
-          this.router.navigate(["/"]);
+          this.router.navigate(["/modelo1"]);
         }
         return throwError(e);
       })
