@@ -1,6 +1,10 @@
 navbar{
   desaparecer boton login una vez logueado y solo mostrar logout
   desaparecer boton logout sin estar logueado y solo mostrar login
+  registrarce aumentar ruta y despareer al loguearce
+  cambiar las rutas ({subir imagen = /modelo1})
+  mostrar ruta admin si solo es admin
+  mostrar El usuario(email) activo
 }
 
 tabla admin{
@@ -11,13 +15,3 @@ tabla admin{
   -burbuja de colores dependiendo el rol (anaranjado, amarillo, morado)
   -aumentar botones de (eliminar, editar)
 }
-
-img-portada{
-Mejorar la perspectiva N
-}
-
-Guards{
-Proteger rutas()
-}
-
-interceptors()
