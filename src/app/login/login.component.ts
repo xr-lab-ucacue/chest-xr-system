@@ -1,12 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Usuario } from '../interfaces/User';
-// import { UserService } from '../../core/user.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { RoleGuard } from '../auth/role.guard';
-declare var $: any;
 
 @Component({
   selector: 'app-login',
@@ -36,13 +32,12 @@ showPassword(){
 
 usuario: Usuario = new Usuario();
 
-constructor(private _route: Router, private authService: AuthService, private roleGuard: RoleGuard) {}
+constructor(private _route: Router, private authService: AuthService) {}
 
   login(){
     this.authService.login(this.usuario).subscribe( (resp) => {
-      // console.log('Respuesta: ',resp);
       this.usuario.password=btoa(this.usuario.password);
-      this.authService.guardarUsuario(resp.access_token);
+      // this.authService.guardarUsuario(resp.access_token);
       this.authService.guardarToken(resp.access_token);
     }, (err) => {
       if (err.status == 401) {

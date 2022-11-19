@@ -1,10 +1,8 @@
 navbar{
-  desaparecer boton login una vez logueado y solo mostrar logout
-  desaparecer boton logout sin estar logueado y solo mostrar login
-  registrarce aumentar ruta y despareer al loguearce
   cambiar las rutas ({subir imagen = /modelo1})
   mostrar ruta admin si solo es admin
-  mostrar El usuario(email) activo
+  cambiar fondo a dark en el acordion y letras blancas
+  solucionar lo de recargar pagina para aparecer icono user (condicional +)
 }
 
 tabla admin{

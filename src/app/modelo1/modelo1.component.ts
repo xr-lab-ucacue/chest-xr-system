@@ -35,15 +35,12 @@ export class Modelo1Component implements OnInit {
       this.hiddenTxt= false;
       this.displayButton = false;
     }
-    console.log(this.displayButton);
-
   }
 
   // Bar progress
   loading(){
     this.hiddenSpinner = true;
     setTimeout(() => {
-      console.log("Redireccionando a otra pag")
       this.router.navigateByUrl('/radiology');
     }, 1000);
   }
