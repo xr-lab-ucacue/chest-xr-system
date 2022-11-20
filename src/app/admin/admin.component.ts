@@ -14,16 +14,24 @@ import { AuthService } from '../services/auth.service';
 })
 export class AdminComponent implements AfterViewInit {
 
+  // changeColorRol(rol:string){
+  //   if (rol == "ROLE_ADMIN") {
+  //     return this.backgroundColorRol = "background-color: rgb(161, 59, 192);"
+  //   } else if (rol == "ROLE_USER") {
+  //     return this.backgroundColorRol = "background-color: rgb(245, 172, 37);"
+  //   } else {
+  //     return this.backgroundColorRol = "background-color: grey;"
+  //   }
+  // }
+
   constructor(private _liveAnnouncer: LiveAnnouncer, private usersService: AuthService) {}
 
-  displayedColumns: string [] = ['id','cedula', 'email', 'nombre', 'apellido', 'telefono', 'direccion', 'estado', 'roles']
-  // displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  displayedColumns: string [] = ['id','cedula', 'email', 'nombre', 'apellido', 'telefono', 'direccion', 'estado', 'tokenEstado', 'roles']
 
   dataUsers: any[] = [];
   rolesUser: any[] = [];
 
   dataSource = new MatTableDataSource<any>(this.dataUsers);
-  // dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
 
   clickedRows = new Set<Usuario>();
 
@@ -31,32 +39,37 @@ export class AdminComponent implements AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   ngAfterViewInit() {
-    // this.dataSource.paginator = this.paginator;
-    // this.dataSource.sort = this.sort;
     this.getUsers()
   }
 
   getUsers(){
     this.usersService.getUserRegisters().subscribe(
-      (req) => {
+      (res: Usuario[]) => {
         // req.forEach((item: any) => {
         //   this.dataUsers.push(item)
         // });
 
-        req.filter( e => {
-          console.log("Roles: ", e.roles);
+        res.filter( e => {
+          console.log("E:> ",e.roles);
+          e.roles.forEach( (i:any) => {
+          console.log("i:> ",i.nombre);
+            // if(e.roles.length > 1){
+            //   this.dataUsers.push(e.roles = i.nombre);
+            //   this.dataUsers.push(e.roles = i.nombre);
+            // }
+            this.dataUsers.push(e.roles = i.nombre);
+          });
         });
 
-
-        this.dataUsers = req
+        this.dataUsers = res
 
         this.dataSource = new MatTableDataSource<any>(this.dataUsers);
         this.dataSource.paginator = this.paginator
         this.dataSource.sort = this.sort;
-      }, (res) => {
-        console.log(res);
+      }, (err) => {
+        console.log(err);
       }, () => {
-        console.log("EXITO");
+        // console.log("EXITO");
       }
     )
   }
@@ -81,7 +94,8 @@ export class AdminComponent implements AfterViewInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
-    return this.backgroundFilter = (event.target as HTMLInputElement).value;
+    return this.backgroundFilter = (event.target as HTMLInputElement).value
   }
+
 }
 

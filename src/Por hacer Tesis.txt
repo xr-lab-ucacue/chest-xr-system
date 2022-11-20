@@ -1,16 +1,5 @@
-navbar{
-  
-}
 
 tabla admin{
-  -separar filtros de busqueda por (Nombre, cedula, email, apellido...)// No olvidar goldselection cambiar tmb
-  -aumentar x para borrado rapido del filtro
-  -separar roles
-  -burbuja de colores dependiendo el estado (Rojo, verde)
-  -burbuja de colores dependiendo el rol (anaranjado, amarillo, morado)
+  *** capturar dos roles en tabla (Al darle dos roles a un usuario solo mostrara el ultimo dado)
   -aumentar botones de (eliminar, editar)
-}
-
-carga {
-  poner gif al cargar paginas
 }

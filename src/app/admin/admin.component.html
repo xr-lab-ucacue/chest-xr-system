@@ -3,7 +3,6 @@
         <div class="row">
             <div class="col">
                 <div class="mat-elevation-z8">
-
                     <div class="row justify-content-between">
                         <div class="col-8">
                             <!-- filtro -->
@@ -69,13 +68,29 @@
                       <!-- Estado Column -->
                       <ng-container matColumnDef="estado">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by estado"> Estado </th>
-                        <td mat-cell *matCellDef="let element"> {{element.estado}} </td>
+                        <td mat-cell *matCellDef="let element">
+                          <h4 class="burbuja" *ngIf="element.estado == true" style="background-color: rgb(99, 226, 87);">{{element.estado}}</h4>
+                          <h4 class="burbuja" *ngIf="element.estado == false" style="background-color: rgb(245, 65, 65);">{{element.estado}}</h4>
+                        </td>
+                      </ng-container>
+
+                      <!-- Estado Token Column -->
+                      <ng-container matColumnDef="tokenEstado">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by tokenEstado"> Estado Token </th>
+                        <td mat-cell *matCellDef="let element">
+                           <h4 class="burbuja" *ngIf="element.estadoTokenRegistro == true" style="background-color: rgb(99, 226, 87);">{{element.estadoTokenRegistro}} </h4>
+                           <h4 class="burbuja" *ngIf="element.estadoTokenRegistro == false" style="background-color: rgb(245, 65, 65);">{{element.estadoTokenRegistro}} </h4>
+                          </td>
                       </ng-container>
 
                       <!-- Roles Column -->
                       <ng-container matColumnDef="roles">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by roles"> Roles </th>
-                        <td mat-cell *matCellDef="let element"> {{element.roles|json}} </td>
+                        <td mat-cell *matCellDef="let element"> <h4 class="burbuja-rol" > {{element.roles}}</h4>
+                           <!-- <h4 class="burbuja-rol" *ngIf="element.roles == 'ROLE_ADMIN' " style="background-color: rgb(161, 59, 192);" > {{element.roles}}</h4>
+                           <h4 class="burbuja-rol" *ngIf="element.roles == 'ROLE_USER' " style="background-color: rgb(245, 172, 37);;" > {{element.roles}}</h4>
+                           <h4 class="burbuja-rol" *ngIf="element.roles == 'ROLE_PUBLICATOR' " style="background-color: rgb(82, 81, 80);;" > {{element.roles}}</h4> -->
+                          </td>
                       </ng-container>
 
                       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
