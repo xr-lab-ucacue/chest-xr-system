@@ -41,9 +41,9 @@ body {overflow-x:hidden!important;}
     margin-bottom: 20px;
     margin-inline: 10px;
     border: 1px solid rgb(204, 204, 204);
-    box-shadow: 0px 0px 15px 2px #4b4a49;
-    border-top-left-radius: 30px;
-    border-top-right-radius: 30px;
+    box-shadow: 0px 0px 15px 4px #4b4a49;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }

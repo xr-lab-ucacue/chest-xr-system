@@ -81,7 +81,7 @@ export class AuthService {
   // compruebo si esta autenticado
   isAuthenticated(): boolean {
     let payload = this.obtenerDatosToken(this.tokencito!);
-    console.log("isAuthenticated-payload: ", payload)
+    // console.log("isAuthenticated-payload: ", payload)
     if (payload != null && payload.user_name && payload.user_name.length > 0) {
       return true;
     }

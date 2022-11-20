@@ -1,5 +1,5 @@
 navbar{
-  solucionar lo de recargar pagina para aparecer icono user (condicional +)
+  
 }
 
 tabla admin{
@@ -9,4 +9,8 @@ tabla admin{
   -burbuja de colores dependiendo el estado (Rojo, verde)
   -burbuja de colores dependiendo el rol (anaranjado, amarillo, morado)
   -aumentar botones de (eliminar, editar)
+}
+
+carga {
+  poner gif al cargar paginas
 }
