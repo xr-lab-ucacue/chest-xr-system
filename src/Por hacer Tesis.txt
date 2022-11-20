@@ -1,7 +1,4 @@
 navbar{
-  cambiar las rutas ({subir imagen = /modelo1})
-  mostrar ruta admin si solo es admin
-  cambiar fondo a dark en el acordion y letras blancas
   solucionar lo de recargar pagina para aparecer icono user (condicional +)
 }
 

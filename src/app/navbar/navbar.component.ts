@@ -34,6 +34,10 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(["/register"])
   }
 
+  isAdmin(): boolean{
+    return this.authService.capturoRol();
+  }
+
   logout(){
     this.userApellido = ""
     this.userNombre = ""

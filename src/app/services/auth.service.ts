@@ -88,7 +88,7 @@ export class AuthService {
     return false
   }
 
-  //verifico si tiene rol admin
+  //verifico si tiene rol admin devolviendo TRUE si lo es
   capturoRol(): boolean{
     let payload = this.obtenerDatosToken(this.tokencito!);
     let _rol = payload.authorities
@@ -130,7 +130,7 @@ export class AuthService {
 
 
 
-  
+
 // funciones en desuso >>>>>>>>>>>>>>>>>
 
 guardarUsuario(accessToken: string): void {
