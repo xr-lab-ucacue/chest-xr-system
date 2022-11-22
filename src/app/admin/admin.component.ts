@@ -49,19 +49,27 @@ export class AdminComponent implements AfterViewInit {
         //   this.dataUsers.push(item)
         // });
 
-        res.filter( e => {
-          console.log("E:> ",e.roles);
-          e.roles.forEach( (i:any) => {
-          console.log("i:> ",i.nombre);
-            // if(e.roles.length > 1){
-            //   this.dataUsers.push(e.roles = i.nombre);
-            //   this.dataUsers.push(e.roles = i.nombre);
-            // }
-            this.dataUsers.push(e.roles = i.nombre);
-          });
-        });
+        // res.filter( e => {
+        //   console.log("E:> ",e.roles);
+        //   e.roles.filter( (i:any) => {
+        //   console.log("i:> ",i.nombre);
+        //     this.dataUsers.push(e.roles = i.nombre);
+        //   });
+        // });
 
-        this.dataUsers = res
+        res.forEach((e:Usuario) => {
+          console.log("Roles-ForEach: ", e.roles)
+          e.roles.forEach((i:any) => {
+            // console.log("x2F>: ",e.roles[0] = i.nombre, e.roles[1])
+            console.log("x2F>: ", e.roles[i] = i.nombre)
+            this.dataUsers.push(e.roles[0] = i.nombre);
+          });
+        })
+
+      this.dataUsers = res
+
+
+
 
         this.dataSource = new MatTableDataSource<any>(this.dataUsers);
         this.dataSource.paginator = this.paginator
