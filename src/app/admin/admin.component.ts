@@ -1,3 +1,4 @@
+import Swal  from 'sweetalert2';
 import { Usuario } from './../interfaces/User';
 import { Component, OnInit } from '@angular/core';
 import {AfterViewInit, ViewChild} from '@angular/core';
@@ -14,22 +15,13 @@ import { AuthService } from '../services/auth.service';
 })
 export class AdminComponent implements AfterViewInit {
 
-  // changeColorRol(rol:string){
-  //   if (rol == "ROLE_ADMIN") {
-  //     return this.backgroundColorRol = "background-color: rgb(161, 59, 192);"
-  //   } else if (rol == "ROLE_USER") {
-  //     return this.backgroundColorRol = "background-color: rgb(245, 172, 37);"
-  //   } else {
-  //     return this.backgroundColorRol = "background-color: grey;"
-  //   }
-  // }
-
   constructor(private _liveAnnouncer: LiveAnnouncer, private usersService: AuthService) {}
 
-  displayedColumns: string [] = ['id','cedula', 'email', 'nombre', 'apellido', 'telefono', 'direccion', 'estado', 'tokenEstado', 'roles']
+  displayedColumns: string [] = ['id','cedula', 'email', 'nombre', 'apellido', 'telefono', 'direccion', 'estado', 'tokenEstado', 'roles', 'edit']
 
   dataUsers: any[] = [];
   rolesUser: any[] = [];
+  usuario: Usuario = new Usuario();
 
   dataSource = new MatTableDataSource<any>(this.dataUsers);
 
@@ -68,9 +60,6 @@ export class AdminComponent implements AfterViewInit {
 
       this.dataUsers = res
 
-
-
-
         this.dataSource = new MatTableDataSource<any>(this.dataUsers);
         this.dataSource.paginator = this.paginator
         this.dataSource.sort = this.sort;
@@ -105,5 +94,105 @@ export class AdminComponent implements AfterViewInit {
     return this.backgroundFilter = (event.target as HTMLInputElement).value
   }
 
+  async updateUser(){
+    const { value: formValues } = await Swal.fire({
+      title: 'Editar Usuario',
+      html:
+      `
+      <!-- Email -->
+      <label class="form-label">Email:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="swal-input1"
+      />
+
+      <!-- Nombre -->
+      <label class="form-label">Nombre:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="swal-input2"
+      />
+
+      <!-- Apellido -->
+      <label class="form-label">Apellido:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="swal-input3"
+      />
+
+      <!-- Telefono -->
+      <label class="form-label">Telefono:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="swal-input4"
+      />
+
+      <!-- Direccion -->
+      <label class="form-label">Direccion:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="swal-input5"
+      />
+
+      <!-- Estado -->
+      <label class="form-label">Estado:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="swal-input6"
+      />
+
+      <br>
+      <hr>
+      <input id="swal-input1" class="swal2-input">
+      `,
+
+      focusConfirm: false,
+      preConfirm: () => {
+        return [
+          // (document.getElementById(elementId) as HTMLInputElement).value
+          (<HTMLInputElement>document.getElementById('swal-input1')!).value ,
+
+          (<HTMLInputElement>document.getElementById('swal-input2')!).value,
+          (<HTMLInputElement>document.getElementById('swal-input3')!).value,
+          (<HTMLInputElement>document.getElementById('swal-input4')!).value,
+          (<HTMLInputElement>document.getElementById('swal-input5')!).value,
+          (<HTMLInputElement>document.getElementById('swal-input6')!).value,
+        ]
+      }
+    })
+
+    if (formValues) {
+      Swal.fire(JSON.stringify(formValues))
+    }
+
+    /* this.usersService.aupdateUser(this.usuario).subscribe(
+      (resp) => {
+
+      }, (err) => {
+
+      }, () => {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+        Toast.fire({
+          icon: 'success',
+          title: 'Usuario Actualizado'
+        })
+      }) */
+  }
 }
 

@@ -1,8 +1,8 @@
+import { Usuario } from './../interfaces/User';
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Usuario } from '../interfaces/User';
 import Swal from 'sweetalert2';
 
 @Injectable({
@@ -126,6 +126,24 @@ export class AuthService {
       return this._usuario;
     }
     return new Usuario();
+  }
+
+
+  // actualizar el usuario
+  aupdateUser(usuario: Usuario){
+    let json = JSON.stringify(usuario);
+    let params = json;
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.put(environment.Url + `/usuario/${usuario.email}`, params, { headers: headers }).pipe(map((data) => { return data }));
+  }
+
+
+  // actualizar roles del usuario
+  aupdateUserRol(usuario: Usuario){
+    let json = JSON.stringify(usuario);
+    let params = json;
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post(environment.Url + `/usuario/roles/${usuario.email}`, params, { headers: headers }).pipe(map((data) => { return data }));
   }
 
 

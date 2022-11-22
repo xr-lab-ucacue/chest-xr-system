@@ -1,7 +1,7 @@
 <div class="fondo">
     <div class="container my-5">
         <div class="row">
-            <div class="col">
+            <div class="col-md-12">
                 <div class="mat-elevation-z8">
                     <div class="row justify-content-between">
                         <div class="col-8">
@@ -86,11 +86,20 @@
                       <!-- Roles Column -->
                       <ng-container matColumnDef="roles">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by roles"> Roles </th>
-                        <td mat-cell *matCellDef="let element"> <h4 class="burbuja-rol" > {{element.roles}}</h4>
+                        <td mat-cell *matCellDef="let element">
+                           <h4 class="burbuja-rol" > {{element.roles | json }}</h4>
                            <!-- <h4 class="burbuja-rol" *ngIf="element.roles == 'ROLE_ADMIN' " style="background-color: rgb(161, 59, 192);" > {{element.roles}}</h4>
                            <h4 class="burbuja-rol" *ngIf="element.roles == 'ROLE_USER' " style="background-color: rgb(245, 172, 37);;" > {{element.roles}}</h4>
                            <h4 class="burbuja-rol" *ngIf="element.roles == 'ROLE_PUBLICATOR' " style="background-color: rgb(82, 81, 80);;" > {{element.roles}}</h4> -->
                           </td>
+                      </ng-container>
+
+                      <!-- Edit Column -->
+                      <ng-container matColumnDef="edit">
+                        <th mat-header-cell *matHeaderCellDef> Editar </th>
+                        <td mat-cell *matCellDef="let element">
+                          <button type="button" class="btn btn-warning"(click)="updateUser()" > <i class="bi bi-pencil"></i></button>
+                        </td>
                       </ng-container>
 
                       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -106,6 +115,10 @@
                                    aria-label="Select page of periodic elements">
                     </mat-paginator>
                 </div>
+            </div>
+            <!-- Formulario -->
+            <div class="col-md-12">
+              
             </div>
         </div>
     </div>
@@ -124,6 +137,6 @@
 
   <ul>
     <li *ngFor="let clickedRow of clickedRows">
-      Clicked on {{clickedRow.email}}
+      Clicked on {{clickedRow | json}}
     </li>
 </ul>
