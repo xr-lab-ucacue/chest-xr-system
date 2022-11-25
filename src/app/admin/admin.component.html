@@ -1,142 +1,56 @@
 <div class="fondo">
-    <div class="container my-5">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="mat-elevation-z8">
-                    <div class="row justify-content-between">
-                        <div class="col-8">
-                            <!-- filtro -->
-                            <div class="filtro">
-                                <i class="bi bi-search" style="margin-left: 5px;"></i>
-                                <mat-form-field style="margin-left: 10px;">
-                                    <mat-label style="color: black;">Buscar</mat-label>
-                                    <input matInput (keyup)="applyFilter($event)" #input>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                            <div class="col-4">
-                                    <p class="text-md-end txt-title-table">Usuarios Registrados</p>
-                            </div>
-                      </div>
+  <!-- filtro -->
+  <label for="">Buscar</label>
+  <input type="text" [(ngModel)]="searchText" placeholder="SEARCH">
+  <!-- tabla -->
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <!-- <th scope="col">ID</th> -->
+          <th scope="col">Email</th>
+          <th scope="col">Apellido</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Cedula</th>
+          <th scope="col">Telefono</th>
+          <th scope="col">Direccion</th>
+          <th scope="col">Roles</th>
+          <th scope="col">Estado</th>
+          <th scope="col">Estado Token</th>
+          <th scope="col">Actualizar</th>
+        </tr>
+      </thead>
+      <tbody id="tabla" ref="tabla">
+        <tr  *ngFor="let data of dataUsers | filter:searchText | paginate: { itemsPerPage: itemsPage, currentPage: p}; let i = index">
+          <th scope="row">{{ i+1 }}</th>
+          <!-- <td>{{item.id}}</td> -->
+          <td>{{ data.email }}</td>
+          <td>{{ data.apellido }}</td>
+          <td>{{ data.nombre }}</td>
+          <td>{{ data.cedula }}</td>
+          <td>{{ data.telefono }}</td>
+          <td>{{ data.direccion }}</td>
+          <td>{{ data.roles| json  }}</td>
+          <td>{{ data.estado }}</td>
+          <td>{{ data.estadoTokenRegistro }}</td>
+          <td>
+            <button (click)="updateUser(data)"> Edit</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- paginacion -->
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
 
-                    <!-- Tabla -->
-                    <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
-                    class="mat-elevation-z8 demo-table">
-
-                      <!-- Id Column -->
-                      <ng-container matColumnDef="id">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by id"> ID </th>
-                        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-                      </ng-container>
-
-                      <!-- Cedula Column -->
-                      <ng-container matColumnDef="cedula">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by cedula"> Cedula </th>
-                        <td mat-cell *matCellDef="let element"> {{element.cedula}} </td>
-                      </ng-container>
-
-                      <!-- Emial Column -->
-                      <ng-container matColumnDef="email">
-                        <th mat-header-cell *matHeaderCellDef> Email </th>
-                        <td mat-cell *matCellDef="let element"> {{element.email}} </td>
-                      </ng-container>
-
-                      <!-- Nombre Column -->
-                      <ng-container matColumnDef="nombre">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by nombre"> Nombre </th>
-                        <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
-                      </ng-container>nombre
-
-                      <!-- Apellido Column -->
-                      <ng-container matColumnDef="apellido">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by apellido"> Apellido </th>
-                        <td mat-cell *matCellDef="let element"> {{element.apellido}} </td>
-                      </ng-container>
-
-                      <!-- Telefono Column -->
-                      <ng-container matColumnDef="telefono">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by telefono"> Telefono </th>
-                        <td mat-cell *matCellDef="let element"> {{element.telefono}} </td>
-                      </ng-container>
-
-                      <!-- Direccion Column -->
-                      <ng-container matColumnDef="direccion">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by direccion"> Direccion </th>
-                        <td mat-cell *matCellDef="let element"> {{element.direccion}} </td>
-                      </ng-container>
-
-                      <!-- Estado Column -->
-                      <ng-container matColumnDef="estado">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by estado"> Estado </th>
-                        <td mat-cell *matCellDef="let element">
-                          <h4 class="burbuja" *ngIf="element.estado == true" style="background-color: rgb(99, 226, 87);">{{element.estado}}</h4>
-                          <h4 class="burbuja" *ngIf="element.estado == false" style="background-color: rgb(245, 65, 65);">{{element.estado}}</h4>
-                        </td>
-                      </ng-container>
-
-                      <!-- Estado Token Column -->
-                      <ng-container matColumnDef="tokenEstado">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by tokenEstado"> Estado Token </th>
-                        <td mat-cell *matCellDef="let element">
-                           <h4 class="burbuja" *ngIf="element.estadoTokenRegistro == true" style="background-color: rgb(99, 226, 87);">{{element.estadoTokenRegistro}} </h4>
-                           <h4 class="burbuja" *ngIf="element.estadoTokenRegistro == false" style="background-color: rgb(245, 65, 65);">{{element.estadoTokenRegistro}} </h4>
-                          </td>
-                      </ng-container>
-
-                      <!-- Roles Column -->
-                      <ng-container matColumnDef="roles">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by roles"> Roles </th>
-                        <td mat-cell *matCellDef="let element">
-                           <h4 class="burbuja-rol" > {{element.roles | json }}</h4>
-                           <!-- <h4 class="burbuja-rol" *ngIf="element.roles == 'ROLE_ADMIN' " style="background-color: rgb(161, 59, 192);" > {{element.roles}}</h4>
-                           <h4 class="burbuja-rol" *ngIf="element.roles == 'ROLE_USER' " style="background-color: rgb(245, 172, 37);;" > {{element.roles}}</h4>
-                           <h4 class="burbuja-rol" *ngIf="element.roles == 'ROLE_PUBLICATOR' " style="background-color: rgb(82, 81, 80);;" > {{element.roles}}</h4> -->
-                          </td>
-                      </ng-container>
-
-                      <!-- Edit Column -->
-                      <ng-container matColumnDef="edit">
-                        <th mat-header-cell *matHeaderCellDef> Editar </th>
-                        <td mat-cell *matCellDef="let element">
-                          <button type="button" class="btn btn-warning"(click)="updateUser()" > <i class="bi bi-pencil"></i></button>
-                        </td>
-                      </ng-container>
-
-                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                      <tr mat-row [ngClass]="{'make-gold': row.email == backgroundFilter}"
-                        (click)="clickedRows.add(row)"
-                        [class.demo-row-is-clicked]="clickedRows.has(row)"
-                        *matRowDef="let row; columns: displayedColumns;"></tr>
-                    </table>
-
-                    <!-- Paginador -->
-                    <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                                   showFirstLastButtons
-                                   aria-label="Select page of periodic elements">
-                    </mat-paginator>
-                </div>
-            </div>
-            <!-- Formulario -->
-            <div class="col-md-12">
-              
-            </div>
-        </div>
-    </div>
+    <!-- selecion de items por page -->
+    <select class="form-select" style="width: auto" [(ngModel)]="itemsPage">
+      <option [value]="itemsPage" disabled selected hidden>Items</option>
+      <option [ngValue]="2">2 items per page</option>
+      <option [ngValue]="4">4 items per page</option>
+      <option [ngValue]="6">6 items per page</option>
+    </select>
+    <label for="">N° de Usuarios: </label>{{allUsers}}
+  </div>
 </div>
 
-<!-- Metodo Click -->
-<div>
-    <h3>
-      Click Log
-    </h3>
-  </div>
-
-  <div *ngIf="!clickedRows.size">
-    Clicked rows will be logged here
-  </div>
-
-  <ul>
-    <li *ngFor="let clickedRow of clickedRows">
-      Clicked on {{clickedRow | json}}
-    </li>
-</ul>

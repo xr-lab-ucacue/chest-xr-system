@@ -6,17 +6,17 @@ export class ServidorMsg {
 export class Usuario {
     id?:                  number;
     cedula?:              string;
-    nombre?:              string;
-    apellido?:            string;
+    nombre!:              string;
+    apellido!:            string;
     email!:               string;
     emailEncripted?:      string;
-    password!:             string;
-    telefono?:            string;
-    direccion?:           string;
-    estado?:              boolean;
+    password?:             string;
+    telefono!:            string;
+    direccion!:           string;
+    estado!:              boolean;
     estadoTokenRegistro?: boolean;
-    roles:                string[]=[];
-    fechaCreacion:        Date=new Date();
-    longitud:             number=0;
-    latitud:              number=0;
+    roles?:                string[]=[];
+    fechaCreacion?:        Date=new Date();
+    longitud?:             number=0;
+    latitud?:              number=0;
 }

@@ -36,7 +36,7 @@ constructor(private _route: Router, private authService: AuthService) {}
 
   login(){
     this.authService.login(this.usuario).subscribe( (resp) => {
-      this.usuario.password=btoa(this.usuario.password);
+      this.usuario.password=btoa(this.usuario.password!);
       // this.authService.guardarUsuario(resp.access_token);
       this.authService.guardarToken(resp.access_token);
     }, (err) => {

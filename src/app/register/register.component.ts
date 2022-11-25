@@ -1,10 +1,8 @@
 import { Router } from '@angular/router';
 import { ServidorMsg, Usuario} from './../interfaces/User';
 import { Component, OnInit } from '@angular/core';
-
 import Swal from 'sweetalert2'
 import { AuthService } from '../services/auth.service';
-
 
 @Component({
   selector: 'app-register',
@@ -229,7 +227,7 @@ export class RegisterComponent implements OnInit {
         icon: 'info',
         title: 'Campo Telefono no permite letras'
       })
-    } 
+    }
     /* else if(this.validarCedula(this.usuario.cedula) != true) {
       const Toast = Swal.mixin({
         toast: true,

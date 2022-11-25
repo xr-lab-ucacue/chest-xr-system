@@ -45,7 +45,7 @@ export class AuthService {
     let params = new URLSearchParams();
     params.set('grant_type', 'password');
     params.set('username', usuario.email);
-    params.set('password', usuario.password);
+    params.set('password', usuario.password!);
     //console.log(params.toString());
     return this.http.post<any>(urlEndpoint, params.toString(), {
       headers: httpHeaders,
@@ -98,7 +98,7 @@ export class AuthService {
 
  //boolenao si tiene un rol
  hasRole(role: string): boolean {
-  if (this.usuario.roles.includes(role)) {
+  if (this.usuario.roles!.includes(role)) {
     return true;
   }
   return false;
@@ -143,7 +143,7 @@ export class AuthService {
     let json = JSON.stringify(usuario);
     let params = json;
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post(environment.Url + `/usuario/roles/${usuario.email}`, params, { headers: headers }).pipe(map((data) => { return data }));
+    return this.http.put(environment.Url + `/usuario/roles/${usuario.email}`, params, { headers: headers }).pipe(map((data) => { return data }));
   }
 
 
