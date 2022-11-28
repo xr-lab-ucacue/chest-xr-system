@@ -27,11 +27,11 @@ export class AdminComponent implements OnInit {
       (res: Usuario[]) => {
 
         res.forEach((e: Usuario) => {
-          console.log("Roles-ForEach: ", e.roles)
-          e.roles!.forEach((i: any) => {
-            console.log(i.nombre);
-            this.dataUsers.push(i.nombre);
-          });
+          this.dataUsers.push(
+            e.roles!.forEach((i: any) => {
+              this.dataUsers.push(e.roles![0] =i.nombre);
+            })
+          );
         })
 
       this.dataUsers = res
