@@ -16,11 +16,12 @@ export class AdminComponent implements OnInit {
   dataUsers: any[] = [];
   allUsers: number = 0;
 
-  // elemntos de paginacion
+  // elemntos de paginacion background-color: rgb(226, 55, 55); border-radius: 10px; width: 40px; height: 25px;
   p: number = 1;
   itemsPage: number = 6;
   // filtro
   searchText: any;
+  estado = ""
 
   getUsers(){
     this.usersService.getUserRegisters().subscribe(
@@ -38,8 +39,6 @@ export class AdminComponent implements OnInit {
       this.allUsers = res.length
       }, (err) => {
         console.log(err);
-      }, () => {
-        // console.log("EXITO");
       }
     )
   }
@@ -93,8 +92,8 @@ export class AdminComponent implements OnInit {
       <!-- Estado -->
       <label for="rol" class="form-label mb-2 mt-2">Estado</label>
       <select class="form-select" id="swal-estado">
-        <option value="false" disabled selected hidden>
-          Selecione el Rol
+        <option value="" disabled selected hidden>
+          Selecione el Estado
         </option>
         <option value="true">True</option>
         <option value="false">False</option>
@@ -119,11 +118,10 @@ export class AdminComponent implements OnInit {
           apellido: (<HTMLInputElement>document.getElementById('swal-apellido')!).value,
           telefono: (<HTMLInputElement>document.getElementById('swal-telefono')!).value,
           direccion: (<HTMLInputElement>document.getElementById('swal-direccion')!).value,
-          estado: (<HTMLInputElement>document.getElementById('swal-estado')!).value as any,
+          estado: (<HTMLInputElement>document.getElementById('swal-estado')!).value as any
         };
         this.usersService.aupdateUser(UpdateUsuario).subscribe(
             (resp: any) => {
-              // console.log("Respuesta: ",resp);
               const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
@@ -139,7 +137,6 @@ export class AdminComponent implements OnInit {
                 icon: 'success',
                 title: `${resp.mensaje}`
               })
-
             }, (err) => {
               console.log("Error: ",err);
               const errorServidor = err.error.mensaje;

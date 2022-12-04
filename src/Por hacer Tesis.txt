@@ -1,5 +1,2 @@
+ocupar fecha de creacion, laitud y longitud
 
-tabla admin{
-  *** capturar dos roles en tabla (Al darle dos roles a un usuario solo mostrara el ultimo dado)
-  -aumentar botones de (eliminar, editar)
-}
