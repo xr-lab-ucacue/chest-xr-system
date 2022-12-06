@@ -55,14 +55,40 @@ table{
 .estado-false{
   background-color: rgb(226, 55, 55);
   text-align: center;
-  border-radius: 10px;
+  border-radius: 30px;
   width: 45px;
-  height: 25px;
+  height: 20px;
 }
 .estado-true{
   background-color: rgb(55, 226, 106);
   text-align: center;
-  border-radius: 10px;
+  border-radius: 30px;
   width: 45px;
-  height: 25px;
+  height: 20px;
+}
+
+.bubble-admin{
+  background: rgb(146, 0, 146);
+  text-align: center;
+  border: 0.5px solid rgb(195, 112, 216);
+  border-radius: 30px;
+  height: 23px;
+  margin-bottom: 5px;
+}
+.bubble-user{
+  background: rgba(255, 166, 0, 0.89);
+  text-align: center;
+  border: 0.5px solid rgb(180, 182, 83);
+  border-radius: 30px;
+  height: 23px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.bubble-publi{
+  background: rgb(0, 65, 187);
+  text-align: center;
+  border: 0.5px solid rgb(82, 120, 201);
+  border-radius: 30px;
+  height: 23px;
+  margin-top: 5px;
 }

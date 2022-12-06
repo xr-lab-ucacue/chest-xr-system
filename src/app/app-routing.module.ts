@@ -9,6 +9,7 @@ import { RadiologysComponent } from './radiologys/radiologys.component';
 import { AdminComponent } from './admin/admin.component';
 import { AuthGuard } from './auth/auth.guard';
 import { RoleGuard } from './auth/role.guard';
+import { PageUserComponent } from './page-user/page-user.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'modelo1', component: Modelo1Component, canActivate: [AuthGuard] },
   { path: 'radiology', component: RadiologyComponent, canActivate: [AuthGuard] },
   { path: 'admin', component: AdminComponent, canActivate: [RoleGuard] },
+  { path: 'userPage/:id', component: PageUserComponent, canActivate: [RoleGuard]},
   // { path: 'radiologys', component: RadiologysComponent },
   { path: '', pathMatch: 'full', component: LoginComponent },
   { path: '**', pathMatch: 'full', component: LoginComponent }

@@ -22,6 +22,7 @@ import { AdminComponent } from './admin/admin.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 // import { NgbAlertModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { PageUserComponent } from './page-user/page-user.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     RadiologysComponent,
     LoginComponent,
     RegisterComponent,
-    AdminComponent
+    AdminComponent,
+    PageUserComponent
   ],
   imports: [
     BrowserModule,

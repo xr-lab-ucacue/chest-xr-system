@@ -27,13 +27,14 @@ export class AdminComponent implements OnInit {
     this.usersService.getUserRegisters().subscribe(
       (res: Usuario[]) => {
 
-        res.forEach((e: Usuario) => {
-          this.dataUsers.push(
-            e.roles!.forEach((i: any) => {
-              this.dataUsers.push(e.roles![0] =i.nombre);
-            })
-          );
-        })
+        // res.forEach((e: Usuario) => {
+        //   this.dataUsers.push(
+        //     e.roles!.forEach((i: any) => {
+        //       this.dataUsers.push(i.nombre);
+        //     })
+        //   );
+        // })
+
 
       this.dataUsers = res
       this.allUsers = res.length
@@ -149,7 +150,7 @@ export class AdminComponent implements OnInit {
       }
     })
     if (formValues) {
-      Swal.fire(JSON.stringify(formValues))
+      // Swal.fire(JSON.stringify(formValues))
     }
   }
 

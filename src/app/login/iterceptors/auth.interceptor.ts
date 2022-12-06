@@ -20,7 +20,6 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       catchError((e) => {
         if (e.status == 401) {
-          //this.authService.loginAutomatico();
           console.log(e);
           if (this.authService.isAuthenticated()) {
             this.authService.logout();
@@ -29,7 +28,7 @@ export class AuthInterceptor implements HttpInterceptor {
           this.router.navigate(["/"]);
         }
         if(e.status == 200){
-          this.router.navigate(["/modelo1"]);
+          // this.router.navigate(["/modelo1"]);
         }
         if(e.status == 423){
           this.authService.logout();

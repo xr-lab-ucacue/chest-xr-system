@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { ServidorMsg, Usuario} from './../interfaces/User';
+import { Usuario} from './../interfaces/User';
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2'
 import { AuthService } from '../services/auth.service';
@@ -20,9 +20,6 @@ export class RegisterComponent implements OnInit {
   btnProgress3: string = "position-absolute top-0 start-100 translate-middle btn btn-sm btn-secondary rounded-pill"
 
   usuario: Usuario = new Usuario();
-
-  mensaje: ServidorMsg = new ServidorMsg();
-  // usuarioSave: Usuario[] = [];
 
   progress1(){
     this.btnProgress1 = 'position-absolute top-0 start-0 translate-middle btn btn-sm btn-primary rounded-pill'

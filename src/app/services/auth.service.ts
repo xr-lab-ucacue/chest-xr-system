@@ -18,6 +18,10 @@ export class AuthService {
   getUserRegisters() {
     return this.http.get<Usuario[]>(environment.Url + '/personas');
   }
+  
+  getUser(id: number) {
+    return this.http.get<Usuario>(environment.Url + '/persona/'+id);
+  }
 
   registerUser(usuario: Usuario) {
     let json = JSON.stringify(usuario);
@@ -97,12 +101,12 @@ export class AuthService {
 
 
  //boolenao si tiene un rol
- hasRole(role: string): boolean {
+ hasRole(role: any): boolean {
   if (this.usuario.roles!.includes(role)) {
     return true;
   }
   return false;
-}
+ }
 
   logout(): void {
     this._token = null;
@@ -145,8 +149,6 @@ export class AuthService {
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.put(environment.Url + `/usuario/roles/${usuario.email}`, params, { headers: headers }).pipe(map((data) => { return data }));
   }
-
-
 
 
 // funciones en desuso >>>>>>>>>>>>>>>>>
