@@ -27,7 +27,8 @@
             </tr>
           </thead>
           <tbody id="tabla" ref="tabla" class="table-group-divider">
-            <tr  *ngFor="let data of dataUsers | filter:searchText | paginate: { itemsPerPage: itemsPage, currentPage: p}; let i = index" [routerLink]="['/userPage/' + data.id]">
+            <!-- [routerLink]="['/userPage/' + data.id]" -->
+            <tr  *ngFor="let data of dataUsers | filter:searchText | paginate: { itemsPerPage: itemsPage, currentPage: p}; let i = index">
               <th scope="row">{{ i+1 }}</th>
               <!-- <td>{{item.id}}</td> -->
               <td>{{ data.email }}</td>
@@ -89,3 +90,69 @@
   </div>
 </div>
 
+<!-- <div class="form-check">
+  <input class="form-check-input" type="checkbox" value="ROLE_ADMIN" [(ngModel)]="rolcheckAdmin" (click)="selectRol()" id="adminCheck">
+  <label class="form-check-label" for="adminCheck">
+    Admin
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="checkbox" value="ROLE_USER" id="userCheck" [(ngModel)]="rolcheckUser" (click)="selectRol()">
+  <label class="form-check-label" for="flexCheckChecked">
+    User
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="checkbox" value="ROLE_PUBLICATOR" id="publicatorCheck" [(ngModel)]="rolcheckPublicator" (click)="selectRol()">
+  <label class="form-check-label" for="flexCheckChecked">
+    Publicator
+  </label>
+</div> -->
+
+<!-- <div>
+  <div class="form-check">
+    <div class="form-check form-check-inline">
+      <input
+        type="radio"
+        required
+        name="roles-a"
+        class="form-check-input"
+        id="adminCheck"
+        value="ROLE_ADMIN"
+        [(ngModel)]="rolcheckAdmin"
+        (click)="selectRol()"
+      />
+      <label for="adminCheck" class="form-check-label">Admin</label>
+    </div>
+  </div>
+  <div class="form-check">
+    <div class="form-check form-check-inline">
+      <input
+        type="radio"
+        required
+        name="roles-u"
+        class="form-check-input"
+        id="userCheck"
+        value="ROLE_USER"
+        [(ngModel)]="rolcheckUser"
+        (click)="selectRol()"
+      />
+      <label for="userCheck" class="form-check-label">User</label>
+    </div>
+  </div>
+  <div class="form-check">
+    <div class="form-check form-check-inline">
+      <input
+        type="radio"
+        required
+        name="roles-p"
+        class="form-check-input"
+        id="publicatorCheck"
+        value="ROLE_PUBLICATOR"
+        [(ngModel)]="rolcheckPublicator"
+        (click)="selectRol()"
+      />
+      <label for="publicatorCheck" class="form-check-label">Publicator</label>
+    </div>
+  </div>
+</div> -->

@@ -25,6 +25,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { PageUserComponent } from './page-user/page-user.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,

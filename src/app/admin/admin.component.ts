@@ -22,20 +22,11 @@ export class AdminComponent implements OnInit {
   // filtro
   searchText: any;
   estado = ""
+  //checkBox
 
   getUsers(){
     this.usersService.getUserRegisters().subscribe(
       (res: Usuario[]) => {
-
-        // res.forEach((e: Usuario) => {
-        //   this.dataUsers.push(
-        //     e.roles!.forEach((i: any) => {
-        //       this.dataUsers.push(i.nombre);
-        //     })
-        //   );
-        // })
-
-
       this.dataUsers = res
       this.allUsers = res.length
       }, (err) => {
@@ -99,6 +90,9 @@ export class AdminComponent implements OnInit {
         <option value="true">True</option>
         <option value="false">False</option>
       </select>
+
+      <!-- Roles checks -->
+
       `,
       focusConfirm: true,
         showCancelButton: true,
@@ -152,6 +146,21 @@ export class AdminComponent implements OnInit {
     if (formValues) {
       // Swal.fire(JSON.stringify(formValues))
     }
+  }
+
+  rolcheckAdmin: string = "";
+  rolcheckUser: string = "";
+  rolcheckPublicator: string = "";
+  rolcheck: string = "";
+  selectRol(){
+    const rol = {
+      'ROLE_ADMIN': 1,
+      'ROLE_USER': 2,
+      'ROLE_PUBLICATOR': 3
+    };
+    console.log("Rol_admin: ", rol[this.rolcheckAdmin as keyof typeof rol])
+    console.log("Rol_User: ", rol[this.rolcheckUser as keyof typeof rol])
+    console.log("Rol_publicator: ", rol[this.rolcheckPublicator as keyof typeof rol])
   }
 
   ngOnInit(): void {
