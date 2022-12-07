@@ -18,7 +18,7 @@ export class AuthService {
   getUserRegisters() {
     return this.http.get<Usuario[]>(environment.Url + '/personas');
   }
-  
+
   getUser(id: number) {
     return this.http.get<Usuario>(environment.Url + '/persona/'+id);
   }
@@ -143,11 +143,12 @@ export class AuthService {
 
 
   // actualizar roles del usuario
-  aupdateUserRol(usuario: Usuario){
-    let json = JSON.stringify(usuario);
+  aupdateUserRol(email: string, roles:string){
+    // let json = JSON.stringify(roles);
+    let json = roles
     let params = json;
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.put(environment.Url + `/usuario/roles/${usuario.email}`, params, { headers: headers }).pipe(map((data) => { return data }));
+    return this.http.put(environment.Url + `/usuario/roles/${email}`, params, { headers: headers }).pipe(map((data) => { return data }));
   }
 
 

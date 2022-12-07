@@ -1,6 +1,6 @@
+import { AuthService } from 'src/app/services/auth.service';
 import { Usuario } from './../interfaces/User';
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../services/auth.service';
 import Swal from "sweetalert2"
 
 @Component({
@@ -22,7 +22,6 @@ export class AdminComponent implements OnInit {
   // filtro
   searchText: any;
   estado = ""
-  //checkBox
 
   getUsers(){
     this.usersService.getUserRegisters().subscribe(
@@ -90,9 +89,6 @@ export class AdminComponent implements OnInit {
         <option value="true">True</option>
         <option value="false">False</option>
       </select>
-
-      <!-- Roles checks -->
-
       `,
       focusConfirm: true,
         showCancelButton: true,
@@ -148,19 +144,78 @@ export class AdminComponent implements OnInit {
     }
   }
 
-  rolcheckAdmin: string = "";
-  rolcheckUser: string = "";
-  rolcheckPublicator: string = "";
-  rolcheck: string = "";
-  selectRol(){
-    const rol = {
-      'ROLE_ADMIN': 1,
-      'ROLE_USER': 2,
-      'ROLE_PUBLICATOR': 3
-    };
-    console.log("Rol_admin: ", rol[this.rolcheckAdmin as keyof typeof rol])
-    console.log("Rol_User: ", rol[this.rolcheckUser as keyof typeof rol])
-    console.log("Rol_publicator: ", rol[this.rolcheckPublicator as keyof typeof rol])
+  rolAdmin: string = ' ';
+  rolUser: string = ' ';
+  rolPublicator: string = ' ';
+  //concatenador
+  concatenador: string = ' ';
+  // style
+  btn_rol_admin= 'background-color: grey; border-color: grey;'
+  btn_rol_user = 'background-color: grey; border-color: grey;'
+  btn_rol_publicator = 'background-color: grey; border-color: grey;'
+  selectRolAdmin(){
+    if (this.rolAdmin === ' ') {
+      console.log(this.rolAdmin = 'ROLE_ADMIN')
+      this.btn_rol_admin = 'background-color:  rgb(146, 0, 146); border-color: rgb(195, 112, 216);'
+    } else if (this.rolAdmin.length > 1) {
+      console.log(this.rolAdmin = ' ')
+      this.btn_rol_admin = 'background-color: grey; border-color: grey;'
+    }
+  }
+  selectRolUser(){
+    if (this.rolUser === ' ') {
+      console.log(this.rolUser = 'ROLE_USER')
+      this.btn_rol_user = 'background-color:  rgba(255, 166, 0, 0.89); border-color: rgb(180, 182, 83);'
+    } else if (this.rolUser.length > 1) {
+      console.log(this.rolUser = ' ')
+      this.btn_rol_user = 'background-color: grey; border-color: grey;'
+    }
+  }
+  selectRolPublicator(){
+    if (this.rolPublicator === ' ') {
+      console.log(this.rolPublicator = 'ROLE_PUBLICATOR')
+      this.btn_rol_publicator = 'background-color:  rgb(0, 65, 187); border-color: rgb(82, 120, 201);'
+    } else if (this.rolPublicator.length > 1) {
+      console.log(this.rolPublicator = ' ')
+      this.btn_rol_publicator = 'background-color: grey; border-color: grey;'
+    }
+  }
+  emailCapturado:any;
+  CapEmail(email:any){
+    return this.emailCapturado =  email, console.log(this.emailCapturado)
+  }
+  concateInput(str1:string, str2:string, str3:string){
+    this.concatenador = `["${str1}","${str2}","${str3}"]`
+    // this.concatenador = `${str1},${str2},${str3}`
+
+    this.usersService.aupdateUserRol(this.emailCapturado, this.concatenador).subscribe((resp: any) => {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+        Toast.fire({
+          icon: 'success',
+          title: `${resp.mensaje}`
+        })
+        console.log('Respuesta: ', resp);
+
+      }, (err) => {
+        console.log("Error: ",err);
+        const errorServidor = err.error.mensaje;
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: `${errorServidor}`,
+        })
+    })
+    // return this.concatenador = `["${str1}","${str2}","${str3}"]`, console.log(this.concatenador)
   }
 
   ngOnInit(): void {

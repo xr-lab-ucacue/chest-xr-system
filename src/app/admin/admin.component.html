@@ -2,6 +2,31 @@
 
   <div class="row justify-content-center">
 
+    <!-- Modal-Edit rol  -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Selecione los Roles</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <button type="button" class="btn btn-primary btn-sm ms-4 me-1" [style]="btn_rol_admin" (click)="selectRolAdmin()" >Admin</button>
+        <button type="button" class="btn btn-primary btn-sm ms-1" [style]="btn_rol_user" (click)="selectRolUser()" >User</button>
+        <button type="button" class="btn btn-primary btn-sm ms-2" [style]="btn_rol_publicator" (click)="selectRolPublicator()" >Publicator</button>
+        <div *ngIf="false">
+          <input type="text" [value]="rolAdmin">
+          <input type="text" [value]="rolUser">
+          <input type="text" [value]="rolPublicator">
+      </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" (click)="concateInput(rolAdmin, rolUser, rolPublicator)">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- filtro -->
     <div class="col-10 d-flex justify-content-center div-filtro mt-5 mb-1">
       <label class="mx-2"> <i class="bi bi-search" style="font-size: 1.5rem; color: rgb(47, 46, 134);"></i> </label>
@@ -23,7 +48,8 @@
               <th scope="col">Direccion</th>
               <th scope="col">Roles</th>
               <th scope="col">Estado</th>
-              <th scope="col" style="border-top-right-radius: 5px;">Editar</th>
+              <th scope="col" style="border-top-right-radius: 5px;">Edit</th>
+              <th scope="col" style="border-top-right-radius: 5px;">Show Profile</th>
             </tr>
           </thead>
           <tbody id="tabla" ref="tabla" class="table-group-divider">
@@ -37,7 +63,8 @@
               <td>{{ data.telefono }}</td>
               <td>{{ data.direccion }}</td>
               <td>
-                <div *ngFor="let rol of data.roles">
+
+                <div *ngFor="let rol of data.roles" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="CapEmail(data.email)">
                   <!-- {{rol.nombre}} -->
                   <div *ngIf="rol.id == 1" class="bubble-admin"> <label>Admin</label> </div>
                   <div *ngIf="rol.id == 2" class="bubble-user"> <label>User</label> </div>
@@ -51,6 +78,11 @@
               <td>
                 <button type="button" class="btn btn-warning" (click)="updateUser(data)">
                   <i class="bi bi-pencil"></i>
+                </button>
+              </td>
+              <td>
+                <button type="button" class="btn btn-primary" [routerLink]="['/userPage/' + data.id]">
+                  <i class="bi bi-eye"></i>
                 </button>
               </td>
             </tr>
@@ -89,70 +121,3 @@
 
   </div>
 </div>
-
-<!-- <div class="form-check">
-  <input class="form-check-input" type="checkbox" value="ROLE_ADMIN" [(ngModel)]="rolcheckAdmin" (click)="selectRol()" id="adminCheck">
-  <label class="form-check-label" for="adminCheck">
-    Admin
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="checkbox" value="ROLE_USER" id="userCheck" [(ngModel)]="rolcheckUser" (click)="selectRol()">
-  <label class="form-check-label" for="flexCheckChecked">
-    User
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="checkbox" value="ROLE_PUBLICATOR" id="publicatorCheck" [(ngModel)]="rolcheckPublicator" (click)="selectRol()">
-  <label class="form-check-label" for="flexCheckChecked">
-    Publicator
-  </label>
-</div> -->
-
-<!-- <div>
-  <div class="form-check">
-    <div class="form-check form-check-inline">
-      <input
-        type="radio"
-        required
-        name="roles-a"
-        class="form-check-input"
-        id="adminCheck"
-        value="ROLE_ADMIN"
-        [(ngModel)]="rolcheckAdmin"
-        (click)="selectRol()"
-      />
-      <label for="adminCheck" class="form-check-label">Admin</label>
-    </div>
-  </div>
-  <div class="form-check">
-    <div class="form-check form-check-inline">
-      <input
-        type="radio"
-        required
-        name="roles-u"
-        class="form-check-input"
-        id="userCheck"
-        value="ROLE_USER"
-        [(ngModel)]="rolcheckUser"
-        (click)="selectRol()"
-      />
-      <label for="userCheck" class="form-check-label">User</label>
-    </div>
-  </div>
-  <div class="form-check">
-    <div class="form-check form-check-inline">
-      <input
-        type="radio"
-        required
-        name="roles-p"
-        class="form-check-input"
-        id="publicatorCheck"
-        value="ROLE_PUBLICATOR"
-        [(ngModel)]="rolcheckPublicator"
-        (click)="selectRol()"
-      />
-      <label for="publicatorCheck" class="form-check-label">Publicator</label>
-    </div>
-  </div>
-</div> -->
