@@ -1,2 +1,1 @@
-ocupar fecha de creacion, laitud y longitud
-
+crear en backend para buscar usuario  por email... para el navbar pueda redirecionar al perfil

@@ -25,7 +25,7 @@ export class NavbarComponent implements OnInit {
         const lastName = payload.apellido.charAt(0).toUpperCase() + payload.apellido.slice(1);
         const name = payload.nombre.charAt(0).toUpperCase() + payload.nombre.slice(1);
         const email= payload.user_name;
-        return this.userApellido = lastName, this.userNombre = name, this.userEmail = email;
+        return this.userApellido = lastName, this.userNombre = name, this.userEmail = email
     } catch(e) {
     }
   }

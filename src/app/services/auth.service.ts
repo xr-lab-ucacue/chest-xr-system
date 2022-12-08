@@ -12,6 +12,7 @@ export class AuthService {
 
   private _usuario: Usuario| null = null;
   private _token: string| null = null;
+  private idUser!: number;
 
   constructor(private http: HttpClient) {}
 
@@ -52,7 +53,7 @@ export class AuthService {
     params.set('password', usuario.password!);
     //console.log(params.toString());
     return this.http.post<any>(urlEndpoint, params.toString(), {
-      headers: httpHeaders,
+      headers: httpHeaders
     });
   }
 

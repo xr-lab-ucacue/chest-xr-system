@@ -23,6 +23,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 // import { NgbAlertModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { PageUserComponent } from './page-user/page-user.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 
@@ -37,7 +38,8 @@ import { PageUserComponent } from './page-user/page-user.component';
     LoginComponent,
     RegisterComponent,
     AdminComponent,
-    PageUserComponent
+    PageUserComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

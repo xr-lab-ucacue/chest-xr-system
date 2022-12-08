@@ -1,24 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import Swal from 'sweetalert2';
 import { Usuario } from '../interfaces/User';
+import { ActivatedRoute } from '@angular/router';
+
 @Component({
-  selector: 'app-page-user',
-  templateUrl: './page-user.component.html',
-  styleUrls: ['./page-user.component.css']
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.css']
 })
-export class PageUserComponent implements OnInit {
+export class ProfileComponent implements OnInit {
 
   constructor(private idRoute: ActivatedRoute, private authService: AuthService) { }
 
-  profileID: number = 0;
+  profileID: number = 52;
   userData: Usuario[]=[];
   haveRols: any[]=[];
   usuario: Usuario = new Usuario();
 
   getDataUser(){
-    this.profileID = Number(this.idRoute.snapshot.paramMap.get('id'))
+    // this.profileID = Number(this.idRoute.snapshot.paramMap.get('id'))
     this.authService.getUser(this.profileID).subscribe(
       (resp) => {
         let {roles, ...todo} = resp
