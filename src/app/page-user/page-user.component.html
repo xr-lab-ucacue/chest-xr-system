@@ -1,45 +1,40 @@
-<div class="fondo">
-
-  <!-- <ul *ngFor="let data of userData">
-    {{data| json}}
-  </ul>
-  <ul *ngFor="let data of haveRols">
-    {{data}}
-  </ul> -->
-
-  <div class="container rounded bg-white mt-5 mb-5" *ngFor="let data of userData">
+<div class="fondo">\
+  <br>
+  <br>
+  <br>
+  <div class="container rounded bg-dark " *ngFor="let data of userData">
     <div class="row">
 
         <div class="col-md-3 border-right">
-            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="../../assets/icons/usuario.png"><span class="font-weight-bold"> {{data.nombre}} </span><span class="text-black-50"> {{data.email}} </span><span> </span></div>
-        </div>
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="../../assets/icons/usuario.png"><span class="font-weight-bold text-white"> {{data.nombre}} </span><span class="text-white-50"> {{data.email}} </span><span> </span></div>
+          </div>
 
         <div class="col-md-5 border-right">
             <div class="p-3 py-5">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4 class="text-right">Profile</h4>
+                    <h4 class="text-right text-white"> <b>Profile Info</b></h4>
                 </div>
                 <div class="row mt-2">
-                    <div class="col-md-6"><label class="labels">Nombre</label><input type="text" class="form-control" placeholder="first name" value="{{data.nombre}}"></div>
-                    <div class="col-md-6"><label class="labels">Apellido</label><input type="text" class="form-control" value="{{data.apellido}}" placeholder="surname"></div>
+                    <div class="col-md-6"><label class="labels">Nombre</label><input type="text" class="form-control" placeholder="first name" value="{{data.nombre}}" disabled></div>
+                    <div class="col-md-6"><label class="labels">Apellido</label><input type="text" class="form-control" value="{{data.apellido}}" placeholder="surname" disabled></div>
                 </div>
                 <div class="row mt-3">
-                    <div class="col-md-12"><label class="labels">Cedula</label><input type="text" class="form-control" value="{{data.cedula}}"></div>
-                    <div class="col-md-12"><label class="labels">Email</label><input type="text" class="form-control" value="{{data.email}}"></div>
-                    <div class="col-md-12"><label class="labels">Email Encriptado</label><input type="text" class="form-control" value="{{data.emailEncripted}}"></div>
-                    <div class="col-md-12"><label class="labels">Password</label><input type="text" class="form-control" value="{{data.password}}"></div>
-                    <div class="col-md-12"><label class="labels">Telefono</label><input type="text" class="form-control" value="{{data.telefono}}"></div>
-                    <div class="col-md-12"><label class="labels">Direccion</label><input type="text" class="form-control" value="{{data.direccion}}"></div>
-                    <div class="col-md-12"><label class="labels">Estado</label><input type="text" class="form-control" value="{{data.estado}}"></div>
-                    <div class="col-md-12"><label class="labels">Estado token registro</label><input type="text" class="form-control" value="{{data.estadoTokenRegistro}}"></div>
-                    <div class="col-md-12"><label class="labels">Fecha creacion</label><input type="text" class="form-control" value="{{data.fechaCreacion}}"></div>
-                    <div class="col-md-12"><label class="labels">Longitud</label><input type="text" class="form-control" value="{{data.longitud}}"></div>
-                    <div class="col-md-12"><label class="labels">Latitud</label><input type="text" class="form-control" value="{{data.latitud}}"></div>
-                    <div *ngFor="let roles of haveRols">
+                    <div class="col-md-12"><label class="labels">Cedula</label><input type="text" class="form-control" value="{{data.cedula}}" disabled></div>
+                    <!-- <div class="col-md-12"><label class="labels">Email</label><input type="text" class="form-control" value="{{data.email}}"></div> -->
+                    <div class="col-md-12"><label class="labels">Email Encriptado</label><input type="text" class="form-control" value="{{data.emailEncripted}}" disabled></div>
+                    <div class="col-md-12"><label class="labels">Password</label><input type="text" class="form-control" value="{{data.password}}" disabled></div>
+                    <!-- <div class="col-md-12"><label class="labels">Telefono</label><input type="text" class="form-control" value="{{data.telefono}}"></div> -->
+                    <!-- <div class="col-md-12"><label class="labels">Direccion</label><input type="text" class="form-control" value="{{data.direccion}}"></div> -->
+                    <!-- <div class="col-md-12"><label class="labels">Estado</label><input type="text" class="form-control" value="{{data.estado}}"></div> -->
+                    <div class="col-md-12"><label class="labels">Estado token registro</label><input type="text" class="form-control" value="{{data.estadoTokenRegistro}}" disabled></div>
+                    <div class="col-md-12"><label class="labels">Fecha creacion</label><input type="text" class="form-control" value="{{data.fechaCreacion}}" disabled></div>
+                    <div class="col-md-12"><label class="labels">Longitud</label><input type="text" class="form-control" value="{{data.longitud}}" disabled></div>
+                    <div class="col-md-12"><label class="labels">Latitud</label><input type="text" class="form-control" value="{{data.latitud}}" disabled></div>
+                    <div class="mt-2">
                       <div class="row">
-                        <div class="col-md-5">
-                          <label class="labels">Roles</label>
-                          <input type="text" class="form-control" value="{{roles}}">
+                        <label class="labels">Rol</label>
+                        <div *ngFor="let roles of haveRols" class="col-md-4">
+                          <input  type="text" class="form-control" value="{{roles}}" disabled>
                         </div>
                       </div>
                     </div>
@@ -49,15 +44,75 @@
 
         <div class="col-md-4">
             <div class="p-3 py-5">
-                <div class="d-flex justify-content-between align-items-center experience"><span>Edit Experience</span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Experience</span></div><br>
-                <div class="col-md-12"><label class="labels">Experience in Designing</label><input type="text" class="form-control" placeholder="experience" value=""></div> <br>
-                <div class="col-md-12"><label class="labels">Additional Details</label><input type="text" class="form-control" placeholder="additional details" value=""></div>
+                <div class="d-flex justify-content-between align-items-center experience"><span class="text-white"><b>Edit Profile</b></span></div><br>
+                <div class="col-md-12">
+                  <!-- Email -->
+              <label class="form-label">Email:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="swal-email"
+                [(ngModel)]='data.email'
+              /><br>
+
+              <!-- Nombre -->
+              <label class="form-label">Nombre:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="swal-nombre"
+                [(ngModel)]='data.nombre'
+              /><br>
+
+              <!-- Apellido -->
+              <label class="form-label">Apellido:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="swal-apellido"
+                [(ngModel)]='data.apellido'
+              /><br>
+              <!-- Telefono -->
+              <label class="form-label">Telefono:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="swal-telefono"
+                [(ngModel)]='data.telefono'
+              /><br>
+
+              <!-- Direccion -->
+              <label class="form-label">Direccion:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="swal-direccion"
+                [(ngModel)]='data.direccion'
+              /><br>
+
+              <!-- Estado -->
+              <!-- <label for="rol" class="form-label mb-2 mt-2">Estado</label>
+              <select class="form-select" id="swal-estado" [value]="data.estado">
+                <option value="" disabled selected hidden>
+                  Selecione el Estado
+                </option>
+                <option value="true">True</option>
+                <option value="false">False</option>
+              </select> -->
+
+              <button type="button" class="btn btn-warning my-1" (click)="update(data)">
+                Edit Profile<i class="bi bi-pencil mx-2"></i>
+              </button>
+                </div>
             </div>
         </div>
 
     </div>
 </div>
-
+<br>
+  <br>
+  <br>
+  <br>
 </div>
 
 

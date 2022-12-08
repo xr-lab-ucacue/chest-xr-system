@@ -1,5 +1,9 @@
 .fondo{
-  /* background-color: rgb(24, 23, 23); */
+  background-color: rgb(24, 23, 23);
   /* height: 100vh; */
+}
+
+label{
+  color: white;
 }
 

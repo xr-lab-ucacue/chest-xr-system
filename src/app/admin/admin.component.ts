@@ -113,6 +113,7 @@ export class AdminComponent implements OnInit {
         };
         this.usersService.aupdateUser(UpdateUsuario).subscribe(
             (resp: any) => {
+              this.ngOnInit();
               const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
@@ -182,13 +183,14 @@ export class AdminComponent implements OnInit {
   }
   emailCapturado:any;
   CapEmail(email:any){
-    return this.emailCapturado =  email, console.log(this.emailCapturado)
+    return this.emailCapturado =  email
   }
   concateInput(str1:string, str2:string, str3:string){
     this.concatenador = `["${str1}","${str2}","${str3}"]`
     // this.concatenador = `${str1},${str2},${str3}`
 
     this.usersService.aupdateUserRol(this.emailCapturado, this.concatenador).subscribe((resp: any) => {
+    this.ngOnInit();
         const Toast = Swal.mixin({
           toast: true,
           position: 'top-end',
@@ -204,8 +206,6 @@ export class AdminComponent implements OnInit {
           icon: 'success',
           title: `${resp.mensaje}`
         })
-        console.log('Respuesta: ', resp);
-
       }, (err) => {
         console.log("Error: ",err);
         const errorServidor = err.error.mensaje;
@@ -215,7 +215,6 @@ export class AdminComponent implements OnInit {
           text: `${errorServidor}`,
         })
     })
-    // return this.concatenador = `["${str1}","${str2}","${str3}"]`, console.log(this.concatenador)
   }
 
   ngOnInit(): void {

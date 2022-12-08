@@ -3,6 +3,7 @@ import { Usuario} from './../interfaces/User';
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2'
 import { AuthService } from '../services/auth.service';
+import { GeolocationService } from '../services/geolocation.service';
 
 @Component({
   selector: 'app-register',
@@ -11,7 +12,7 @@ import { AuthService } from '../services/auth.service';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router, private locationService: GeolocationService) { }
 
   section: number = 1;
   progressBar: string = "width: 8%;"
@@ -20,6 +21,16 @@ export class RegisterComponent implements OnInit {
   btnProgress3: string = "position-absolute top-0 start-100 translate-middle btn btn-sm btn-secondary rounded-pill"
 
   usuario: Usuario = new Usuario();
+
+
+    getLocation() {
+      this.locationService.getPosition().then(pos => {
+          this.usuario.latitud = pos.lat;
+          this.usuario.longitud = pos.lng;
+          console.log('lat: ', this.usuario.latitud);
+          console.log('long: ', this.usuario.longitud);
+      });
+  }
 
   progress1(){
     this.btnProgress1 = 'position-absolute top-0 start-0 translate-middle btn btn-sm btn-primary rounded-pill'
@@ -67,7 +78,17 @@ export class RegisterComponent implements OnInit {
         icon: 'info',
         title: 'Rellene todo los campos'
       })
-    } else {
+    } else if (this.usuario.latitud == 0 || this.usuario.longitud == 0) {
+      Swal.fire({
+        title: 'Ubicacion no econtrada!',
+        text: 'Permita acceder a la ubicacion dando click en "Permitir (A)", para poder continuar.',
+        imageUrl: '../../assets/permitir_ubicacion.png',
+        imageWidth: 400,
+        imageHeight: 200,
+        imageAlt: 'Custom image',
+      })
+    }
+    else {
       this.btnProgress1 = 'position-absolute top-0 start-0 translate-middle btn btn-sm btn-success rounded-pill'
       this.btnProgress2 = 'position-absolute top-0 start-50 translate-middle btn btn-sm btn-primary rounded-pill'
       this.btnProgress3 = 'position-absolute top-0 start-100 translate-middle btn btn-sm btn-secondary rounded-pill'
@@ -340,6 +361,7 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getLocation();
   }
 
 }
