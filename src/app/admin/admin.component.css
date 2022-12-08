@@ -1,3 +1,6 @@
+.row{
+  margin: 0;
+}
 .fondo{
   background: #0a0a0a;
   min-height: 100vh;
