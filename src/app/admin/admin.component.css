@@ -95,3 +95,8 @@ table{
   height: 23px;
   margin-top: 5px;
 }
+
+.btn_eye, .btn_pencil{
+  display: flex;
+  margin: auto;
+}

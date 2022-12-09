@@ -22,6 +22,8 @@ a:hover, .nav-link:hover{
 .user-name{
   list-style:none;
   padding-inline: 10px;
+  max-width: 80px;
+  max-height: 45px;
 }
 .user-name:hover{
   background-color: rgb(255, 255, 255,0.1);
@@ -41,6 +43,11 @@ a:hover, .nav-link:hover{
   background-color: #333;
 }
 
+.navbar {
+  --bs-navbar-toggler-icon-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='grey' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  --bs-navbar-toggler-border-color: grey;
+}
+
 @media (max-width: 991px) {
   .btn-navbar{
     margin-inline: -3px !important;
@@ -48,5 +55,11 @@ a:hover, .nav-link:hover{
   }
   .dropdown-menu.show {
   margin-left: 0%;
+  }
+.user-name{
+  background-color: rgb(255, 255, 255,0.1);
+  border: 1.5px solid rgb(47, 46, 134);
+  border-radius: 10px;
+  /* box-shadow: 0px 0px 15px 1px rgb(47, 46, 134); */
 }
 }

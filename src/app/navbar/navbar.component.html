@@ -24,13 +24,13 @@
         </div>
         <div class="user-name"*ngIf="userEmail.length > 0">
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" (click)="UserByEmail(userEmail)">
               <img src="../../assets/icons/usuario.png" alt="img-usuario">
             </a>
             <ul class="dropdown-menu">
               <li class="dropdown-item"> {{userNombre}} {{userApellido}} <br> {{userEmail}} </li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="/profile">Edit profile</a></li>
+              <li><a class="dropdown-item" [routerLink]="['/profile/' + idUser]">Edit profile</a></li>
               <li><hr class="dropdown-divider"></li>
               <li class="dropdown-item logout">
                 <div class="row">

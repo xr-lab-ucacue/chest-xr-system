@@ -2,6 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
 import { Component, Inject, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { Usuario } from '../interfaces/User';
 
 @Component({
   selector: 'app-navbar',
@@ -16,7 +17,20 @@ export class NavbarComponent implements OnInit {
   userApellido: string = "";
   userEmail: string = "";
 
+  idUser: number | undefined;
+
   ngOnInit(): void {
+  }
+
+  UserByEmail(email: string){
+    this.authService.getUserByEmail(email).subscribe(
+      (res: Usuario) => {
+        this.idUser = res.id;
+        console.log("idActual: ", this.idUser);
+      }, (err) => {
+        console.log("ERROR: ",err);
+      }
+    )
   }
 
   UserNav(){
@@ -40,6 +54,7 @@ export class NavbarComponent implements OnInit {
   isAdmin(): boolean{
     try{
       this.UserNav();
+      // this.UserByEmail();
       return this.authService.capturoRol();
     } catch (e){
       return false

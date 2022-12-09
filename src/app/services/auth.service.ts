@@ -24,6 +24,10 @@ export class AuthService {
     return this.http.get<Usuario>(environment.Url + '/persona/'+id);
   }
 
+  getUserByEmail(email: string){
+    return this.http.get<Usuario>(environment.Url + `/user/${email}`);
+  }
+
   registerUser(usuario: Usuario) {
     let json = JSON.stringify(usuario);
     let params = json;
@@ -59,6 +63,7 @@ export class AuthService {
 
   //guarda token en el storage al loguearce
   guardarToken(accessToken: string): void {
+    // console.log("guardarToken: ", accessToken)
     this._token = accessToken;
     sessionStorage.setItem('token', accessToken);
   }

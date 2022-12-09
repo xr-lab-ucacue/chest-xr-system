@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: 'radiology', component: RadiologyComponent, canActivate: [AuthGuard] },
   { path: 'admin', component: AdminComponent, canActivate: [RoleGuard] },
   { path: 'userPage/:id', component: PageUserComponent, canActivate: [RoleGuard]},
-  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
+  { path: 'profile/:id', component: ProfileComponent, canActivate: [AuthGuard]},
   // { path: 'radiologys', component: RadiologysComponent },
   { path: '', pathMatch: 'full', component: LoginComponent },
   { path: '**', pathMatch: 'full', component: LoginComponent }

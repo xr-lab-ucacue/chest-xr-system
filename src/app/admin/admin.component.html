@@ -50,10 +50,10 @@
               <th scope="col">Apellido</th>
               <th scope="col">Telefono</th>
               <th scope="col">Direccion</th>
-              <th scope="col">Roles</th>
+              <th scope="col" class="text-center">Roles</th>
               <th scope="col">Estado</th>
-              <th scope="col" style="border-top-right-radius: 5px;">Edit</th>
-              <th scope="col" style="border-top-right-radius: 5px;">Show Profile</th>
+              <th scope="col" class="text-center">Edit</th>
+              <th scope="col" class="text-center" style="border-top-right-radius: 5px;">Show Profile</th>
             </tr>
           </thead>
           <tbody id="tabla" ref="tabla" class="table-group-divider">
@@ -71,8 +71,8 @@
                 <div *ngFor="let rol of data.roles" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="CapEmail(data.email)">
                   <!-- {{rol.nombre}} -->
                   <div *ngIf="rol.id == 1" class="bubble-admin"> <label>Admin</label> </div>
-                  <div *ngIf="rol.id == 2" class="bubble-user"> <label>User</label> </div>
-                  <div *ngIf="rol.id == 3" class="bubble-publi"> <label>Publicator</label> </div>
+                  <div *ngIf="rol.id == 2" class="bubble-user"> <label>User</label></div>
+                  <div *ngIf="rol.id == 3" class="bubble-publi"> <label>Publicator</label></div>
                 </div>
               </td>
               <td>
@@ -80,13 +80,13 @@
                  <div *ngIf="data.estado == false" class="estado-false">{{ data.estado }}</div>
               </td>
               <td>
-                <button type="button" class="btn btn-warning" (click)="updateUser(data)">
+                <button type="button" class="btn btn-warning btn_pencil" (click)="updateUser(data)">
                   <i class="bi bi-pencil"></i>
                 </button>
               </td>
               <td>
-                <button type="button" class="btn btn-primary" [routerLink]="['/userPage/' + data.id]">
-                  <i class="bi bi-eye"></i>
+                <button type="button" class="btn btn-primary btn_eye" [routerLink]="['/userPage/' + data.id]">
+                  <i class="bi bi-eye"  style="font-size: 1rem; color: black;"></i>
                 </button>
               </td>
             </tr>

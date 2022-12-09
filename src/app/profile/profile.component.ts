@@ -13,13 +13,13 @@ export class ProfileComponent implements OnInit {
 
   constructor(private idRoute: ActivatedRoute, private authService: AuthService) { }
 
-  profileID: number = 52;
+  profileID: number = 0;
   userData: Usuario[]=[];
   haveRols: any[]=[];
   usuario: Usuario = new Usuario();
 
   getDataUser(){
-    // this.profileID = Number(this.idRoute.snapshot.paramMap.get('id'))
+    this.profileID = Number(this.idRoute.snapshot.paramMap.get('id'))
     this.authService.getUser(this.profileID).subscribe(
       (resp) => {
         let {roles, ...todo} = resp
