@@ -1,1 +1,1 @@
-crear en backend para buscar usuario  por email... para el navbar pueda redirecionar al perfil
+
