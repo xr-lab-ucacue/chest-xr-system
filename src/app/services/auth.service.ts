@@ -28,6 +28,13 @@ export class AuthService {
     return this.http.get<Usuario>(environment.Url + `/user/${email}`);
   }
 
+  changePassword(email:string, newPassword:string){
+    let json = JSON.stringify('{}');
+    let params = json;
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.put(environment.Url + `/usuario/${email}/${newPassword}`, params, { headers: headers }).pipe(map((data) => { return data }));
+  }
+
   registerUser(usuario: Usuario) {
     let json = JSON.stringify(usuario);
     let params = json;

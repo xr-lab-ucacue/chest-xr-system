@@ -47,62 +47,84 @@
                 <div class="d-flex justify-content-between align-items-center experience"><span class="text-white"><b>Edit Profile</b></span></div><br>
                 <div class="col-md-12">
                   <!-- Email -->
-              <label class="form-label">Email:</label>
-              <input
-                type="text"
-                class="form-control"
-                id="swal-email"
-                [(ngModel)]='data.email'
-              /><br>
+                  <label class="form-label">Email:</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="swal-email"
+                    [(ngModel)]="data.email"
+                  /><br />
 
-              <!-- Nombre -->
-              <label class="form-label">Nombre:</label>
-              <input
-                type="text"
-                class="form-control"
-                id="swal-nombre"
-                [(ngModel)]='data.nombre'
-              /><br>
+                  <div class="row mt-2">
+                    <div class="col-md-6">
+                      <!-- Nombre -->
+                      <label class="form-label">Nombre:</label>
+                      <input
+                      maxlength="60"
+                        type="text"
+                        class="form-control"
+                        id="swal-nombre"
+                        [(ngModel)]="data.nombre"
+                      /><br />
+                    </div>
+                    <div class="col-md-6">
+                      <!-- Apellido -->
+                      <label class="form-label">Apellido:</label>
+                      <input
+                      maxlength="60"
+                        type="text"
+                        class="form-control"
+                        id="swal-apellido"
+                        [(ngModel)]="data.apellido"
+                      /><br />
+                    </div>
+                  </div>
 
-              <!-- Apellido -->
-              <label class="form-label">Apellido:</label>
-              <input
-                type="text"
-                class="form-control"
-                id="swal-apellido"
-                [(ngModel)]='data.apellido'
-              /><br>
-              <!-- Telefono -->
-              <label class="form-label">Telefono:</label>
-              <input
-                type="text"
-                class="form-control"
-                id="swal-telefono"
-                [(ngModel)]='data.telefono'
-              /><br>
+                  <!-- Telefono -->
+                  <label class="form-label">Telefono:</label>
+                  <input
+                  type="tel"
+                  maxlength="20"
+                  pattern="[0-9]+"
+                    class="form-control"
+                    id="swal-telefono"
+                    [(ngModel)]="data.telefono"
+                  /><br />
 
-              <!-- Direccion -->
-              <label class="form-label">Direccion:</label>
-              <input
-                type="text"
-                class="form-control"
-                id="swal-direccion"
-                [(ngModel)]='data.direccion'
-              /><br>
+                  <!-- Direccion -->
+                  <label class="form-label">Direccion:</label>
+                  <input
+                  maxlength="60"
+                    type="text"
+                    class="form-control"
+                    id="swal-direccion"
+                    [(ngModel)]="data.direccion"
+                  /><br />
 
-              <!-- Estado -->
-              <!-- <label for="rol" class="form-label mb-2 mt-2">Estado</label>
-              <select class="form-select" id="swal-estado" [value]="data.estado">
-                <option value="" disabled selected hidden>
-                  Selecione el Estado
-                </option>
-                <option value="true">True</option>
-                <option value="false">False</option>
-              </select> -->
+                  <button
+                    type="button"
+                    class="btn btn-warning my-1"
+                    (click)="update(data)"
+                  >
+                    Edit Profile<i class="bi bi-pencil mx-2"></i>
+                  </button> <br>
 
-              <button type="button" class="btn btn-warning my-1" (click)="update(data)">
-                Edit Profile<i class="bi bi-pencil mx-2"></i>
-              </button>
+                  <!-- change password -->
+                  <label class="form-label mt-5">Nueva Contraseña:</label>
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="newPassord" (click)="showPassword()">
+                      <i [class]="eyePassword"  style="font-size: 1rem; color: black;"></i>
+                    </span>
+                    <input [type]="typePassword" class="form-control" placeholder="Escriba la nueva Contraseña" aria-label="Username" aria-describedby="newPassord" autocomplete="new-password" [(ngModel)]="newPassword">
+                  </div>
+
+                  <button
+                    type="button"
+                    class="btn btn-danger my-2"
+                    (click)="PasswordUpdate(data, newPassword)"
+                  >
+                    Change Password<i class="bi bi-key ms-2"></i>
+                  </button>
                 </div>
             </div>
         </div>

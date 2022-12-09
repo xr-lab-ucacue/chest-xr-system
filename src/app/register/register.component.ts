@@ -245,8 +245,26 @@ export class RegisterComponent implements OnInit {
         icon: 'info',
         title: 'Campo Telefono no permite letras'
       })
+    } else if (this.usuario.telefono.length <= 9) {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 2000,
+        background: '#000000',
+        color: '#ccc',
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+      Toast.fire({
+        icon: 'info',
+        title: 'Numero de telefono no valido'
+      })
     }
-    /* else if(this.validarCedula(this.usuario.cedula) != true) {
+    else if(this.validarCedula(this.usuario.cedula) != true) {
       const Toast = Swal.mixin({
         toast: true,
         position: 'top-end',
@@ -264,7 +282,7 @@ export class RegisterComponent implements OnInit {
         icon: 'error',
         title: 'Cedula no valida'
       })
-    }  */
+    } 
     else {
       this.btnProgress1 = 'position-absolute top-0 start-0 translate-middle btn btn-sm btn-success rounded-pill'
       this.btnProgress2 = 'position-absolute top-0 start-50 translate-middle btn btn-sm btn-success rounded-pill'
@@ -329,6 +347,24 @@ export class RegisterComponent implements OnInit {
       Toast.fire({
         icon: 'info',
         title: 'Correo no valido'
+      })
+    } else if(this.usuario.password!.length < 5){
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 2000,
+        background: '#000000',
+        color: '#ccc',
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+      Toast.fire({
+        icon: 'info',
+        title: 'La contraseña es muy corta'
       })
     } else {
       this.btnProgress3 = 'position-absolute top-0 start-100 translate-middle btn btn-sm btn-success rounded-pill'

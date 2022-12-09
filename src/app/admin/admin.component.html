@@ -101,7 +101,7 @@
           </div>
           <div class="col">
             <div class="row justify-content-end">
-              <div class="col-md-4 align-self-end">
+              <div class="col-6" style="display: flex; justify-content: flex-end;">
               <!-- selecion de items por page -->
                 <select style="background-color: grey;" class="form-select" style="width: auto" [(ngModel)]="itemsPage">
                   <option [value]="itemsPage" disabled selected hidden>Items</option>
@@ -110,7 +110,7 @@
                   <option [ngValue]="10">10 items per page</option>
                 </select>
               </div>
-              <div class="col-md-4">
+              <div class="col-4 align-self-end">
                 <div class="mt-2">
                   <!-- Total de usuarios -->
                     <label style="color: grey;">N° Users: {{allUsers}}</label>

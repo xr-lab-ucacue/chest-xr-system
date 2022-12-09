@@ -38,6 +38,7 @@
                 <!-- Nombre -->
                 <label class="form-label">Nombre:</label>
                 <input
+                maxlength="60"
                   type="text"
                   class="form-control"
                   id="swal-nombre"
@@ -48,6 +49,7 @@
                 <!-- Apellido -->
                 <label class="form-label">Apellido:</label>
                 <input
+                maxlength="60"
                   type="text"
                   class="form-control"
                   id="swal-apellido"
@@ -59,7 +61,9 @@
             <!-- Telefono -->
             <label class="form-label">Telefono:</label>
             <input
-              type="text"
+            type="tel"
+            maxlength="20"
+            pattern="[0-9]+"
               class="form-control"
               id="swal-telefono"
               [(ngModel)]="data.telefono"
@@ -68,6 +72,7 @@
             <!-- Direccion -->
             <label class="form-label">Direccion:</label>
             <input
+            maxlength="60"
               type="text"
               class="form-control"
               id="swal-direccion"
@@ -80,6 +85,23 @@
               (click)="update(data)"
             >
               Edit Profile<i class="bi bi-pencil mx-2"></i>
+            </button> <br>
+
+            <!-- change password -->
+            <label class="form-label mt-5">Nueva Contraseña:</label>
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="newPassord" (click)="showPassword()">
+                <i [class]="eyePassword"  style="font-size: 1rem; color: black;"></i>
+              </span>
+              <input [type]="typePassword" class="form-control" placeholder="Escriba la nueva Contraseña" aria-label="Username" aria-describedby="newPassord" autocomplete="new-password" [(ngModel)]="newPassword">
+            </div>
+
+            <button
+              type="button"
+              class="btn btn-danger my-2"
+              (click)="PasswordUpdate(data, newPassword)"
+            >
+              Change Password<i class="bi bi-key ms-2"></i>
             </button>
           </div>
         </div>
@@ -107,7 +129,7 @@
                 <div *ngFor="let roles of haveRols" class="col-md-6">
                   <input
                     type="text"
-                    class="form-control"
+                    class="form-control mx-2 my-1"
                     value="{{ roles }}"
                     disabled
                   />
