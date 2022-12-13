@@ -23,7 +23,7 @@ showPassword(){
   } else {
     this.typePassword = 'password'
     this.eyePassword = 'bi bi-eye-slash'
-    this.eyeColor = 'color: #262626;'
+    this.eyeColor = 'color: black;'
 
   }
   return
@@ -68,30 +68,6 @@ constructor(private _route: Router, private authService: AuthService) {}
       this._route.navigateByUrl('/modelo1');
     })
   }
-
-
-  /* recuperar_password(event: Event) {
-    event.preventDefault();
-    if (this.form_recuperar.valid) {
-      this.restablece = true;
-      this._userService.restablecer_pass(this.form_recuperar.value.email,this.form_recuperar.value.cedula ).subscribe(
-        (res) => {
-          this.restablece = false;
-          $('#exampleModal').modal('hide');
-          alert(
-            'Contraseña Restablecida Correctamente, revise su Correo Electrónico.'
-          );
-        },
-        (errro) => {
-          alert("Datos Incorrectos, Verifique");
-          this.restablece = false;
-          $('#exampleModal').modal('hide');
-        }
-      );
-    }
-  }
- */
-
 
   ngOnInit(): void {
     if (this.authService.isAuthenticated()) {

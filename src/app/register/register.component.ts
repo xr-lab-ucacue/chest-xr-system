@@ -22,7 +22,22 @@ export class RegisterComponent implements OnInit {
 
   usuario: Usuario = new Usuario();
 
+  typePassword: string = "password"
+  eyePassword: string = "bi bi-eye-slash"
+  eyeColor: string = "color: black;"
+  showPassword(){
+    if (this.typePassword === 'password') {
+      this.typePassword = 'text'
+      this.eyePassword = 'bi bi-eye'
+      this.eyeColor = 'color: rgb(115, 154, 225);'
+    } else {
+      this.typePassword = 'password'
+      this.eyePassword = 'bi bi-eye-slash'
+      this.eyeColor = 'color: black;'
 
+    }
+    return
+  }
     getLocation() {
       this.locationService.getPosition().then(pos => {
           this.usuario.latitud = pos.lat;
@@ -282,7 +297,7 @@ export class RegisterComponent implements OnInit {
         icon: 'error',
         title: 'Cedula no valida'
       })
-    } 
+    }
     else {
       this.btnProgress1 = 'position-absolute top-0 start-0 translate-middle btn btn-sm btn-success rounded-pill'
       this.btnProgress2 = 'position-absolute top-0 start-50 translate-middle btn btn-sm btn-success rounded-pill'

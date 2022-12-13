@@ -1,3 +1,4 @@
+import { LostPasswordComponent } from './lost-password/lost-password.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { RegisterComponent } from './register/register.component';
 import { NgModule } from '@angular/core';
@@ -13,7 +14,10 @@ import { PageUserComponent } from './page-user/page-user.component';
 import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent
+  },
+  { path: 'lostPassword', component: LostPasswordComponent
+  },
   { path: 'register', component: RegisterComponent },
   { path: 'modelo1', component: Modelo1Component, canActivate: [AuthGuard] },
   { path: 'radiology', component: RadiologyComponent, canActivate: [AuthGuard] },

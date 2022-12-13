@@ -13,8 +13,6 @@
     background-position: center;
     background-color: rgba(0, 0, 0, 0.308);
     background-blend-mode: darken;
-    /* transform: perspective( 400px ) rotateY( -45deg ) rotateX(30deg) rotateZ(50deg); */
-
 }
 .background{
     width: 400px;
@@ -30,33 +28,27 @@
     position: absolute;
     border-radius: 50%;
 }
-.shape:first-child{
-    background: linear-gradient(
-        #1845ad,
-        #23a2f6
-    );
-    left: -80px;
-    top: 20px;
-}
-.shape:last-child{
-    background: linear-gradient(
-        to right,
-        #ff512f,
-        #f09819
-    );
-    right: -70px;
-    bottom: -90px;
-}
 div a{
    color: #23a2f6;
 }
 img{
     height: 150px;
     width: 150px;
+    border-radius: 100%;
+    animation-name: example;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+}
+@keyframes example {
+  0%   {height: 150px; width: 150px; box-shadow: 0px 0px 15px 5px #3a3a3b; }
+  25%  {height: 130px; width: 130px; box-shadow: 0px 0px 15px 10px #252423; }
+  50%  {height: 150px; width: 150px; box-shadow: 0px 0px 15px 5px #3a3a3b; }
+  75%  {height: 130px; width: 130px; box-shadow: 0px 0px 15px 10px #252423; }
+  100% {height: 150px; width: 150px; box-shadow: 0px 0px 15px 5px #3a3a3b; }
 }
 form{
     height: 585px;
-    width: 400px;
+    width: 420px;
     background-color: rgba(255,255,255,0.13);
     border-radius: 10px;
     backdrop-filter: blur(10px);
@@ -90,64 +82,68 @@ input{
     width: 100%;
     background-color: rgba(255,255,255,0.07);
     border-radius: 3px;
-    padding: 0 10px;
-    margin-top: 8px;
-    font-size: 14px;
-    font-weight: 300;
 }
 ::placeholder{
     color: #e5e5e5;
 }
 
-input:hover{
+.input-group-text {
+  background-color: rgba(255,255,255,0.07);
+}
+
+.input-group>.form-control:focus{
+  background-color: rgba(255,255,255,0.07);
+}
+
+input:hover, input:focus{
     /* border: 1px solid #ccc; */
     border-top: 1px solid #ccc;
     border-inline: 1px solid #ccc;
     border-bottom: 3px solid;
     border-bottom-color: #23a2f6;
-    box-shadow: 0px 0px 15px 2px #4b4a49;
+    box-shadow: 0px 0px 15px 5px #4b4a49;
 }
 
 .button-log{
     cursor: pointer;
     margin-top: 25px;
     width: 100%;
-    background-color: #1d1c1c;
+    background-color: cornflowerblue;
     padding: 15px 0;
     font-size: 18px;
     font-weight: 600;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    box-shadow: 0px 0px 15px 2px #4b4a49;
+    border-radius: 30px;
+    border: 1px solid rgb(91, 68, 219);
+    box-shadow: 0px 0px 15px 2px #4d639e;
 }
 
 .button-log:hover{
     background: linear-gradient(
         to right,
-        #111111,
-        #373838,
-        #242323
+        #4191aa,
+        #6ac0c0,
+        #4191aa
     );
-    border: 1px solid #ccc;
-    box-shadow: 0px 0px 15px 7px #555554;
+    border: 1px solid #81c3d3;
+    box-shadow: 0px 0px 15px 7px #70a8ce;
 }
 
-.btn-eye{
+/* .btn-eye{
     background-color: transparent;
     border: none;
-}
+} */
 
 .icon-label{
     margin-right: 10px;
     font-size: 1.5rem;
 }
-
+/*
 .icon--eye{
     font-size: 1.3rem;
     position: absolute;
     width: 25px;
     margin-left: 73%;
-}
+} */
 
 p{
     color: rgba(0,0,0,.4);

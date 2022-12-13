@@ -24,6 +24,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { PageUserComponent } from './page-user/page-user.component';
 import { ProfileComponent } from './profile/profile.component';
+import { LostPasswordComponent } from './lost-password/lost-password.component';
 
 
 
@@ -39,7 +40,8 @@ import { ProfileComponent } from './profile/profile.component';
     RegisterComponent,
     AdminComponent,
     PageUserComponent,
-    ProfileComponent
+    ProfileComponent,
+    LostPasswordComponent
   ],
   imports: [
     BrowserModule,

@@ -95,6 +95,29 @@
 img{
     height: 150px;
     width: 150px;
+    border-radius: 100%;
+    animation-name: example;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+}
+@keyframes example {
+  0%   {height: 150px; width: 150px; box-shadow: 0px 0px 15px 5px #3a3a3b; }
+  5%   {height: 145px; width: 145px; box-shadow: 0px 0px 15px 5px #3a3a3b; }
+  10%   {height: 140px; width: 140px; box-shadow: 0px 0px 15px 5px #3a3a3b; }
+  15%   {height: 135px; width: 135px; box-shadow: 0px 0px 15px 5px #3a3a3b; }
+  20%  {height: 130px; width: 130px; box-shadow: 0px 0px 15px 10px #252423; }
+  25%  {height: 135px; width: 135px; box-shadow: 0px 0px 15px 10px #252423; }
+  30%  {height: 140px; width: 140px; box-shadow: 0px 0px 15px 10px #252423; }
+  35%  {height: 145px; width: 145px; box-shadow: 0px 0px 15px 10px #252423; }
+  40%  {height: 150px; width: 150px; box-shadow: 0px 0px 15px 5px #3a3a3b; }
+  45%   {height: 145px; width: 145px; box-shadow: 0px 0px 15px 5px #3a3a3b; }
+  55%   {height: 140px; width: 140px; box-shadow: 0px 0px 15px 5px #3a3a3b; }
+  60%   {height: 135px; width: 135px; box-shadow: 0px 0px 15px 5px #3a3a3b; }
+  65%  {height: 130px; width: 130px; box-shadow: 0px 0px 15px 10px #252423; }
+  70%  {height: 135px; width: 135px; box-shadow: 0px 0px 15px 10px #252423; }
+  75%  {height: 140px; width: 140px; box-shadow: 0px 0px 15px 10px #252423; }
+  80%  {height: 145px; width: 145px; box-shadow: 0px 0px 15px 10px #252423; }
+  85%  {height: 150px; width: 150px; box-shadow: 0px 0px 15px 5px #3a3a3b; }
 }
 form{
     height: 500px;
@@ -133,36 +156,32 @@ input{
     width: 100%;
     background-color: rgba(255,255,255,0.07);
     border-radius: 3px;
-    padding: 0 10px;
-    margin-top: 8px;
-    font-size: 14px;
-    font-weight: 300;
 }
 ::placeholder{
     color: #e5e5e5;
 }
 .button-register{
   cursor: pointer;
-  margin-top: 25px;
-  width: 50%;
-  background-color: #1d1c1c;
-  padding: 15px 0;
-  font-size: 18px;
-  font-weight: 600;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  box-shadow: 0px 0px 15px 2px #4b4a49;
+    margin-top: 25px;
+    width: 100%;
+    background-color: cornflowerblue;
+    padding: 15px 0;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 30px;
+    border: 1px solid rgb(91, 68, 219);
+    box-shadow: 0px 0px 15px 2px #4d639e;
 }
 
 .button-register:hover{
   background: linear-gradient(
-    to right,
-    #111111,
-    #373838,
-    #242323
-);
-border: 1px solid #ccc;
-box-shadow: 0px 0px 15px 7px #555554;
+        to right,
+        #4191aa,
+        #6ac0c0,
+        #4191aa
+    );
+    border: 1px solid #81c3d3;
+    box-shadow: 0px 0px 15px 7px #70a8ce;
 }
 
 .icon-label{
@@ -174,3 +193,11 @@ box-shadow: 0px 0px 15px 7px #555554;
 .form-control:focus {
     background-color: #464646;
 }
+
+.input-group>.form-control:focus{
+  background-color: rgba(255,255,255,0.07);
+}
+.input-group-text {
+  background-color: rgba(255,255,255,0.07);
+}
+

@@ -71,12 +71,12 @@
                 </div>
                 <input
                 [(ngModel)]="usuario.nombre"
-                [ngModelOptions]="{standalone: true}"
+                name="id-nombre"
                 maxlength="60"
                   type="text"
                   class="form-control is-invalid"
                   id="nombre"
-                  placeholder="Nombre"
+                  placeholder="   Nombre"
                   required
                 />
               </div>
@@ -91,12 +91,12 @@
                 </div>
                   <input
                   [(ngModel)]="usuario.apellido"
-                  [ngModelOptions]="{standalone: true}"
+                  name="id-apellido"
                   maxlength="60"
                     type="text"
                     class="form-control is-invalid"
                     id="apellido"
-                    placeholder="Apellido"
+                    placeholder="   Apellido"
                     required
                   />
               </div>
@@ -111,7 +111,7 @@
                     <label for="latitud" class="form-label">Latitud</label>
                     <input style="color: black;"
                     [(ngModel)]="usuario.latitud"
-                    [ngModelOptions]="{standalone: true}"
+                    name="id-latitud"
                       type="text"
                       class="form-control is-invalid"
                       id="latitud"
@@ -123,7 +123,7 @@
                     <label for="longitude" class="form-label">Latitud</label>
                     <input style="color: black;"
                     [(ngModel)]="usuario.longitud"
-                    [ngModelOptions]="{standalone: true}"
+                    name="id-longitud"
                       type="text"
                       class="form-control is-invalid"
                       id="longitude"
@@ -149,12 +149,12 @@
                 </div>
                 <input
                 [(ngModel)]="usuario.cedula"
-                [ngModelOptions]="{standalone: true}"
+                name="id-cedula"
                 type="text"
                 maxlength="11"
                   class="form-control is-invalid"
                   id="cedula"
-                  placeholder="Cedula"
+                  placeholder="   Cedula"
                   required
                 />
               </div>
@@ -169,13 +169,13 @@
                 </div>
                 <input
                 [(ngModel)]="usuario.telefono"
-                [ngModelOptions]="{standalone: true}"
+                name="id-telefono"
                 type="tel"
                 maxlength="20"
                 pattern="[0-9]+"
                   class="form-control is-invalid"
                   id="telefono"
-                  placeholder="Telefono"
+                  placeholder="   Telefono"
                   required
                 />
               </div>
@@ -190,12 +190,12 @@
                 </div>
                 <input
                 [(ngModel)]="usuario.direccion"
-                [ngModelOptions]="{standalone: true}"
+                name="id-direccion"
                 maxlength="60"
                   type="text"
                   class="form-control is-invalid"
                   id="direccion"
-                  placeholder="Dirección"
+                  placeholder="   Dirección"
                   required
                 />
               </div>
@@ -214,12 +214,12 @@
                 </div>
                 <input
                 [(ngModel)]="usuario.email"
-                [ngModelOptions]="{standalone: true}"
+                name="id-email"
                 maxlength="254"
                   type="email"
                   class="form-control is-invalid"
                   id="email"
-                  placeholder="Email"
+                  placeholder="   Email"
                   required
                 />
               </div>
@@ -232,7 +232,15 @@
                 <div class="col-5">
                   <label for="password">Password</label>
                 </div>
-                <input
+
+                <div class="input-group">
+                    <span class="input-group-text" id="password" (click)="showPassword()" style="width: 2.5rem;">
+                      <i [class]="eyePassword" class="ms-2" [style]="eyeColor"></i>
+                    </span>
+                    <input [type]="typePassword" maxlength="60"  style="color:black;" class="form-control is-invalid" placeholder="   Password" aria-label="Username" aria-describedby="password" [(ngModel)]="usuario.password" name="idPassword" required>
+                  </div>
+
+                <!-- <input
                 [(ngModel)]="usuario.password"
                 [ngModelOptions]="{standalone: true}"
                 maxlength="60"
@@ -241,7 +249,7 @@
                   id="password"
                   placeholder="Password"
                   required
-                />
+                /> -->
               </div>
             </div>
 
