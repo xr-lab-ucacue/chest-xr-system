@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
 import { DiseasesService } from '../services/diseases.service';
-
+import { ViewChild, ElementRef } from '@angular/core';
 //Alertas sweealert
 import Swal from 'sweetalert2'
 
@@ -13,12 +13,18 @@ import Swal from 'sweetalert2'
 })
 export class RadiologyComponent implements OnInit {
 
-  constructor(private diseasesService: DiseasesService) {}
+  /* @ViewChild('valueInput') valueInput!: ElementRef;
+  const urlPhoto =  this.valueInput.nativeElement.value;
+  console.log(urlPhoto); */
+
+  constructor(private diseasesService: DiseasesService) {
+      // this.view = [innerWidth / 1.60, 600];
+  }
 
   diseases: any[] = [];
 
   // Options Horizontal Bar
-  view: [number, number] = [575, 600];
+  view: [number, number] = [460, 660];
   gradient: boolean = true;
   showXAxis = true;
   showYAxis = true;
@@ -37,7 +43,6 @@ export class RadiologyComponent implements OnInit {
   trimYAxisTicks = false;
   //(No funcional)
   activeEntries = [{name: 'Edema', label: "Edema", value: 50}]
-
 
   backgroundColor:any[] = [];
    //Custom Color
@@ -90,6 +95,12 @@ export class RadiologyComponent implements OnInit {
     } else if (data.name === 'Edema' && data.value > 49) {
       this. photo = "../../assets/radiologyDiseases2.jpeg";
       this.showDiseases = data.name;
+    } else if (data.name === 'Effusion' && data.value > 49) {
+      this. photo = "../../assets/radiologyDiseases3.jpg";
+      this.showDiseases = data.name;
+    } else if (data.name === 'Cardiomegaly' && data.value > 49) {
+      this. photo = "../../assets/radiologyDiseases4.jpg";
+      this.showDiseases = data.name;
     } else {
       const Toast = Swal.mixin({
         toast: true,
@@ -111,62 +122,34 @@ export class RadiologyComponent implements OnInit {
     }
   }
 
-/*   public getNamedColor = (statName: string) => {
-    console.log(statName);
-    switch (statName) {
-      case 'Antelectasis':
-          return '#00ff00';
-      case 'Trend':
-          return '#D33F93';
-      case 'Average':
-          return '#9fa1a9';
-      case 'Total':
-          return '#CECB62';
-      default:
-          return '#1f3165';
-    }
-  }; */
+  onlyDiseases: any[]=[];
+  diaseasesOnly(){
+    this.diseases.forEach( disease => {
+      if ( disease.value >= 51){
+        this.onlyDiseases.push(disease)
+      }
+    })
+  }
 
- /*  customColors = (name: string, value: any) => {
-    console.log(name, value);
-    return "#9CCC65";
-  } */
-
-  customColors(){}
+  expandCardRadiology(urlPhoto: string, nameDisease:string, percent: number){
+        Swal.fire({
+          html: //html
+          `<hr style="color: white;">
+          <h1 class="text-center" style="color: white; line-height:0.1;">${nameDisease}</h1>
+          <p class="text-start"  style="color: rgb(59, 86, 134); font-size: 15px; line-height:0.1;">Percent: ${percent}%</p>
+          `,
+          imageUrl:`${urlPhoto}`,
+          backdrop: 'rgba(0, 0, 0, 0.7)',
+          imageHeight: 600,
+          imageWidth: 600,
+          showConfirmButton: false,
+          imageAlt: 'Radiology',
+          background: '#000000',
+        })
+  }
 
   ngOnInit(): void {
     this.myColor();
+    this.diaseasesOnly();
   }
-
-  // grafica con colores por el valor: (lento rendimiento)
-  /* setCustomColors() {
-    let result: any[] = [];
-    for (let i = 0; i < this.diseasesService.diseasesData.length; i++) {
-       if (this.diseasesService.diseasesData[i].value <= 20) {
-          result.push({"name": this.diseasesService.diseasesData[i].name,"value": "#9CCC65"});
-       }
-       else if (this.diseasesService.diseasesData[i].value >= 21 && this.diseasesService.diseasesData[i].value <= 50){
-        result.push({"name": this.diseasesService.diseasesData[i].name,"value": "#FFEE58"});
-       }
-       else{
-          result.push({"name": this.diseasesService.diseasesData[i].name,"value": "#EF5350"});
-       }
-    }
-    return result;
-  } */
-
-  // grafica con colores por el valor: (lento rendimiento)
-  /* setCustomColors() {
-    let result: any[] = [];
-    this.diseases.forEach( resp =>{
-      if (resp.value <= 20) {
-        return result.push({"name": resp.name,"value": "#9CCC65"});
-      }else if (resp.value >= 21 && resp.value <= 50){
-       return result.push({"name": resp.name,"value": "#FFEE58"});
-      }else{
-       return result.push({"name": resp.name,"value": "#EF5350"});
-      }
-    });
-    return result;
-  } */
 }

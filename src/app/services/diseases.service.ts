@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 interface diseases {
   name: string;
   value: number;
+  photo?: string;
 }
 
 @Injectable({
@@ -24,7 +25,8 @@ export class DiseasesService {
     },
     {
       "name": "Infiltration",
-      "value": 90
+      "value": 90,
+      photo: "../../assets/radiologyDiseases.jpeg"
     },
     {
       "name": "Pneumothorax",
@@ -32,7 +34,8 @@ export class DiseasesService {
     },
     {
       "name": "Edema",
-      "value": 80
+      "value": 55,
+      photo: "../../assets/radiologyDiseases2.jpeg"
     },
     {
       "name": "Emphysema",
@@ -44,7 +47,8 @@ export class DiseasesService {
     },
     {
       "name": "Effusion",
-      "value": 40
+      "value": 80,
+      photo : "../../assets/radiologyDiseases3.jpg"
     },
     {
       "name": "Pneumonia",
@@ -56,7 +60,8 @@ export class DiseasesService {
     },
     {
       "name": "Cardiomegaly",
-      "value": 35
+      "value": 100,
+      photo : "../../assets/radiologyDiseases4.jpg"
     },
     {
       "name": "Nodule",
