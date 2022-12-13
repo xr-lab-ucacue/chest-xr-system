@@ -35,11 +35,11 @@ img{
     height: 150px;
     width: 150px;
     border-radius: 100%;
-    animation-name: example;
+    animation-name: example2;
     animation-duration: 4s;
     animation-iteration-count: infinite;
 }
-@keyframes example {
+@keyframes example2 {
   0%   {height: 150px; width: 150px; box-shadow: 0px 0px 15px 5px #3a3a3b; }
   25%  {height: 130px; width: 130px; box-shadow: 0px 0px 15px 10px #252423; }
   50%  {height: 150px; width: 150px; box-shadow: 0px 0px 15px 5px #3a3a3b; }

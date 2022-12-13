@@ -21,7 +21,6 @@
 }
 .card-logo-3d{
     /* border: 1px solid #ccc; */
-
     padding-top: 2rem;
     padding-bottom: 2rem;
     max-width: 85%;
@@ -29,10 +28,25 @@
     max-height: 350px;
     min-height: 350px;
     transform: perspective(400px) rotateY(20deg) rotateX(5deg) translateX(8%) translateZ(150px);
+    animation-name: example;
+    animation-duration: 2s;
+    /* animation-iteration-count: infinite; */
+}
+@keyframes example {
+    0% { transform: perspective(400px) rotateY(-5deg) rotateX(-5deg) translateX(8%) translateZ(-150px); }
+}
+.Click-Here{
+    /* color: white !important; */
+    animation-name: ejemplo;
+    animation-duration: 2.5s;
+    animation-iteration-count: infinite;
+}
+@keyframes ejemplo {
+    50% { color: #4080df ; font-size: 13px; }
+    100% { color: #4080df ; font-size: 13px; }
 }
 .card-logo{
     /* border: 1px dashed red; */
-
     background-color: rgba(8, 8, 8, 0.3);
     border-radius: 10px;
     /* backdrop-filter: blur(3px); */
@@ -75,49 +89,10 @@
     position: absolute;
     border-radius: 50%;
 }
-.shape:first-child{
-    background: linear-gradient(
-        #1845ad,
-        #23a2f6
-    );
-    left: -80px;
-    top: -80px;
-}
-.shape:last-child{
-    background: linear-gradient(
-        to right,
-        #ff512f,
-        #f09819
-    );
-    right: -30px;
-    bottom: -80px;
-}
 img{
     height: 150px;
     width: 150px;
     border-radius: 100%;
-    animation-name: example;
-    animation-duration: 4s;
-    animation-iteration-count: infinite;
-}
-@keyframes example {
-  0%   {height: 150px; width: 150px; box-shadow: 0px 0px 15px 5px #3a3a3b; }
-  5%   {height: 145px; width: 145px; box-shadow: 0px 0px 15px 5px #3a3a3b; }
-  10%   {height: 140px; width: 140px; box-shadow: 0px 0px 15px 5px #3a3a3b; }
-  15%   {height: 135px; width: 135px; box-shadow: 0px 0px 15px 5px #3a3a3b; }
-  20%  {height: 130px; width: 130px; box-shadow: 0px 0px 15px 10px #252423; }
-  25%  {height: 135px; width: 135px; box-shadow: 0px 0px 15px 10px #252423; }
-  30%  {height: 140px; width: 140px; box-shadow: 0px 0px 15px 10px #252423; }
-  35%  {height: 145px; width: 145px; box-shadow: 0px 0px 15px 10px #252423; }
-  40%  {height: 150px; width: 150px; box-shadow: 0px 0px 15px 5px #3a3a3b; }
-  45%   {height: 145px; width: 145px; box-shadow: 0px 0px 15px 5px #3a3a3b; }
-  55%   {height: 140px; width: 140px; box-shadow: 0px 0px 15px 5px #3a3a3b; }
-  60%   {height: 135px; width: 135px; box-shadow: 0px 0px 15px 5px #3a3a3b; }
-  65%  {height: 130px; width: 130px; box-shadow: 0px 0px 15px 10px #252423; }
-  70%  {height: 135px; width: 135px; box-shadow: 0px 0px 15px 10px #252423; }
-  75%  {height: 140px; width: 140px; box-shadow: 0px 0px 15px 10px #252423; }
-  80%  {height: 145px; width: 145px; box-shadow: 0px 0px 15px 10px #252423; }
-  85%  {height: 150px; width: 150px; box-shadow: 0px 0px 15px 5px #3a3a3b; }
 }
 form{
     height: 500px;
