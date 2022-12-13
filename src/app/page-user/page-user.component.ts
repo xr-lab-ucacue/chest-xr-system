@@ -69,11 +69,11 @@ export class PageUserComponent implements OnInit {
         title: 'Rellene los campos de Edit Profile',
       });
     } else if (
-      data.email.length === 0 || this.usuario.email.trim().length === 0 ||
-      data.nombre.length === 0 || this.usuario.nombre.trim().length === 0 ||
-      data.apellido.length === 0 || this.usuario.apellido.trim().length === 0 ||
-      data.telefono.length === 0 || this.usuario.telefono.trim().length === 0 ||
-      data.direccion.length === 0 || this.usuario.direccion.trim().length === 0
+      data.email.length === 0 || data.email.trim().length === 0 ||
+      data.nombre.length === 0 || data.nombre.trim().length === 0 ||
+      data.apellido.length === 0 || data.apellido.trim().length === 0 ||
+      data.telefono.length === 0 || data.telefono.trim().length === 0 ||
+      data.direccion.length === 0 || data.direccion.trim().length === 0
     ) {
       const Toast = Swal.mixin({
         toast: true,
@@ -145,6 +145,24 @@ export class PageUserComponent implements OnInit {
       Toast.fire({
         icon: 'info',
         title: 'Numero de telefono no valido',
+      });
+    } else if (data.estado != false||true ) {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 2000,
+        background: '#000000',
+        color: '#ccc',
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer);
+          toast.addEventListener('mouseleave', Swal.resumeTimer);
+        },
+      });
+      Toast.fire({
+        icon: 'info',
+        title: 'Selecione el estado',
       });
     } else {
       Swal.fire({

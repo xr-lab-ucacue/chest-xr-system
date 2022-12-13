@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2'
 import { Usuario } from '../interfaces/User';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-lost-password',
@@ -10,7 +11,7 @@ import { Usuario } from '../interfaces/User';
 })
 export class LostPasswordComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit(): void {
   }
@@ -93,7 +94,13 @@ usuario: Usuario = new Usuario()
       })
     } else {
 
-      // alerta correo
+      this.authService.forgotPassword(this.usuario).subscribe(
+        (res) => {
+          console.log('El cliente se actualizo con exito')
+        }, (err) => {
+          console.log(err)
+        }, () => {
+          // alerta correo
       Swal.fire({
         title: 'Contraseña Actualizada!',
         html: `<h3>Su contraseña fue restablecida y enviada al correo: </h3>
@@ -108,6 +115,8 @@ usuario: Usuario = new Usuario()
           this.router.navigateByUrl('/login')
         }
       })
+        }
+      )
     }
   }
 

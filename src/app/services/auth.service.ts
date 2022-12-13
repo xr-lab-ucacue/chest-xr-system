@@ -35,6 +35,10 @@ export class AuthService {
     return this.http.put(environment.Url + `/usuario/${email}/${newPassword}`, params, { headers: headers }).pipe(map((data) => { return data }));
   }
 
+  forgotPassword(usuario:Usuario){
+    return this.http.get(environment.Url + `/usuario/password/lost/${usuario.cedula}/${usuario.email}`);
+  }
+
   registerUser(usuario: Usuario) {
     let json = JSON.stringify(usuario);
     let params = json;

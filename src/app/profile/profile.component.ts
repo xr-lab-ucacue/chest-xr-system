@@ -81,11 +81,11 @@ export class ProfileComponent implements OnInit {
         title: 'Rellene los campos de Edit Profile',
       });
     } else if (
-      data.email.length === 0 || this.usuario.email.trim().length === 0 ||
-      data.nombre.length === 0 || this.usuario.nombre.trim().length === 0 ||
-      data.apellido.length === 0 || this.usuario.apellido.trim().length === 0 ||
-      data.telefono.length === 0 || this.usuario.telefono.trim().length === 0 ||
-      data.direccion.length === 0 || this.usuario.direccion.trim().length === 0
+      data.email.length === 0 || data.email.trim().length === 0 ||
+      data.nombre.length === 0 || data.nombre.trim().length === 0 ||
+      data.apellido.length === 0 || data.apellido.trim().length === 0 ||
+      data.telefono.length === 0 || data.telefono.trim().length === 0 ||
+      data.direccion.length === 0 || data.direccion.trim().length === 0
     ) {
       const Toast = Swal.mixin({
         toast: true,
