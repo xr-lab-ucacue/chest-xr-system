@@ -36,8 +36,7 @@ export class PageUserComponent implements OnInit {
         if (err.status == 0) {
           Swal.fire('Servicio', 'No esta Disponible', 'error');
         }
-      },
-      () => {}
+      }
     );
   }
 
