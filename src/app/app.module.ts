@@ -25,7 +25,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { PageUserComponent } from './page-user/page-user.component';
 import { ProfileComponent } from './profile/profile.component';
 import { LostPasswordComponent } from './lost-password/lost-password.component';
-
+// import {CornerstoneModule} from 'cornerstone-core';
 
 
 @NgModule({
@@ -54,7 +54,8 @@ import { LostPasswordComponent } from './lost-password/lost-password.component';
     HttpClientModule,
     // NgbPaginationModule, NgbAlertModule,
     NgxPaginationModule,
-    Ng2SearchPipeModule
+    Ng2SearchPipeModule,
+    // CornerstoneModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass:AuthInterceptor, multi:true},
