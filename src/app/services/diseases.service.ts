@@ -13,7 +13,7 @@ export class DiseasesService {
 
   constructor() { }
 
-  private data: diseases[] = 
+  private data: diseases[] =
   [
     {
       "name": "Antelectasis",
@@ -26,7 +26,7 @@ export class DiseasesService {
     {
       "name": "Infiltration",
       "value": 90,
-      photo: "../../assets/radiologyDiseases.jpeg"
+      photo: "../../assets/imgs/radiologyDiseases.jpeg"
     },
     {
       "name": "Pneumothorax",
@@ -35,7 +35,7 @@ export class DiseasesService {
     {
       "name": "Edema",
       "value": 55,
-      photo: "../../assets/radiologyDiseases2.jpeg"
+      photo: "../../assets/imgs/radiologyDiseases2.jpeg"
     },
     {
       "name": "Emphysema",
@@ -48,7 +48,7 @@ export class DiseasesService {
     {
       "name": "Effusion",
       "value": 80,
-      photo : "../../assets/radiologyDiseases3.jpg"
+      photo : "../../assets/imgs/radiologyDiseases3.jpg"
     },
     {
       "name": "Pneumonia",
@@ -61,7 +61,7 @@ export class DiseasesService {
     {
       "name": "Cardiomegaly",
       "value": 100,
-      photo : "../../assets/radiologyDiseases4.jpg"
+      photo : "../../assets/imgs/radiologyDiseases4.jpg"
     },
     {
       "name": "Nodule",
@@ -93,7 +93,7 @@ export class DiseasesService {
     },
   ];
 
-  
+
 
   get diseasesData() {
     return this.data;

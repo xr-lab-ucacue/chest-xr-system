@@ -90,16 +90,16 @@ export class RadiologyComponent implements OnInit {
     console.log('Item clicked: ', JSON.parse(JSON.stringify(data)));
     console.log("data", data.name);
     if (data.name === 'Infiltration' && data.value > 49) {
-      this.photo = "../../assets/radiologyDiseases.jpeg";
+      this.photo = "../../assets/imgs/radiologyDiseases.jpeg";
       this.showDiseases = data.name;
     } else if (data.name === 'Edema' && data.value > 49) {
-      this. photo = "../../assets/radiologyDiseases2.jpeg";
+      this. photo = "../../assets/imgs/radiologyDiseases2.jpeg";
       this.showDiseases = data.name;
     } else if (data.name === 'Effusion' && data.value > 49) {
-      this. photo = "../../assets/radiologyDiseases3.jpg";
+      this. photo = "../../assets/imgs/radiologyDiseases3.jpg";
       this.showDiseases = data.name;
     } else if (data.name === 'Cardiomegaly' && data.value > 49) {
-      this. photo = "../../assets/radiologyDiseases4.jpg";
+      this. photo = "../../assets/imgs/radiologyDiseases4.jpg";
       this.showDiseases = data.name;
     } else {
       const Toast = Swal.mixin({

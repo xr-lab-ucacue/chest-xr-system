@@ -8,7 +8,7 @@
 .fondo{
     /* background-color: #000000; */
     min-height: 100vh;
-    background-image: url('../../assets/PortadaX-Ray.jpg');
+    background-image: url('../../assets/imgs/PortadaX-Ray.jpg');
     background-size: cover;
     background-position: center;
     background-color: rgba(0, 0, 0, 0.308);

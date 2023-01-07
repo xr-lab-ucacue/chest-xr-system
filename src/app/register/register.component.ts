@@ -97,7 +97,7 @@ export class RegisterComponent implements OnInit {
       Swal.fire({
         title: 'Ubicacion no econtrada!',
         text: 'Permita acceder a la ubicacion dando click en "Permitir (A)", para poder continuar.',
-        imageUrl: '../../assets/permitir_ubicacion.png',
+        imageUrl: '../../assets/imgs/permitir_ubicacion.png',
         imageWidth: 400,
         imageHeight: 200,
         imageAlt: 'Custom image',
