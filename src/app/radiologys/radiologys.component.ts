@@ -18,19 +18,6 @@ var config = {
 }
 cornerstoneWADOImageLoader.webWorkerManager.initialize(config);
 
-// import uids from './uids';
-import { init as csRenderInit } from '@cornerstonejs/core';
-import { init as csToolsInit } from '@cornerstonejs/tools';
-import { RenderingEngine, Types, Enums, metaData } from '@cornerstonejs/core';
-import { ViewportType } from '@cornerstonejs/core/dist/esm/enums';
-
-// import {
-//   initDemo,
-//   createImageIdsAndCacheMetaData,
-//   setTitleAndDescription,
-//   ctVoiRange,
-// } from 'helpers';
-
 
 @Component({
   selector: 'app-radiologys',
@@ -466,7 +453,7 @@ export class RadiologysComponent implements OnInit {
     cornerstoneTools.textStyle.setFont(`16px ${fontFamily}`);
 
     // Set the tool width
-    cornerstoneTools.toolStyle.setToolWidth(2);
+    cornerstoneTools.toolStyle.setToolWidth(1);
 
     // Set color for inactive tools
     cornerstoneTools.toolColors.setToolColor('rgb(255, 255, 0)');
@@ -518,9 +505,9 @@ export class RadiologysComponent implements OnInit {
     cornerstoneTools.setToolActive('ZoomMouseWheel',  { mouseButtonMask: 0 })
     cornerstoneTools.setToolActive('EllipticalRoi',  { mouseButtonMask: 0 })
     cornerstoneTools.setToolActive('ArrowAnnotate',  { mouseButtonMask: 0 })
-    cornerstoneTools.setToolActive('Eraser',  { mouseButtonMask: 3 })
+    cornerstoneTools.setToolActive('Eraser',  { mouseButtonMask: 2 })
     cornerstoneTools.setToolActive('FreehandRoi',  { mouseButtonMask: 0 })
-    cornerstoneTools.setToolActive('Magnify',  { mouseButtonMask: 0 })
+    cornerstoneTools.setToolActive('Magnify',  { mouseButtonMask: 4 })
     cornerstoneTools.setToolActive('Rotate',  { mouseButtonMask: 0 })
     cornerstoneTools.setToolActive('Wwwc',  { mouseButtonMask: 0 })
     cornerstoneTools.setToolActive('ScaleOverlay', { mouseButtonMask: 0 })
