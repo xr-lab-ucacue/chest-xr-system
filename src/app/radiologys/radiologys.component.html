@@ -1,11 +1,15 @@
-<input type="file" id="selectFile" >
+<!-- <input type="file" id="selectFile" > -->
 
-<div id="content">
-  <div class="cornerstone-element'"></div>
-</div>
-
+<button (click)="activateTools('Length')">Length</button>
+<button (click)="activateTools('EllipticalRoi')">EllipticalRoi</button>
+<button (click)="activateTools('Rotate')">Rotate</button>
+<button (click)="activateTools('Wwwc')">Wwwc</button>
+<button (click)="activateTools('Pan')">Pan</button>
+<button (click)="activateTools('Angle')">Angle</button>
+<button (click)="activateTools('Bidirectional')">Bidirectional</button>
+<button (click)="activateTools('RectangleRoi')">RectangleRoi</button>
+<br>
 
 <div class="image-canvas-wrapper my-5" id="element-1">
-<div id="element" class="cornerstone-element">
-</div>
+  <div id="element" class="cornerstone-element"></div>
 </div>

@@ -1,5 +1,3 @@
-
-
 body {overflow-x:hidden!important;}
 
 .fondo{
@@ -8,8 +6,8 @@ body {overflow-x:hidden!important;}
 }
 
 .image-canvas-wrapper {
-  width: 512px;
-  height: 325px;
+  width: 600px;
+  height: 600px;
   margin: 35px auto;
   background: black;
 }
