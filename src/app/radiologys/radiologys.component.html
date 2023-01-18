@@ -10,6 +10,9 @@
 <button (click)="activateTools('RectangleRoi')">RectangleRoi</button>
 <br>
 
+<input type="file" class="d-none" (change)="files($event)" #photoInput id="fileInput">
+<button (click)="photoInput.click()">Clik</button>
+
 <div class="image-canvas-wrapper my-5" id="element-1">
   <div id="element" class="cornerstone-element"></div>
 </div>

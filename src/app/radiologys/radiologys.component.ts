@@ -2,8 +2,9 @@ import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 
 import cornerstoneTools from 'cornerstone-tools';
 import * as cornerstone from 'cornerstone-core';
-import cornerstoneWADOImageLoader from 'cornerstone-wado-image-loader';
 import * as dicomParser from 'dicom-parser';
+import cornerstoneWADOImageLoader from 'cornerstone-wado-image-loader';
+// import cornerstoneWADOImageLoader from 'cornerstone-wado-image-loader/dist/dynamic-import/cornerstoneWADOImageLoader.min.js';
 import cornerstoneMath from 'cornerstone-math';
 import 'hammerjs';
 
@@ -139,7 +140,60 @@ export class RadiologysComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+
+
+  
+file: File;
+
+  files(event: any): any {
+    cornerstoneTools.external.cornerstone = cornerstone;
+    cornerstoneTools.external.cornerstoneMath = cornerstoneMath;
+    cornerstoneTools.external.Hammer = Hammer;
+    cornerstoneTools.init();
+
+    cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
+    cornerstoneWADOImageLoader.external.dicomParser = dicomParser;
+
+    cornerstoneWADOImageLoader.webWorkerManager.initialize({
+      maxWebWorkers: navigator.hardwareConcurrency || 1,
+      startWebWorkersOnDemand: true,
+      webWorkerPath: "cornerstoneWADOImageLoaderWebWorker.min.js",
+      taskConfiguration: {
+        'decodeTask': {
+          loadCodecsOnStartup : true,
+          initializeCodecsOnStartup: false,
+          codecsPath: "cornerstoneWADOImageLoaderCodecs.min.js"
+        }
+      }
+    });
+
+    var element = document.getElementById('element');
+
+
+    this.file = <File>event.target.files[0];
+
+      const imageId = cornerstoneWADOImageLoader.wadouri.fileManager.add(this.file);
+
+
+      cornerstone.enable(element);
+      this.Tools();
+
+      cornerstone
+      .loadImage(imageId)
+      .then((image) => {
+        image.windowWidth = 400;
+        image.windowCenter = 60;
+
+        cornerstone.displayImage(element, image);
+        console.log(image);
+      })
+      .catch((e) => console.log(e));
+
+  }
+
+
+
+  Iniciar() {
     cornerstoneTools.external.cornerstone = cornerstone;
     cornerstoneTools.external.cornerstoneMath = cornerstoneMath;
     cornerstoneTools.external.Hammer = Hammer;
@@ -153,34 +207,27 @@ export class RadiologysComponent implements OnInit {
     cornerstone.enable(element);
     this.Tools();
 
-    cornerstone
-      .loadAndCacheImage('wadouri:' + '../../assets/IM222')
-      .then((imageData) => {
-        console.log(imageData);
-        cornerstone.displayImage(element, imageData);
 
-        //   var viewport = {
-        //   invert: false,
-        //   pixelReplication: false,
-        //   voi: {
-        //     windowWidth: 400,
-        //     windowCenter: 60,
-        //   },
-        //   scale: 1.1,
-        //   translation: {
-        //     x: 0,
-        //     y: 0,
-        //   },
-        //   // colormap: 'hot',
-        // };
 
-        // cornerstone.setViewport(element, viewport);
-        // cornerstone.updateImage(element);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+      cornerstone
+        .loadAndCacheImage('wadouri:' + '')
+        .then((imageData) => {
+          console.log(imageData);
+          cornerstone.displayImage(element, imageData);
+
+
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+
+
   }
+
+  ngOnInit(): void {
+
+  }
+
 
 }
 
