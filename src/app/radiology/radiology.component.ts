@@ -32,15 +32,50 @@ cornerstoneWADOImageLoader.webWorkerManager.initialize(config);
   styleUrls: ['./radiology.component.css'],
   encapsulation: ViewEncapsulation.None,
 })
-export class RadiologyComponent implements OnInit {
+export class RadiologyComponent implements OnInit  {
 
-  /* @ViewChild('valueInput') valueInput!: ElementRef;
-  const urlPhoto =  this.valueInput.nativeElement.value;
-  console.log(urlPhoto); */
 
   constructor(private diseasesService: DiseasesService) {
       // this.view = [innerWidth / 1.60, 600];
   }
+
+
+  //>>>>>>> Variables photo
+  viewUpload: boolean = true;
+  viewRadiology: boolean = false;
+
+  file!: File;
+  photoSelected!: string | ArrayBuffer | null;
+  hiddenTxt: boolean = true;
+  hiddenSpinner: boolean = false;
+  displayButton: boolean = true;
+  // Upload photo
+  onPhotoSelected(event: any): any {
+    if (event.target.files && event.target.files[0]) {
+      this.file = <File>event.target.files[0];
+      // image preview
+      const reader = new FileReader();
+      reader.onload = e => this.photoSelected = reader.result;
+      reader.readAsDataURL(this.file);
+      // hiddens
+      this.hiddenTxt= false;
+      this.displayButton = false;
+      //retorno file
+
+    }
+  }
+  // Bar progress
+  loading(){
+    this.hiddenSpinner = true;
+    setTimeout(() => {
+      console.log('hello')
+      this.files(this.file);
+    }, 1500);
+    this.viewUpload = false;
+    this.viewRadiology = true;
+  }
+// <<<<<<<<<
+
 
   diseases: any[] = [];
 
@@ -294,6 +329,78 @@ export class RadiologyComponent implements OnInit {
     });
   }
 
+  files(fileUp: any): any {
+    this.hiddenSpinner = false;
+
+    cornerstoneTools.external.cornerstone = cornerstone;
+    cornerstoneTools.external.cornerstoneMath = cornerstoneMath;
+    cornerstoneTools.external.Hammer = Hammer;
+    cornerstoneTools.init();
+
+    cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
+    cornerstoneWADOImageLoader.external.dicomParser = dicomParser;
+
+    cornerstoneWADOImageLoader.webWorkerManager.initialize({
+      maxWebWorkers: navigator.hardwareConcurrency || 1,
+      startWebWorkersOnDemand: true,
+      webWorkerPath: "cornerstoneWADOImageLoaderWebWorker.min.js",
+      taskConfiguration: {
+        'decodeTask': {
+          loadCodecsOnStartup : true,
+          initializeCodecsOnStartup: false,
+          codecsPath: "cornerstoneWADOImageLoaderCodecs.min.js"
+        }
+      }
+    });
+
+    var element = document.getElementById('element');
+
+    // this.file = <File>event.target.files[0];
+
+      // const imageId = cornerstoneWADOImageLoader.wadouri.fileManager.add(this.file);
+      const imageId = cornerstoneWADOImageLoader.wadouri.fileManager.add(fileUp);
+
+
+      cornerstone.enable(element);
+      this.Tools();
+
+      cornerstone
+      .loadImage(imageId)
+      .then((image) => {
+        image.windowWidth = 400;
+        image.windowCenter = 60;
+
+        cornerstone.displayImage(element, image);
+        console.log(image);
+      })
+      .catch((e) => {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+        Toast.fire({
+          icon: 'success',
+          title: 'Bienvenido'
+        })
+        console.log(e)
+      });
+
+  }
+
+
+  ngOnInit(): void {
+    this.myColor();
+    this.diaseasesOnly();
+    // this.initCornerstone();
+  }
+
   initCornerstone() {
     cornerstoneTools.external.cornerstone = cornerstone;
     cornerstoneTools.external.cornerstoneMath = cornerstoneMath;
@@ -337,9 +444,4 @@ export class RadiologyComponent implements OnInit {
       });
   }
 
-  ngOnInit(): void {
-    this.myColor();
-    this.diaseasesOnly();
-    this.initCornerstone();
-  }
 }

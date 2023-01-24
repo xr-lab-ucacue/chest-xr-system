@@ -1,1 +1,10 @@
 
+-- preguntar si esta seguro de cambiar de
+vista cuando este en /radiology
+
+-- previsualizar al cargar la img
+
+-- ocupar mayor parte de [pantalla] en la radiologya
+
+--- cambiar ruta de /modelo1 a /radiology
+
