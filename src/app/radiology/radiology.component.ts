@@ -355,11 +355,7 @@ export class RadiologyComponent implements OnInit  {
 
     var element = document.getElementById('element');
 
-    // this.file = <File>event.target.files[0];
-
-      // const imageId = cornerstoneWADOImageLoader.wadouri.fileManager.add(this.file);
       const imageId = cornerstoneWADOImageLoader.wadouri.fileManager.add(fileUp);
-
 
       cornerstone.enable(element);
       this.Tools();
@@ -374,21 +370,7 @@ export class RadiologyComponent implements OnInit  {
         console.log(image);
       })
       .catch((e) => {
-        const Toast = Swal.mixin({
-          toast: true,
-          position: 'top-end',
-          showConfirmButton: false,
-          timer: 2000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer)
-            toast.addEventListener('mouseleave', Swal.resumeTimer)
-          }
-        })
-        Toast.fire({
-          icon: 'success',
-          title: 'Bienvenido'
-        })
+        Swal.fire('Error', 'Algo Fallo!!', 'error');
         console.log(e)
       });
 
@@ -398,9 +380,9 @@ export class RadiologyComponent implements OnInit  {
   ngOnInit(): void {
     this.myColor();
     this.diaseasesOnly();
-    // this.initCornerstone();
   }
 
+  //prueba inicial de cornestrone EN DESUSO
   initCornerstone() {
     cornerstoneTools.external.cornerstone = cornerstone;
     cornerstoneTools.external.cornerstoneMath = cornerstoneMath;

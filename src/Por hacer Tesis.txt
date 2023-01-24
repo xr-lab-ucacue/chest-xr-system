@@ -1,6 +1,5 @@
 
--- preguntar si esta seguro de cambiar de
-vista cuando este en /radiology
+-- preguntar si esta seguro de cambiar de vista cuando este en /radiology
 
 -- previsualizar al cargar la img
 
@@ -8,3 +7,4 @@ vista cuando este en /radiology
 
 --- cambiar ruta de /modelo1 a /radiology
 
+-- hacer responsib img radiology y data
