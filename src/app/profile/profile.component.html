@@ -3,6 +3,11 @@
   <br />
   <br />
   <div class="container rounded bg-dark" *ngFor="let data of userData">
+    <!-- btn Regresar -->
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+      <a href="/admin"><button class="btn btn-primary mt-3" type="button" style="width: 150px;"> <i class="bi bi-arrow-left"></i> Back</button></a>
+    </div>
+
     <div class="row">
       <div class="col-md-3 border-right">
         <div class="d-flex flex-column align-items-center text-center p-3 py-5">
@@ -129,9 +134,9 @@
               <div class="row">
                 <label class="labels">Rol</label>
                 <div *ngFor="let roles of haveRols" class="col-md-8 mt-2">
-                  <div *ngIf="roles == 'ROLE_ADMIN'" class="bubble-admin mx-5"> <label>Admin</label> </div>
-                  <div *ngIf="roles == 'ROLE_USER'" class="bubble-user mx-5"> <label>User</label></div>
-                  <div *ngIf="roles == 'ROLE_PUBLICATOR'" class="bubble-publi mx-5"> <label>Publicator</label></div>
+                  <div *ngIf="roles == 'ROLE_ADMIN'" class="bubble-admin mx-5"> <label style="color: white;">Admin</label> </div>
+                  <div *ngIf="roles == 'ROLE_USER'" class="bubble-user mx-5"> <label style="color: white;">User</label></div>
+                  <div *ngIf="roles == 'ROLE_PUBLICATOR'" class="bubble-publi mx-5"> <label style="color: white;">Publicator</label></div>
                 </div>
               </div>
             </div>

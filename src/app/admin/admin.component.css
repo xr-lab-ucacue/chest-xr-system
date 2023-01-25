@@ -7,7 +7,17 @@
 }
 table{
   border-radius: 30px;
+  /* table-layout: fixed; */
 }
+
+#miTablaPersonalizada th{
+  height: 97px;
+  overflow: auto;
+}
+
+
+
+
 .table-hover > tbody > tr:hover > * {
   --bs-table-accent-bg: rgb(47, 46, 134);
 }

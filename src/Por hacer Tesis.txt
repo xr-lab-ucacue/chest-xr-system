@@ -1,10 +1,10 @@
 
 -- preguntar si esta seguro de cambiar de vista cuando este en /radiology
 
+-- alerta de error si el archivo no es dicom
+
 -- previsualizar al cargar la img
 
--- ocupar mayor parte de [pantalla] en la radiologya
-
---- cambiar ruta de /modelo1 a /radiology
+-- ocupar mayor parte de [pantalla] en la radiology
 
 -- hacer responsib img radiology y data

@@ -58,7 +58,7 @@
           </thead>
           <tbody id="tabla" ref="tabla" class="table-group-divider">
             <!-- [routerLink]="['/userPage/' + data.id]" -->
-            <tr  *ngFor="let data of dataUsers | filter:searchText | paginate: { itemsPerPage: itemsPage, currentPage: p}; let i = index">
+            <tr  id="miTablaPersonalizada" *ngFor="let data of dataUsers | filter:searchText | paginate: { itemsPerPage: itemsPage, currentPage: p}; let i = index">
               <th scope="row">{{ i+1 }}</th>
               <!-- <td>{{item.id}}</td> -->
               <td>{{ data.email }}</td>
@@ -105,9 +105,10 @@
               <!-- selecion de items por page -->
                 <select style="background-color: grey;" class="form-select" style="width: auto" [(ngModel)]="itemsPage">
                   <option [value]="itemsPage" disabled selected hidden>Items</option>
-                  <option [ngValue]="3">3 items per page</option>
-                  <option [ngValue]="5">5 items per page</option>
                   <option [ngValue]="10">10 items per page</option>
+                  <option [ngValue]="15">15 items per page</option>
+                  <option [ngValue]="20">20 items per page</option>
+                  <option [ngValue]='allUsers'>All</option>
                 </select>
               </div>
               <div class="col-4 align-self-end">

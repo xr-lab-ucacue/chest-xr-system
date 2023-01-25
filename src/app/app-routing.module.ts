@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: 'lostPassword', component: LostPasswordComponent
   },
   { path: 'register', component: RegisterComponent },
-  { path: 'modelo1', component: Modelo1Component, canActivate: [AuthGuard] },
+  // { path: 'modelo1', component: Modelo1Component, canActivate: [AuthGuard] },
   { path: 'radiology', component: RadiologyComponent, canActivate: [AuthGuard] },
   { path: 'admin', component: AdminComponent, canActivate: [RoleGuard] },
   { path: 'userPage/:id', component: PageUserComponent, canActivate: [RoleGuard]},

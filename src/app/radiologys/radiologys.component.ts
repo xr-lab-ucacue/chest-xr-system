@@ -1,4 +1,5 @@
-import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Component, ElementRef, ViewChild, OnInit, HostListener } from '@angular/core';
 
 import cornerstoneTools from 'cornerstone-tools';
 import * as cornerstone from 'cornerstone-core';
@@ -26,7 +27,10 @@ cornerstoneWADOImageLoader.webWorkerManager.initialize(config);
   styleUrls: ['./radiologys.component.css'],
 })
 export class RadiologysComponent implements OnInit {
+
+  constructor(private router:Router){}
   conditionView: number = 1;
+
 
   activateTools(toolActive: string) {
     const element = document.getElementById('element');
@@ -141,8 +145,6 @@ export class RadiologysComponent implements OnInit {
   }
 
 
-
-  
 file: File;
 
   files(event: any): any {

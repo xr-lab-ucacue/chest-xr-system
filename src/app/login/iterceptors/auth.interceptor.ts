@@ -45,7 +45,7 @@ export class AuthInterceptor implements HttpInterceptor {
             `Hola ${this.authService.usuario.email} no tienes acceso a este recurso!`,
             "warning"
           );
-          this.router.navigate(["/modelo1"]);
+          this.router.navigate(["/radiology"]);
         }
         return throwError(e);
       })
