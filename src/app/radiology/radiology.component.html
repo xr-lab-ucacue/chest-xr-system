@@ -63,8 +63,10 @@
         </div>
       </div>
 
+
       <!-- Content Radiology and Data -->
       <div class="col-md-10">
+
         <div class="row justify-content-center">
 
           <!-- radiology-->
@@ -77,8 +79,146 @@
             </div>
           </div> -->
 
+
           <!-- tools de Cornerstone -->
            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 d-flex justify-content-center mt-3">
+
+            <!-- btn Configuraciones OffCanvas-->
+            <div class="container">
+              <div class="row justify-content-between">
+                <div class="col-6">
+                  <button class="btn btn-outline-primary btn-xray mt-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"><i class="bi bi-gear-fill"></i></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- OffCanvas  -->
+            <div class="offcanvas offcanvas-start  text-bg-dark" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+              <div class="offcanvas-header">
+                <h1 class="offcanvas-title" id="offcanvasWithBothOptionsLabel"><i class="bi bi-gear-fill me-3"></i>Configuration</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+              </div>
+              <div class="offcanvas-body">
+
+                <div class="accordion" id="accordionPanelsStayOpenExample">
+
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                        <i class="bi bi-palette me-2"></i> Change drawing tool colors
+                      </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                      <div class="accordion-body">
+
+
+                        <div class="mb-2">
+                          <h4> <em>Customize the colors of the drawing tool:</em> </h4>
+                          <label for="exampleColorInput" class="form-label">Color Inactive:</label>
+                          <i class="bi bi-info-circle ms-4" style="font-size: 0.9rem; color: cornflowerblue;" (click)="infoToolModal('Inactive')"></i>
+                          <input type="color" class="form-control form-control-color" id="exampleColorInput" [(ngModel)]="colorToolsInactive"  title="Choose your color">
+                        </div>
+
+                        <div class="my-2">
+                          <label for="exampleColorInput2" class="form-label">Color Active:</label>
+                          <i class="bi bi-info-circle ms-4" style="font-size: 0.9rem; color: cornflowerblue;" (click)="infoToolModal('Active')"></i>
+                          <input type="color" class="form-control form-control-color" id="exampleColorInput2"  [(ngModel)]="colorToolsActive"  title="Choose your color">
+                        </div>
+
+                        <div class="mt-4">
+                          <button type="button" class="btn btn-outline-primary" (click)="changeColorTools()">Aply changes</button>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                        <i class="bi bi-fonts me-2"></i> Customize Font Size
+                      </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+                      <div class="accordion-body">
+                        <h4> <em>Change different settings for font style and size:</em> </h4>
+
+                        <div>
+                          <select [(ngModel)]="fuenteSelecioanda" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id='dropdown'>
+                            <option value='' disabled selected>Styles</option>
+                            <option value="Default">Default</option>
+                            <option value="Aboreto">Aboreto</option>
+                            <option value="Audiowide">Audiowide</option>
+                            <option value="Bangers">Bangers</option>
+                            <option value="Bungee Shade">Bungee Shade</option>
+                            <option value="Londrina Outline">Londrina Outline</option>
+                            <option value="Megrim">Megrim</option>
+                            <option value="Metamorphous">Metamorphous</option>
+                            <option value="Noto Serif HK">Noto Serif HK</option>
+                            <option value="Play">Play</option>
+                            <option value="Poiret One">Poiret One</option>
+                            <option value="Redacted Script">Redacted Script</option>
+                            <option value="Slackey">Slackey</option>
+                            <option value="Solitreo">Solitreo</option>
+                            <option value="UnifrakturMaguntia">UnifrakturMaguntia</option>
+                            <option value="Zilla Slab Highlight">Zilla Slab Highlight</option>
+                          </select>
+
+                          <div class="form-floating mb-3">
+                            <input type="number" min="0" max="100" [(ngModel)]="sizeFont" ondrop="return false;" onpaste="return false;" onkeypress="return event.charCode>=48 && event.charCode<=57" class="form-control" id="fontSize">
+                            <label for="fontSize">Font size</label>
+                          </div>
+
+                          <button type="button" class="btn btn-outline-primary mx-2" (click)="changeTextCornerstone()">Aply changes</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                        <i class="bi bi-distribute-vertical me-2"></i>Customize width of tool lines
+                      </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
+                      <div class="accordion-body">
+                        <h4> <em>Change different settings for line width:</em> </h4>
+
+                        <div>
+                          <div class="form-floating mb-3">
+                            <input type="number" min="0" max="100" [(ngModel)]="lineWidhtTool" ondrop="return false;" onpaste="return false;" onkeypress="return event.charCode>=48 && event.charCode<=57" class="form-control" id="lineWidth">
+                            <label for="lineWidth">Line width</label>
+                          </div>
+                          <button type="button" class="btn btn-outline-primary mx-2" (click)="onlyLineWidthToolCornerstone()">Aply Width Line</button>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingFor">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFor" aria-expanded="false" aria-controls="panelsStayOpen-collapseFor">
+                        <i class="bi bi-mouse2 me-2"></i> View default tool buttons
+                      </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseFor" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFor">
+                      <div class="accordion-body">
+                        <h4> <em>Tool buttons:</em> </h4>
+
+                        <!-- poner img de botones aki -->
+
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Btn tools -->
              <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
 
                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
@@ -109,9 +249,97 @@
                <label class="btn btn-outline-primary" for="btnradio9"(click)="activateTools('ArrowAnnotate')"><i class="bi bi-textarea-t"></i> Note</label>
 
                <input type="radio" class="btn-check" name="btnradio" id="btnradio10" autocomplete="off">
-               <label class="btn btn-outline-primary" for="btnradio10"(click)="activateTools('FreehandRoi')"><i class="bi bi-bezier2"></i> lines</label>
+               <label class="btn btn-outline-primary" for="btnradio10"(click)="activateTools('FreehandRoi')"><i class="bi bi-bezier2"></i> Polygons</label>
 
              </div>
+
+             <!-- Cambio de color radiografia -->
+             <div class="btn-group ms-3" role="group" aria-label="Button group with nested dropdown">
+              <div class="btn-group" role="group">
+                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                   <i class="bi bi-thermometer-sun me-2" style="font-size: 1.5rem;"></i>Filter X-Ray
+                </button>
+                <ul class="dropdown-menu">
+                  <div class="btn-group-vertical mx-3" role="group" aria-label="Vertical button group">
+
+                    <input type="radio" class="btn-check" name="btnradio2" id="btnColor1" autocomplete="off" checked>
+                    <label class="btn btn-outline-primary" for="btnColor1" (click)="changeColorXray('gray')">Default</label>
+
+                    <input type="radio" class="btn-check" name="btnradio2" id="btnColor2" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnColor2" (click)="changeColorXray('autumn')">Autumn</label>
+
+                    <input type="radio" class="btn-check" name="btnradio2" id="btnColor3" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnColor3" (click)="changeColorXray('blues')">Blues</label>
+
+                    <input type="radio" class="btn-check" name="btnradio2" id="btnColor4" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnColor4" (click)="changeColorXray('bone')">Bone</label>
+
+                    <input type="radio" class="btn-check" name="btnradio2" id="btnColor5" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnColor5" (click)="changeColorXray('cool')">Cool</label>
+
+                    <input type="radio" class="btn-check" name="btnradio2" id="btnColor6" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnColor6" (click)="changeColorXray('coolwarm')">Cool Warm</label>
+
+                    <input type="radio" class="btn-check" name="btnradio2" id="btnColor7" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnColor7" (click)="changeColorXray('copper')">Copper</label>
+
+                    <input type="radio" class="btn-check" name="btnradio2" id="btnColor8" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnColor8" (click)="changeColorXray('hot')">Hot</label>
+
+                    <input type="radio" class="btn-check" name="btnradio2" id="btnColor9" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnColor9" (click)="changeColorXray('hotIron')">Hot Iron</label>
+
+                    <input type="radio" class="btn-check" name="btnradio2" id="btnColor10" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnColor10" (click)="changeColorXray('hotMetalBlue')">Hot Metal Blue</label>
+
+                    <input type="radio" class="btn-check" name="btnradio2" id="btnColor11" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnColor11" (click)="changeColorXray('pet20Step')">Pet Step</label>
+
+                    <input type="radio" class="btn-check" name="btnradio2" id="btnColor12" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnColor12" (click)="changeColorXray('hsv')">HSV</label>
+
+                    <input type="radio" class="btn-check" name="btnradio2" id="btnColor13" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnColor13" (click)="changeColorXray('jet')">Jet</label>
+
+                    <input type="radio" class="btn-check" name="btnradio2" id="btnColor14" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnColor14" (click)="changeColorXray('pet')">Pet</label>
+
+                    <input type="radio" class="btn-check" name="btnradio2" id="btnColor15" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnColor15" (click)="changeColorXray('spectral')">Spectral</label>
+
+                    <input type="radio" class="btn-check" name="btnradio2" id="btnColor16" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnColor16" (click)="changeColorXray('spring')">Spring</label>
+
+                    <input type="radio" class="btn-check" name="btnradio2" id="btnColor17" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnColor17" (click)="changeColorXray('summer')">Summer</label>
+
+                    <input type="radio" class="btn-check" name="btnradio2" id="btnColor18" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnColor18" (click)="changeColorXray('winter')">Winter</label>
+
+                  </div>
+                  <!-- <button (click)="changeColorXray('gray')">Default</button>
+                  <button (click)="changeColorXray('autumn')">autumn</button>
+                  <button (click)="changeColorXray('blues')">blues</button>
+                  <button (click)="changeColorXray('bone')">bone</button>
+                  <button (click)="changeColorXray('cool')">cool</button>
+                  <button (click)="changeColorXray('coolwarm')">coolwarm</button>
+                  <button (click)="changeColorXray('copper')">copper</button>
+                  <button (click)="changeColorXray('hot')">hot</button>
+                  <button (click)="changeColorXray('hotIron')">hot iron</button>
+                  <button (click)="changeColorXray('hotMetalBlue')">hot metal blue</button>
+
+                  <button (click)="changeColorXray('pet20Step')">pet20step</button>
+                  <button (click)="changeColorXray('hsv')">hsv</button>
+                  <button (click)="changeColorXray('jet')">jet</button>
+                  <button (click)="changeColorXray('pet')">pet</button>
+                  <button (click)="changeColorXray('spectral')">spectral</button>
+                  <button (click)="changeColorXray('spring')">spring</button>
+                  <button (click)="changeColorXray('summer')">summer</button>
+                  <button (click)="changeColorXray('winter')">winter</button> -->
+
+                </ul>
+              </div>
+            </div>
           </div>
 
           <!-- Force next columns to break to new line -->
@@ -121,7 +349,10 @@
           <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 d-flex justify-content-center">
             <div class="" style="padding-left: 10px;">
               <div class="sombra-photo-radiology">
-                <input type="text"  class="form-control-plaintext form-control-lg text-center txt-diseases" readonly [value]="showDiseases">
+
+                  <!-- Top de radiology -->
+                  <!-- nombre de enfermedad selecionada -->
+                  <input type="text"  class="form-control-plaintext form-control-lg text-center  txt-diseases" readonly [value]="showDiseases">
 
                 <!-- Section: Spinner progress -->
                           <ng-container *ngIf="hiddenSpinner != false">
@@ -134,13 +365,12 @@
                           </ng-container>
 
                 <!-- canvas radiology -->
-                  <div class="image-canvas-wrapper my-5" id="element-1">
+                  <div class="image-canvas-wrapper my-1" id="element-1">
                     <div id="element" class="cornerstone-element"></div>
                   </div>
               </div>
             </div>
           </div>
-
 
 
           <!-- Data Visual -->

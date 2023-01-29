@@ -137,7 +137,7 @@ export class AuthService {
 
   //obtiene el usuario activo
   public get usuario(): Usuario {
-    console.log("This.Usuario:", this.usuario)
+    // console.log("This.Usuario:", this.usuario)
     if (this._usuario != null) {
       // console.log("if-usuario>:", this._usuario)
       return this._usuario;

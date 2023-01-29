@@ -8,3 +8,6 @@
 -- ocupar mayor parte de [pantalla] en la radiology
 
 -- hacer responsib img radiology y data
+
+-- aumentar configuracion boton (para maus de mas botones tmb)
+-- dentro de configuraciones las opciones de select aplicar estilos de fuentes para poder verlas antes de aplicarlas

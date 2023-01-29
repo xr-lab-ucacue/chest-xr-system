@@ -64,6 +64,7 @@ export class RadiologyComponent implements OnInit  {
 
     }
   }
+
   // Bar progress
   loading(){
     this.hiddenSpinner = true;
@@ -297,13 +298,14 @@ export class RadiologyComponent implements OnInit  {
     // Despligue de herramientas
     const element = document.getElementById('element');
 
+    // herramientas activadas
     const ZoomMouseWheelTool = cornerstoneTools.ZoomMouseWheelTool; // zoom
     const EraserTool = cornerstoneTools.EraserTool; // borrador
     const MagnifyTool = cornerstoneTools.MagnifyTool; // lupa
     const ScaleOverlayTool = cornerstoneTools.ScaleOverlayTool; // escala
     const OrientationMarkersTool = cornerstoneTools.OrientationMarkersTool; // letras de orientacion
 
-    //toll activa
+    //toll activa por defecto
     const LengthTool = cornerstoneTools.LengthTool;
 
     cornerstone.enable(element);
@@ -376,54 +378,127 @@ export class RadiologyComponent implements OnInit  {
 
   }
 
+  changeColorXray(color : string){
+    var element = document.getElementById('element');
+
+    // cornerstone.displayImage(element, image);
+        var viewport = {
+          invert: false,
+          pixelReplication: false,
+          voi: {
+            windowWidth: 400,
+            windowCenter: 60
+          },
+          scale: 1.0,
+          translation: {
+            x: 0,
+            y: 0
+          },
+          colormap: color
+        };
+
+        cornerstone.setViewport(element, viewport);
+        cornerstone.updateImage(element);
+  }
+
+
+  colorToolsInactive:any = "#FFFF00";
+  colorToolsActive:any = "#00FF00";
+  changeColorTools(){
+    // Set color for inactive tools
+    cornerstoneTools.toolColors.setToolColor(this.colorToolsInactive);
+    // Set color for active tools
+    cornerstoneTools.toolColors.setActiveColor(this.colorToolsActive);
+  }
+
+  fuenteSelecioanda: string = '';
+  sizeFont: number = 16;
+  lineWidhtTool: number = 1;
+  changeTextCornerstone(){
+switch (this.fuenteSelecioanda) {
+  case 'Aboreto':
+    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Aboreto`);
+    break;
+  case 'Audiowide':
+    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Audiowide`);
+    break;
+  case 'Bangers':
+    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Bangers`);
+    break;
+  case 'Bungee Shade':
+    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Bungee Shade`);
+    break;
+  case 'Londrina Outline':
+    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Londrina Outline`);
+    break;
+  case 'Megrim':
+    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Megrim`);
+    break;
+  case 'Metamorphous':
+    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Metamorphous`);
+    break;
+  case 'Noto Serif HK':
+    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Noto Serif HK`);
+    break;
+  case 'Play':
+    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Play`);
+    break;
+  case 'Poiret One':
+    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Poiret One`);
+    break;
+  case 'Redacted Script':
+    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Redacted Script`);
+    break;
+  case 'Slackey':
+    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Slackey`);
+    break;
+  case 'Solitreo':
+    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Solitreo`);
+    break;
+  case 'UnifrakturMaguntia':
+    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px UnifrakturMaguntia`);
+    break;
+  case 'Zilla Slab Highlight':
+    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Zilla Slab Highlight`);
+    break;
+
+    default:
+      const fontFamily ='Work Sans, Roboto, OpenSans, HelveticaNeue-Light, Helvetica Neue Light, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif';
+      cornerstoneTools.textStyle.setFont(`${this.sizeFont}px ${fontFamily}`);
+      break;
+
+}
+  }
+  onlyLineWidthToolCornerstone(){
+    cornerstoneTools.toolStyle.setToolWidth(this.lineWidhtTool);
+  }
+
+  infoToolModal(tipo: string){
+    if (tipo === 'Inactive') {
+      Swal.fire({
+        html: `<h2 style="color: white;">Tool Inactive</h2>`,
+        imageUrl: '../../assets/imgs/ExampleToolInactive.png',
+        imageWidth: 500,
+        imageHeight: 400,
+        imageAlt: 'Custom image',
+        background: '#212529'
+      })
+    } else if (tipo === 'Active') {
+      Swal.fire({
+        html: `<h2 style="color: white;">Tool Active</h2>`,
+        imageUrl: '../../assets/imgs/ExampleToolActive.gif',
+        imageWidth: 500,
+        imageHeight: 400,
+        imageAlt: 'Custom image',
+        background: '#212529'
+      })
+    }
+  }
 
   ngOnInit(): void {
     this.myColor();
     this.diaseasesOnly();
   }
 
-  //prueba inicial de cornestrone EN DESUSO
-  initCornerstone() {
-    cornerstoneTools.external.cornerstone = cornerstone;
-    cornerstoneTools.external.cornerstoneMath = cornerstoneMath;
-    cornerstoneTools.external.Hammer = Hammer;
-    cornerstoneTools.init();
-
-    cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
-    cornerstoneWADOImageLoader.external.dicomParser = dicomParser;
-
-    var element = document.getElementById('element');
-
-    cornerstone.enable(element);
-    this.Tools();
-
-    cornerstone
-      .loadAndCacheImage('wadouri:' + '../../assets/IM222')
-      .then((imageData) => {
-        console.log(imageData);
-        cornerstone.displayImage(element, imageData);
-
-        //   var viewport = {
-        //   invert: false,
-        //   pixelReplication: false,
-        //   voi: {
-        //     windowWidth: 400,
-        //     windowCenter: 60,
-        //   },
-        //   scale: 1.1,
-        //   translation: {
-        //     x: 0,
-        //     y: 0,
-        //   },
-        //   // colormap: 'hot',
-        // };
-
-        // cornerstone.setViewport(element, viewport);
-        // cornerstone.updateImage(element);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
 
 }

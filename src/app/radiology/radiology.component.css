@@ -1,48 +1,50 @@
+body {
+  overflow-x: hidden !important;
+}
 
-
-body {overflow-x:hidden!important;}
-
-.fondo{
+.fondo {
   background-color: rgb(0, 0, 0);
   min-height: 100vh;
 }
-.btn-block{
+
+.btn-block {
   width: 100%;
 }
 
-.card{
+.card {
   --bs-card-cap-bg: rgb(100 149 237);
 }
 
-.card-body img{
+.card-body img {
   width: 150px;
   height: 150px;
   display: block;
   opacity: 0.5;
   margin: 0px auto;
 }
+
 .txt-up {
   opacity: 0.7;
   color: black;
 }
 
-.sombra{
-margin-top: 20px;
-margin-bottom: 20px;
-margin-inline: 10px;
-border: 1px solid #ccc;
-box-shadow: 0px 0px 15px 10px #4b4a49;
-border-top-left-radius: 30px;
-border-top-right-radius: 30px;
-border-bottom-left-radius: 10px;
-border-bottom-right-radius: 10px;
-/*   border-top: 40px solid rgb(29, 29, 29); */
+.sombra {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-inline: 10px;
+  border: 1px solid #ccc;
+  box-shadow: 0px 0px 15px 10px #4b4a49;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  /*   border-top: 40px solid rgb(29, 29, 29); */
 }
 
 .image-canvas-wrapper {
   /* width: 100%; */
   width: 700px;
-  height: 600px;
+  height: 660px;
   margin: 35px auto;
   background: black;
   border-bottom-left-radius: 10px;
@@ -55,121 +57,167 @@ border-bottom-right-radius: 10px;
 }
 
 /* radiografia */
-.img-radiology{
-    /* width: 650px; */
-    max-width: 100%;
-    height: 663px;
-    margin: 0px auto;
-    display:block;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+.img-radiology {
+  /* width: 650px; */
+  max-width: 100%;
+  height: 663px;
+  margin: 0px auto;
+  display: block;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 /* estadistcias */
-.grafica{
-    max-width: 100%;
+.grafica {
+  max-width: 100%;
 }
 
 /* sobra de estadistica */
 .sombra-card-data {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    /* margin-inline: 10px; */
-    padding: 1rem;
-    border: 1px solid rgb(47, 46, 134);
-    border-radius: 5px;
-    box-shadow: 0px 0px 15px 1px rgb(47, 46, 134);
-    /* border-top: 40px solid rgb(29, 29, 29); */
+  margin-top: 20px;
+  margin-bottom: 20px;
+  /* margin-inline: 10px; */
+  padding: 1rem;
+  border: 1px solid rgb(47, 46, 134);
+  border-radius: 5px;
+  box-shadow: 0px 0px 15px 1px rgb(47, 46, 134);
+  /* border-top: 40px solid rgb(29, 29, 29); */
 }
 
 /* sobra de radiografia*/
-.sombra-photo-radiology{
-    margin-top: 20px;
-    margin-bottom: 20px;
-    margin-inline: 10px;
-    border: 1px solid rgb(204, 204, 204);
-    box-shadow: 0px 0px 15px 4px #4b4a49;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+.sombra-photo-radiology {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-inline: 10px;
+  border: 1px solid rgb(204, 204, 204);
+  box-shadow: 0px 0px 15px 4px #4b4a49;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 /* txt white of estadisticas*/
-.ngx-charts, text { fill: white; font-size: 25px; }
+.ngx-charts,
+text {
+  fill: white;
+  font-size: 25px;
+}
 
 
 
-.selectdiseases{
+.selectdiseases {
   margin-top: 30px;
   background-color: #242323;
   border: 1px solid rgb(204, 204, 204);
   box-shadow: 0px 0px 15px 2px #4b4a49;
 }
 
-.selectdiseases:hover{
+.selectdiseases:hover {
   background-color: #242323;
 }
 
-.txt-diseases{
+.txt-diseases {
   color: white;
   font-weight: bolder;
 }
 
-.cards-left{
+.cards-left {
   height: 650px;
   overflow-y: scroll;
   scrollbar-width: thin;
   scrollbar-color: #686868 rgb(19, 19, 19);
 }
 
-.img-card-radiology{
+.img-card-radiology {
   height: 150px;
-  border: 1px solid  rgb(35, 52, 83);
+  border: 1px solid rgb(35, 52, 83);
   box-shadow: 0px 0px 15px 0.2px rgb(47, 46, 134);
   border-radius: 5px;
   cursor: pointer;
 }
 
 /* Card-left */
-.card{
+.card {
   background-color: rgb(0, 0, 0);
 }
 
-.txt-card{
-  color:  white;
+.txt-card {
+  color: white;
 }
 
-.txt-card h2{
- margin-bottom: 0px;
+.txt-card h2 {
+  margin-bottom: 0px;
 }
 
-.txt-card p{
+.txt-card p {
   color: rgb(59, 86, 134);
   font-size: 11px;
-  line-height:0.3;
+  line-height: 0.3;
 }
 
-.d{
+.d {
   color: rgba(0, 0, 0, 0.5);
 }
 
+.dropdown-menu {
+  background-color: #242323;
+  max-height: 350px;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #686868 rgb(19, 19, 19);
+}
+
+.btn-xray {
+  border-radius: 100%;
+}
+
+.selectpicker{
+  background: rgb(202, 11, 11);
+  color: rgb(233, 229, 18);
+  }
+.accordion {
+  /* letras-item */
+  --bs-accordion-color: rgb(219, 219, 219);
+  /* DENTRO */
+  --bs-accordion-bg: #495057;
+  /* Afuera */
+  --bs-accordion-btn-bg: #343a40;
+  /* letras */
+  --bs-accordion-btn-color: #f5f6f7;
+  /* desactivar */
+  --bs-accordion-btn-focus-box-shadow: none;
+  /* activo letra*/
+  --bs-accordion-active-color: cornflowerblue;
+  /* activo casilla*/
+  --bs-accordion-active-bg: #212529;
+  /* bordes */
+  --bs-accordion-border-color: #495057;
+}
+
+.accordion-item {
+  color: rgb(24, 24, 24);
+}
+
 @media (max-width: 1154px) {
-  .col-data{
+  .col-data {
     width: 500px;
   }
-  .img-radiology{
+
+  .img-radiology {
     max-width: 100%;
     height: 663px;
     margin: 0px auto;
-    display:block;
+    display: block;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
   }
-  .txt-card p{
-    line-height:0.9;
+
+  .txt-card p {
+    line-height: 0.9;
   }
-  .txt-card h2{
+
+  .txt-card h2 {
     font-size: 15px;
   }
 }

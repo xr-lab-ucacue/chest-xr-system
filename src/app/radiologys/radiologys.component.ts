@@ -8,6 +8,7 @@ import cornerstoneWADOImageLoader from 'cornerstone-wado-image-loader';
 // import cornerstoneWADOImageLoader from 'cornerstone-wado-image-loader/dist/dynamic-import/cornerstoneWADOImageLoader.min.js';
 import cornerstoneMath from 'cornerstone-math';
 import 'hammerjs';
+import { UploadFileService } from '../services/upload-file.service';
 
 var config = {
   webWorkerPath:
@@ -28,7 +29,7 @@ cornerstoneWADOImageLoader.webWorkerManager.initialize(config);
 })
 export class RadiologysComponent implements OnInit {
 
-  constructor(private router:Router){}
+  constructor(private router:Router,  private uploadService: UploadFileService){}
   conditionView: number = 1;
 
 
@@ -105,10 +106,82 @@ export class RadiologysComponent implements OnInit {
     }
   }
 
+  colorToolsInactive:any;
+  colorToolsActive:any ;
+  changeColorTools(){
+    // Set color for inactive tools
+    cornerstoneTools.toolColors.setToolColor(this.colorToolsInactive);
+    // Set color for active tools
+    cornerstoneTools.toolColors.setActiveColor(this.colorToolsActive);
+  }
+
+  fuenteSelecioanda: string = '';
+  sizeFont: number = 16;
+  lineWidhtTool: number = 1;
+  changeTextCornerstone(){
+switch (this.fuenteSelecioanda) {
+  case 'Aboreto':
+    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Aboreto`);
+    break;
+  case 'Audiowide':
+    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Audiowide`);
+    break;
+  case 'Bangers':
+    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Bangers`);
+    break;
+  case 'Bungee Shade':
+    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Bungee Shade`);
+    break;
+  case 'Londrina Outline':
+    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Londrina Outline`);
+    break;
+  case 'Megrim':
+    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Megrim`);
+    break;
+  case 'Metamorphous':
+    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Metamorphous`);
+    break;
+  case 'Noto Serif HK':
+    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Noto Serif HK`);
+    break;
+  case 'Play':
+    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Play`);
+    break;
+  case 'Poiret One':
+    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Poiret One`);
+    break;
+  case 'Redacted Script':
+    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Redacted Script`);
+    break;
+  case 'Slackey':
+    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Slackey`);
+    break;
+  case 'Solitreo':
+    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Solitreo`);
+    break;
+  case 'UnifrakturMaguntia':
+    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px UnifrakturMaguntia`);
+    break;
+  case 'Zilla Slab Highlight':
+    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Zilla Slab Highlight`);
+    break;
+
+    default:
+      const fontFamily ='Work Sans, Roboto, OpenSans, HelveticaNeue-Light, Helvetica Neue Light, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif';
+      cornerstoneTools.textStyle.setFont(`${this.sizeFont}px ${fontFamily}`);
+      break;
+
+}
+  }
+  onlyLineWidthToolCornerstone(){
+    cornerstoneTools.toolStyle.setToolWidth(this.lineWidhtTool);
+  }
+
+
   Tools() {
     // Style de tools
-    const fontFamily =
-      'Work Sans, Roboto, OpenSans, HelveticaNeue-Light, Helvetica Neue Light, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif';
+    const fontFamily ='Work Sans, Roboto, OpenSans, HelveticaNeue-Light, Helvetica Neue Light, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif';
+
     cornerstoneTools.textStyle.setFont(`16px ${fontFamily}`);
     // Set the tool width
     cornerstoneTools.toolStyle.setToolWidth(1);
@@ -183,19 +256,45 @@ file: File;
       cornerstone
       .loadImage(imageId)
       .then((image) => {
-        image.windowWidth = 400;
-        image.windowCenter = 60;
+        // image.windowWidth = 400;
+        // image.windowCenter = 60;
+
 
         cornerstone.displayImage(element, image);
         console.log(image);
       })
       .catch((e) => console.log(e));
+  }
 
+  changeColor(color : string){
+    var element = document.getElementById('element');
+
+    // cornerstone.displayImage(element, image);
+        var viewport = {
+          invert: false,
+          pixelReplication: false,
+          voi: {
+            windowWidth: 400,
+            windowCenter: 60
+          },
+          scale: 1.4,
+          translation: {
+            x: 0,
+            y: 0
+          },
+          colormap: color
+        };
+
+        cornerstone.setViewport(element, viewport);
+        cornerstone.updateImage(element);
   }
 
 
 
-  Iniciar() {
+
+
+  //prueba inicial de cornestrone EN DESUSO
+  initCornerstone() {
     cornerstoneTools.external.cornerstone = cornerstone;
     cornerstoneTools.external.cornerstoneMath = cornerstoneMath;
     cornerstoneTools.external.Hammer = Hammer;
@@ -209,25 +308,36 @@ file: File;
     cornerstone.enable(element);
     this.Tools();
 
+    cornerstone
+      .loadAndCacheImage('wadouri:' + '../../assets/IM222')
+      .then((imageData) => {
+        console.log(imageData);
+        cornerstone.displayImage(element, imageData);
 
+        //   var viewport = {
+        //   invert: false,
+        //   pixelReplication: false,
+        //   voi: {
+        //     windowWidth: 400,
+        //     windowCenter: 60,
+        //   },
+        //   scale: 1.1,
+        //   translation: {
+        //     x: 0,
+        //     y: 0,
+        //   },
+        //   // colormap: 'hot',
+        // };
 
-      cornerstone
-        .loadAndCacheImage('wadouri:' + '')
-        .then((imageData) => {
-          console.log(imageData);
-          cornerstone.displayImage(element, imageData);
-
-
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-
-
+        // cornerstone.setViewport(element, viewport);
+        // cornerstone.updateImage(element);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   ngOnInit(): void {
-
   }
 
 
