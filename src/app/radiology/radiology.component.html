@@ -205,9 +205,21 @@
                     </h2>
                     <div id="panelsStayOpen-collapseFor" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFor">
                       <div class="accordion-body">
-                        <h4> <em>Tool buttons:</em> </h4>
 
                         <!-- poner img de botones aki -->
+                        <div class="mb-2">
+                          <h4> <em>Tool buttons:</em> </h4>
+                          <label for="exampleColorInput" class="form-label">Classic mouse:</label>
+                          <br>
+                          <i class="bi bi-mouse2-fill mx-2 change-puntero" style="font-size: 0.9rem; color: cornflowerblue;" (click)="infoToolModal('MausClassic')">Show buttons</i>
+
+                        </div>
+
+                        <div class="my-2">
+                          <label for="exampleColorInput2" class="form-label">Advanced mouse:</label>
+                          <br>
+                          <i class="bi bi-mouse3-fill mx-2 change-puntero" style="font-size: 0.9rem; color: cornflowerblue;" (click)="infoToolModal('MausAdvanced')">Show buttons</i>
+                        </div>
 
                       </div>
                     </div>

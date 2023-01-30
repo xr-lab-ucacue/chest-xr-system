@@ -195,6 +195,10 @@ text {
   --bs-accordion-border-color: #495057;
 }
 
+.change-puntero{
+  cursor: pointer;
+}
+
 .accordion-item {
   color: rgb(24, 24, 24);
 }

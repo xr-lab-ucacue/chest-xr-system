@@ -3,7 +3,7 @@ import { Color, ScaleType } from '@swimlane/ngx-charts';
 import { DiseasesService } from '../services/diseases.service';
 import { ViewChild, ElementRef } from '@angular/core';
 //Alertas sweealert
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 
 //Cornerstone
 import cornerstoneTools from 'cornerstone-tools';
@@ -32,13 +32,10 @@ cornerstoneWADOImageLoader.webWorkerManager.initialize(config);
   styleUrls: ['./radiology.component.css'],
   encapsulation: ViewEncapsulation.None,
 })
-export class RadiologyComponent implements OnInit  {
-
-
+export class RadiologyComponent implements OnInit {
   constructor(private diseasesService: DiseasesService) {
-      // this.view = [innerWidth / 1.60, 600];
+    // this.view = [innerWidth / 1.60, 600];
   }
-
 
   //>>>>>>> Variables photo
   viewUpload: boolean = true;
@@ -55,28 +52,29 @@ export class RadiologyComponent implements OnInit  {
       this.file = <File>event.target.files[0];
       // image preview
       const reader = new FileReader();
-      reader.onload = e => this.photoSelected = reader.result;
+      // reader.onload = e => this.photoSelected = reader.result;
+      reader.onload = (e) =>
+        (this.photoSelected = '../../assets/imgs/giphy.gif');
       reader.readAsDataURL(this.file);
       // hiddens
-      this.hiddenTxt= false;
+      this.hiddenTxt = false;
       this.displayButton = false;
       //retorno file
-
     }
   }
 
   // Bar progress
-  loading(){
+  loading() {
     this.hiddenSpinner = true;
     setTimeout(() => {
-      console.log('hello')
+      console.log('hello');
       this.files(this.file);
     }, 1500);
     this.viewUpload = false;
     this.viewRadiology = true;
+    this.MiniTutorial()
   }
-// <<<<<<<<<
-
+  // <<<<<<<<<
 
   diseases: any[] = [];
 
@@ -90,8 +88,8 @@ export class RadiologyComponent implements OnInit  {
   showYAxisLabel = true;
   yAxisLabel = 'Percent';
   //Labels de los ejes X,Y
-  showYAxisVertical=  'Diseases';
-  showXAxisHorizontal=  'Percent';
+  showYAxisVertical = 'Diseases';
+  showXAxisHorizontal = 'Percent';
   //Nuemros al final de barras
   showDataLabel = true;
   //Desactiva los Poops de barras
@@ -99,34 +97,34 @@ export class RadiologyComponent implements OnInit  {
   //Recortar labels eje Y
   trimYAxisTicks = false;
   //(No funcional)
-  activeEntries = [{name: 'Edema', label: "Edema", value: 50}]
+  activeEntries = [{ name: 'Edema', label: 'Edema', value: 50 }];
 
-  backgroundColor:any[] = [];
-   //Custom Color
-   myColor(){
+  backgroundColor: any[] = [];
+  //Custom Color
+  myColor() {
     this.diseases = [...this.diseasesService.diseasesData];
-    console.log("diseases", this.diseases);
+    console.log('diseases', this.diseases);
 
-    const rojo = "rgb(255, 0, 0)";
-    const verde = "rgb(0, 255, 14)";
-    const amarillo = "rgb(255, 242, 0)";
+    const rojo = 'rgb(255, 0, 0)';
+    const verde = 'rgb(0, 255, 14)';
+    const amarillo = 'rgb(255, 242, 0)';
 
-    this.diseases.forEach( disease =>{
-      if( disease.value >= 51 ){
+    this.diseases.forEach((disease) => {
+      if (disease.value >= 51) {
         this.backgroundColor.push(rojo);
-      }else if(disease.value >= 21 && disease.value <= 50){
+      } else if (disease.value >= 21 && disease.value <= 50) {
         this.backgroundColor.push(amarillo);
-      }else{
+      } else {
         this.backgroundColor.push(verde);
       }
     });
-   }
+  }
   // Apply Color
   colorScheme: Color = {
     name: 'mycolor',
     selectable: true,
     group: ScaleType.Ordinal,
-    domain: this.backgroundColor
+    domain: this.backgroundColor,
   };
 
   // Obtener datos
@@ -135,28 +133,28 @@ export class RadiologyComponent implements OnInit  {
   }
 
   // Ejes X labels formateado a 0%
-  formatPercent(val:any) {
-      return val + '%';
+  formatPercent(val: any) {
+    return val + '%';
   }
 
   // Datos seleccionados
-  showDiseases = ''
-  photo: string = ""
-  diseasesSelect: string = "";
+  showDiseases = '';
+  photo: string = '';
+  diseasesSelect: string = '';
   onSelect(data: any): void {
     console.log('Item clicked: ', JSON.parse(JSON.stringify(data)));
-    console.log("data", data.name);
+    console.log('data', data.name);
     if (data.name === 'Infiltration' && data.value > 49) {
-      this.photo = "../../assets/imgs/radiologyDiseases.jpeg";
+      this.photo = '../../assets/imgs/radiologyDiseases.jpeg';
       this.showDiseases = data.name;
     } else if (data.name === 'Edema' && data.value > 49) {
-      this. photo = "../../assets/imgs/radiologyDiseases2.jpeg";
+      this.photo = '../../assets/imgs/radiologyDiseases2.jpeg';
       this.showDiseases = data.name;
     } else if (data.name === 'Effusion' && data.value > 49) {
-      this. photo = "../../assets/imgs/radiologyDiseases3.jpg";
+      this.photo = '../../assets/imgs/radiologyDiseases3.jpg';
       this.showDiseases = data.name;
     } else if (data.name === 'Cardiomegaly' && data.value > 49) {
-      this. photo = "../../assets/imgs/radiologyDiseases4.jpg";
+      this.photo = '../../assets/imgs/radiologyDiseases4.jpg';
       this.showDiseases = data.name;
     } else {
       const Toast = Swal.mixin({
@@ -168,41 +166,41 @@ export class RadiologyComponent implements OnInit  {
         color: '#ccc',
         timerProgressBar: true,
         didOpen: (toast) => {
-          toast.addEventListener('mouseenter', Swal.stopTimer)
-          toast.addEventListener('mouseleave', Swal.resumeTimer)
-        }
-      })
+          toast.addEventListener('mouseenter', Swal.stopTimer);
+          toast.addEventListener('mouseleave', Swal.resumeTimer);
+        },
+      });
       Toast.fire({
         icon: 'error',
-        title: 'Menor del 50%'
-      })
+        title: 'Menor del 50%',
+      });
     }
   }
 
-  onlyDiseases: any[]=[];
-  diaseasesOnly(){
-    this.diseases.forEach( disease => {
-      if ( disease.value >= 51){
-        this.onlyDiseases.push(disease)
+  onlyDiseases: any[] = [];
+  diaseasesOnly() {
+    this.diseases.forEach((disease) => {
+      if (disease.value >= 51) {
+        this.onlyDiseases.push(disease);
       }
-    })
+    });
   }
 
-  expandCardRadiology(urlPhoto: string, nameDisease:string, percent: number){
-        Swal.fire({
-          html: //html
-          `<hr style="color: white;">
+  expandCardRadiology(urlPhoto: string, nameDisease: string, percent: number) {
+    Swal.fire({
+      //html
+      html: `<hr style="color: white;">
           <h1 class="text-center" style="color: white; line-height:0.1;">${nameDisease}</h1>
           <p class="text-start"  style="color: rgb(59, 86, 134); font-size: 15px; line-height:0.1;">Percent: ${percent}%</p>
           `,
-          imageUrl:`${urlPhoto}`,
-          backdrop: 'rgba(0, 0, 0, 0.7)',
-          imageHeight: 600,
-          imageWidth: 600,
-          showConfirmButton: false,
-          imageAlt: 'Radiology',
-          background: '#000000',
-        })
+      imageUrl: `${urlPhoto}`,
+      backdrop: 'rgba(0, 0, 0, 0.7)',
+      imageHeight: 600,
+      imageWidth: 600,
+      showConfirmButton: false,
+      imageAlt: 'Radiology',
+      background: '#000000',
+    });
   }
 
   activateTools(toolActive: string) {
@@ -273,7 +271,7 @@ export class RadiologyComponent implements OnInit  {
         break;
 
       case 'FreehandRoi':
-        cornerstoneTools.addTool(FreehandRoiTool );
+        cornerstoneTools.addTool(FreehandRoiTool);
         cornerstoneTools.setToolActive('FreehandRoi', { mouseButtonMask: 1 });
         break;
 
@@ -305,6 +303,10 @@ export class RadiologyComponent implements OnInit  {
     const ScaleOverlayTool = cornerstoneTools.ScaleOverlayTool; // escala
     const OrientationMarkersTool = cornerstoneTools.OrientationMarkersTool; // letras de orientacion
 
+    //para mouse avanzaados
+    const RotateTool = cornerstoneTools.RotateTool; // rotar imagen
+    const PanTool = cornerstoneTools.PanTool; // mover img por el canvas
+
     //toll activa por defecto
     const LengthTool = cornerstoneTools.LengthTool;
 
@@ -314,14 +316,19 @@ export class RadiologyComponent implements OnInit  {
     cornerstoneTools.addTool(LengthTool);
     cornerstoneTools.setToolActive('Length', { mouseButtonMask: 1 });
 
+    cornerstoneTools.addTool(RotateTool);
+    cornerstoneTools.addTool(PanTool);
+
     cornerstoneTools.addTool(ZoomMouseWheelTool);
     cornerstoneTools.addTool(EraserTool);
     cornerstoneTools.addTool(MagnifyTool);
     cornerstoneTools.addTool(ScaleOverlayTool);
     cornerstoneTools.addTool(OrientationMarkersTool);
 
-
     //herramientas activas por defecto
+    cornerstoneTools.setToolActive('Pan', { mouseButtonMask: 16 }); // Browser Forward
+    cornerstoneTools.setToolActive('Rotate', { mouseButtonMask: 8 }); // Browser Back
+
     cornerstoneTools.setToolActive('ZoomMouseWheel', { mouseButtonMask: 0 }); // rueda de maus
     cornerstoneTools.setToolActive('Magnify', { mouseButtonMask: 4 }); // boton rueda
     cornerstoneTools.setToolActive('Eraser', { mouseButtonMask: 2 }); //  click derecho
@@ -345,24 +352,24 @@ export class RadiologyComponent implements OnInit  {
     cornerstoneWADOImageLoader.webWorkerManager.initialize({
       maxWebWorkers: navigator.hardwareConcurrency || 1,
       startWebWorkersOnDemand: true,
-      webWorkerPath: "cornerstoneWADOImageLoaderWebWorker.min.js",
+      webWorkerPath: 'cornerstoneWADOImageLoaderWebWorker.min.js',
       taskConfiguration: {
-        'decodeTask': {
-          loadCodecsOnStartup : true,
+        decodeTask: {
+          loadCodecsOnStartup: true,
           initializeCodecsOnStartup: false,
-          codecsPath: "cornerstoneWADOImageLoaderCodecs.min.js"
-        }
-      }
+          codecsPath: 'cornerstoneWADOImageLoaderCodecs.min.js',
+        },
+      },
     });
 
     var element = document.getElementById('element');
 
-      const imageId = cornerstoneWADOImageLoader.wadouri.fileManager.add(fileUp);
+    const imageId = cornerstoneWADOImageLoader.wadouri.fileManager.add(fileUp);
 
-      cornerstone.enable(element);
-      this.Tools();
+    cornerstone.enable(element);
+    this.Tools();
 
-      cornerstone
+    cornerstone
       .loadImage(imageId)
       .then((image) => {
         image.windowWidth = 400;
@@ -373,38 +380,36 @@ export class RadiologyComponent implements OnInit  {
       })
       .catch((e) => {
         Swal.fire('Error', 'Algo Fallo!!', 'error');
-        console.log(e)
+        console.log(e);
       });
-
   }
 
-  changeColorXray(color : string){
+  changeColorXray(color: string) {
     var element = document.getElementById('element');
 
     // cornerstone.displayImage(element, image);
-        var viewport = {
-          invert: false,
-          pixelReplication: false,
-          voi: {
-            windowWidth: 400,
-            windowCenter: 60
-          },
-          scale: 1.0,
-          translation: {
-            x: 0,
-            y: 0
-          },
-          colormap: color
-        };
+    var viewport = {
+      invert: false,
+      pixelReplication: false,
+      voi: {
+        windowWidth: 400,
+        windowCenter: 60,
+      },
+      scale: 1.0,
+      translation: {
+        x: 0,
+        y: 0,
+      },
+      colormap: color,
+    };
 
-        cornerstone.setViewport(element, viewport);
-        cornerstone.updateImage(element);
+    cornerstone.setViewport(element, viewport);
+    cornerstone.updateImage(element);
   }
 
-
-  colorToolsInactive:any = "#FFFF00";
-  colorToolsActive:any = "#00FF00";
-  changeColorTools(){
+  colorToolsInactive: any = '#FFFF00';
+  colorToolsActive: any = '#00FF00';
+  changeColorTools() {
     // Set color for inactive tools
     cornerstoneTools.toolColors.setToolColor(this.colorToolsInactive);
     // Set color for active tools
@@ -414,91 +419,175 @@ export class RadiologyComponent implements OnInit  {
   fuenteSelecioanda: string = '';
   sizeFont: number = 16;
   lineWidhtTool: number = 1;
-  changeTextCornerstone(){
-switch (this.fuenteSelecioanda) {
-  case 'Aboreto':
-    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Aboreto`);
-    break;
-  case 'Audiowide':
-    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Audiowide`);
-    break;
-  case 'Bangers':
-    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Bangers`);
-    break;
-  case 'Bungee Shade':
-    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Bungee Shade`);
-    break;
-  case 'Londrina Outline':
-    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Londrina Outline`);
-    break;
-  case 'Megrim':
-    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Megrim`);
-    break;
-  case 'Metamorphous':
-    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Metamorphous`);
-    break;
-  case 'Noto Serif HK':
-    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Noto Serif HK`);
-    break;
-  case 'Play':
-    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Play`);
-    break;
-  case 'Poiret One':
-    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Poiret One`);
-    break;
-  case 'Redacted Script':
-    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Redacted Script`);
-    break;
-  case 'Slackey':
-    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Slackey`);
-    break;
-  case 'Solitreo':
-    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Solitreo`);
-    break;
-  case 'UnifrakturMaguntia':
-    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px UnifrakturMaguntia`);
-    break;
-  case 'Zilla Slab Highlight':
-    cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Zilla Slab Highlight`);
-    break;
+  changeTextCornerstone() {
+    switch (this.fuenteSelecioanda) {
+      case 'Aboreto':
+        cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Aboreto`);
+        break;
+      case 'Audiowide':
+        cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Audiowide`);
+        break;
+      case 'Bangers':
+        cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Bangers`);
+        break;
+      case 'Bungee Shade':
+        cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Bungee Shade`);
+        break;
+      case 'Londrina Outline':
+        cornerstoneTools.textStyle.setFont(
+          `${this.sizeFont}px Londrina Outline`
+        );
+        break;
+      case 'Megrim':
+        cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Megrim`);
+        break;
+      case 'Metamorphous':
+        cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Metamorphous`);
+        break;
+      case 'Noto Serif HK':
+        cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Noto Serif HK`);
+        break;
+      case 'Play':
+        cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Play`);
+        break;
+      case 'Poiret One':
+        cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Poiret One`);
+        break;
+      case 'Redacted Script':
+        cornerstoneTools.textStyle.setFont(
+          `${this.sizeFont}px Redacted Script`
+        );
+        break;
+      case 'Slackey':
+        cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Slackey`);
+        break;
+      case 'Solitreo':
+        cornerstoneTools.textStyle.setFont(`${this.sizeFont}px Solitreo`);
+        break;
+      case 'UnifrakturMaguntia':
+        cornerstoneTools.textStyle.setFont(
+          `${this.sizeFont}px UnifrakturMaguntia`
+        );
+        break;
+      case 'Zilla Slab Highlight':
+        cornerstoneTools.textStyle.setFont(
+          `${this.sizeFont}px Zilla Slab Highlight`
+        );
+        break;
 
-    default:
-      const fontFamily ='Work Sans, Roboto, OpenSans, HelveticaNeue-Light, Helvetica Neue Light, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif';
-      cornerstoneTools.textStyle.setFont(`${this.sizeFont}px ${fontFamily}`);
-      break;
-
-}
+      default:
+        const fontFamily =
+          'Work Sans, Roboto, OpenSans, HelveticaNeue-Light, Helvetica Neue Light, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif';
+        cornerstoneTools.textStyle.setFont(`${this.sizeFont}px ${fontFamily}`);
+        break;
+    }
   }
-  onlyLineWidthToolCornerstone(){
+  onlyLineWidthToolCornerstone() {
     cornerstoneTools.toolStyle.setToolWidth(this.lineWidhtTool);
   }
 
-  infoToolModal(tipo: string){
+  infoToolModal(tipo: string) {
     if (tipo === 'Inactive') {
       Swal.fire({
         html: `<h2 style="color: white;">Tool Inactive</h2>`,
         imageUrl: '../../assets/imgs/ExampleToolInactive.png',
         imageWidth: 500,
         imageHeight: 400,
-        imageAlt: 'Custom image',
-        background: '#212529'
-      })
+        imageAlt: 'Tool Inactive example image:',
+        background: '#212529',
+      });
     } else if (tipo === 'Active') {
       Swal.fire({
         html: `<h2 style="color: white;">Tool Active</h2>`,
         imageUrl: '../../assets/imgs/ExampleToolActive.gif',
         imageWidth: 500,
         imageHeight: 400,
-        imageAlt: 'Custom image',
-        background: '#212529'
-      })
+        imageAlt: 'Tool Active example image',
+        background: '#212529',
+      });
+    } else if (tipo === 'MausClassic') {
+      Swal.fire({
+        html: `<h2 style="color: white;">Classic mouse buttons</h2>`,
+        imageUrl: '../../assets/imgs/Tutorial-Maus1.png',
+        imageWidth: 500,
+        imageHeight: 400,
+        imageAlt: 'Classic mouse tutorial',
+        background: '#212529',
+      });
+    } else if (tipo === 'MausAdvanced') {
+      Swal.fire({
+        html: `<h2 style="color: white;">Advanced mouse buttons</h2>`,
+        imageUrl: '../../assets/imgs/Tutorial-Maus2.png',
+        imageWidth: 500,
+        imageHeight: 400,
+        imageAlt: 'Advanced mouse tutorial',
+        background: '#212529',
+      });
     }
+  }
+
+  MiniTutorial() {
+    // BOTTOM DRAWER
+    Swal.fire({
+      title: 'Hello 👋, Watch this little tutorial before you start.',
+      position: 'top-start',
+      width: '600px',
+      showClass: {
+        popup: `
+      animate__animated
+      animate__fadeInUp
+      animate__faster
+    `,
+      },
+      hideClass: {
+        popup: `
+      animate__animated
+      animate__fadeOutDown
+      animate__faster
+    `,
+      },
+      grow: 'row',
+      showConfirmButton: true,
+      showCloseButton: true,
+      confirmButtonColor: '#71D4AD',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: "OK, let's go",
+      cancelButtonText: "I don't need it",
+      showCancelButton: true,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      allowEnterKey: false,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          html: `<h2 style="color: white;">Classic mouse buttons</h2>`,
+          imageUrl: '../../assets/imgs/Tutorial-Maus1.png',
+          imageWidth: 500,
+          imageHeight: 400,
+          imageAlt: 'Classic mouse tutorial',
+          background: '#212529',
+          confirmButtonText: 'Next >>',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire({
+              html: `<h2 style="color: white;">
+          You can access the tool settings by clicking on the nut.</h2>`,
+              imageUrl: '../../assets/imgs/config-tutorial.png',
+              imageWidth: 500,
+              imageHeight: 400,
+              imageAlt: 'Classic mouse tutorial',
+              background: '#212529',
+              confirmButtonText: 'Ok',
+            });
+          }
+        });
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+      }
+    });
   }
 
   ngOnInit(): void {
     this.myColor();
     this.diaseasesOnly();
   }
-
-
 }
