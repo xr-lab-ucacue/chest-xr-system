@@ -67,7 +67,7 @@ export class RadiologyComponent implements OnInit {
   loading() {
     this.hiddenSpinner = true;
     setTimeout(() => {
-      console.log('hello');
+      // console.log('hello');
       this.files(this.file);
     }, 1500);
     this.viewUpload = false;

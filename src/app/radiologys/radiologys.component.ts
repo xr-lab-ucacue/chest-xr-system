@@ -218,7 +218,8 @@ switch (this.fuenteSelecioanda) {
   }
 
 
-file: File;
+
+file: File ;
 
   files(event: any): any {
     cornerstoneTools.external.cornerstone = cornerstone;
@@ -289,6 +290,74 @@ file: File;
         cornerstone.updateImage(element);
   }
 
+  isInvierte: boolean = false;
+  // invierte colores de negro y blanco
+  invertXray() {
+    var element = document.getElementById('element');
+    setTimeout(() => {
+    var viewport = {
+      invert: this.isInvierte,
+      translation: {
+        x: 0,
+        y: 0
+      }
+    };
+    cornerstone.setViewport(element, viewport);
+    cornerstone.updateImage(element);
+    }, 100);
+  }
+
+  isPixel: boolean = false;
+  // pixela la imagen (se usa para distinguir cuando hay mucho zoom)
+  pixelXray() {
+    var element = document.getElementById('element');
+    setTimeout(() => {
+      var viewport = {
+        pixelReplication: this.isPixel,
+        translation: {
+          x: 0,
+          y: 0
+        }
+      };
+      cornerstone.setViewport(element, viewport);
+      cornerstone.updateImage(element);
+    }, 100);
+  }
+
+
+isFlipH : boolean = false;
+  // imagen se voltea horizontalmente
+flipHXray(){
+  var element = document.getElementById('element');
+  setTimeout(() => {
+    var viewport = {
+      hflip : this.isFlipH, // verdadero si la imagen se voltea horizontalmente
+      translation: {
+        x: 0,
+        y: 0
+      }
+    };
+    cornerstone.setViewport(element, viewport);
+    cornerstone.updateImage(element);
+  }, 100);
+}
+
+isFlipV: boolean = false;
+  // imagen se voltea verticalmente
+flipVXray(){
+  var element = document.getElementById('element');
+  setTimeout(() => {
+    var viewport = {
+      vflip : this.isFlipV, // si la imagen se voltea verticalmente
+      translation: {
+        x: 0,
+        y: 0
+      }
+    };
+    cornerstone.setViewport(element, viewport);
+    cornerstone.updateImage(element);
+  }, 100);
+}
 
 
 
@@ -337,6 +406,8 @@ file: File;
       });
   }
 
+  vm = this;
+  activo = false;
   ngOnInit(): void {
   }
 
