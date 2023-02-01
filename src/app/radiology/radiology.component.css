@@ -161,11 +161,33 @@ text {
 }
 
 .dropdown-menu {
-  background-color: #242323;
+  /* background-color: #242323; */
   max-height: 350px;
   overflow: auto;
   scrollbar-width: thin;
   scrollbar-color: #686868 rgb(19, 19, 19);
+}
+
+.dropwon-switch-btn{
+  margin-top: 3px;
+  border-radius: 100%;
+}
+.dropdown-toggle::after {
+  display: none;
+  margin-left: none;
+  vertical-align: none;
+  content: none;
+  border-top: none;
+  border-right:none;
+  border-bottom: none;
+  border-left:none;
+}
+.dropwon-switch-btn:focus{
+  border-color: cornflowerblue;
+}
+.icon-dropwon-switch{
+  font-size: 1rem;
+   color: cornflowerblue;
 }
 
 .btn-xray {
@@ -225,3 +247,4 @@ text {
     font-size: 15px;
   }
 }
+

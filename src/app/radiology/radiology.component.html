@@ -271,7 +271,7 @@
                 <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                    <i class="bi bi-thermometer-sun me-2" style="font-size: 1.5rem;"></i>Filter X-Ray
                 </button>
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu dropdown-menu-dark">
                   <div class="btn-group-vertical mx-3" role="group" aria-label="Vertical button group">
 
                     <input type="radio" class="btn-check" name="btnradio2" id="btnColor1" autocomplete="off" checked>
@@ -329,26 +329,6 @@
                     <label class="btn btn-outline-primary" for="btnColor18" (click)="changeColorXray('winter')">Winter</label>
 
                   </div>
-                  <!-- <button (click)="changeColorXray('gray')">Default</button>
-                  <button (click)="changeColorXray('autumn')">autumn</button>
-                  <button (click)="changeColorXray('blues')">blues</button>
-                  <button (click)="changeColorXray('bone')">bone</button>
-                  <button (click)="changeColorXray('cool')">cool</button>
-                  <button (click)="changeColorXray('coolwarm')">coolwarm</button>
-                  <button (click)="changeColorXray('copper')">copper</button>
-                  <button (click)="changeColorXray('hot')">hot</button>
-                  <button (click)="changeColorXray('hotIron')">hot iron</button>
-                  <button (click)="changeColorXray('hotMetalBlue')">hot metal blue</button>
-
-                  <button (click)="changeColorXray('pet20Step')">pet20step</button>
-                  <button (click)="changeColorXray('hsv')">hsv</button>
-                  <button (click)="changeColorXray('jet')">jet</button>
-                  <button (click)="changeColorXray('pet')">pet</button>
-                  <button (click)="changeColorXray('spectral')">spectral</button>
-                  <button (click)="changeColorXray('spring')">spring</button>
-                  <button (click)="changeColorXray('summer')">summer</button>
-                  <button (click)="changeColorXray('winter')">winter</button> -->
-
                 </ul>
               </div>
             </div>
@@ -363,8 +343,58 @@
               <div class="sombra-photo-radiology">
 
                   <!-- Top de radiology -->
-                  <!-- nombre de enfermedad selecionada -->
-                  <input type="text"  class="form-control-plaintext form-control-lg text-center  txt-diseases" readonly [value]="showDiseases">
+                  <div class="row">
+                    <!-- dropdown Switchs -->
+                    <div class="col-md-1">
+                      <div class="btn-group ms-3" role="group" aria-label="Button group with nested dropdown">
+                        <button type="button" class="btn btn-online-secondary dropdown-toggle dropwon-switch-btn" data-bs-toggle="dropdown" aria-expanded="false">
+                          <i class="bi bi-three-dots-vertical icon-dropwon-switch"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+
+                          <li>
+                            <div class="form-check form-switch mx-2">
+                              <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"  [(ngModel)]="isInvierte" (click)="invertXray()">
+                              <label class="form-check-label" for="flexSwitchCheckDefault"> Invert</label>
+                            </div>
+                          </li>
+
+                          <li><hr class="dropdown-divider"></li>
+
+                          <li>
+                            <div class="form-check form-switch mx-2">
+                              <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"  [(ngModel)]="isPixel" (click)="pixelXray()">
+                              <label class="form-check-label" for="flexSwitchCheckDefault"> Pixelar</label>
+                            </div>
+                          </li>
+
+                          <li><hr class="dropdown-divider"></li>
+
+                          <li>
+                            <div class="form-check form-switch mx-2">
+                              <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"  [(ngModel)]="isFlipH" (click)="flipHXray()">
+                              <label class="form-check-label" for="flexSwitchCheckDefault" style="font-size: 14px;"> Flip horizontally</label>
+                            </div>
+                          </li>
+
+                          <li><hr class="dropdown-divider"></li>
+
+                          <li>
+                            <div class="form-check form-switch mx-2">
+                              <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"  [(ngModel)]="isFlipV" (click)="flipVXray()">
+                              <label class="form-check-label" for="flexSwitchCheckDefault"> Flip vertically</label>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <!-- nombre de enfermedad selecionada -->
+                    <div class="col-md-10">
+                      <div>
+                        <input type="text"  class="form-control-plaintext form-control-lg text-center  txt-diseases" readonly [value]="showDiseases">
+                      </div>
+                    </div>
+                  </div>
 
                 <!-- Section: Spinner progress -->
                           <ng-container *ngIf="hiddenSpinner != false">

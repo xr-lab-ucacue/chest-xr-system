@@ -72,7 +72,7 @@ export class RadiologyComponent implements OnInit {
     }, 1500);
     this.viewUpload = false;
     this.viewRadiology = true;
-    this.MiniTutorial()
+    this.MiniTutorial();
   }
   // <<<<<<<<<
 
@@ -405,6 +405,9 @@ export class RadiologyComponent implements OnInit {
 
     cornerstone.setViewport(element, viewport);
     cornerstone.updateImage(element);
+    
+    this.isInvierte = false
+    this.isPixel = false
   }
 
   colorToolsInactive: any = '#FFFF00';
@@ -484,6 +487,72 @@ export class RadiologyComponent implements OnInit {
   }
   onlyLineWidthToolCornerstone() {
     cornerstoneTools.toolStyle.setToolWidth(this.lineWidhtTool);
+  }
+
+  // dropdown de switchs
+  isInvierte: boolean = false;
+  // invierte colores de negro y blanco
+  invertXray() {
+    var element = document.getElementById('element');
+    setTimeout(() => {
+      var viewport = {
+        invert: this.isInvierte,
+        translation: {
+          x: 0,
+          y: 0,
+        },
+      };
+      cornerstone.setViewport(element, viewport);
+      cornerstone.updateImage(element);
+    }, 100);
+  }
+  isPixel: boolean = false;
+  // pixela la imagen (se usa para distinguir cuando hay mucho zoom)
+  pixelXray() {
+    var element = document.getElementById('element');
+    setTimeout(() => {
+      var viewport = {
+        pixelReplication: this.isPixel,
+        translation: {
+          x: 0,
+          y: 0,
+        },
+      };
+      cornerstone.setViewport(element, viewport);
+      cornerstone.updateImage(element);
+    }, 100);
+  }
+  isFlipH: boolean = false;
+  // imagen se voltea horizontalmente
+  flipHXray() {
+    var element = document.getElementById('element');
+    setTimeout(() => {
+      var viewport = {
+        hflip: this.isFlipH, // verdadero si la imagen se voltea horizontalmente
+        translation: {
+          x: 0,
+          y: 0,
+        },
+      };
+      cornerstone.setViewport(element, viewport);
+      cornerstone.updateImage(element);
+    }, 100);
+  }
+  isFlipV: boolean = false;
+  // imagen se voltea verticalmente
+  flipVXray() {
+    var element = document.getElementById('element');
+    setTimeout(() => {
+      var viewport = {
+        vflip: this.isFlipV, // si la imagen se voltea verticalmente
+        translation: {
+          x: 0,
+          y: 0,
+        },
+      };
+      cornerstone.setViewport(element, viewport);
+      cornerstone.updateImage(element);
+    }, 100);
   }
 
   infoToolModal(tipo: string) {
@@ -566,7 +635,7 @@ export class RadiologyComponent implements OnInit {
           imageHeight: 400,
           imageAlt: 'Classic mouse tutorial',
           background: '#212529',
-          confirmButtonText: 'Next >>',
+          confirmButtonText: 'Next >',
         }).then((result) => {
           if (result.isConfirmed) {
             Swal.fire({
@@ -575,9 +644,21 @@ export class RadiologyComponent implements OnInit {
               imageUrl: '../../assets/imgs/config-tutorial.png',
               imageWidth: 500,
               imageHeight: 400,
-              imageAlt: 'Classic mouse tutorial',
+              imageAlt: 'Tool Sttings',
               background: '#212529',
-              confirmButtonText: 'Ok',
+              confirmButtonText: 'Next >',
+            }).then((result) => {
+              if (result.isConfirmed) {
+                Swal.fire({
+                  html: `<h2 style="color: white;">By clicking on the three points you can access the options for flipping, pixel and inverting the colors of the radiograph.</h2>`,
+                  imageUrl: '../../assets/imgs/captura-switch.png',
+                  imageWidth: 500,
+                  imageHeight: 400,
+                  imageAlt: 'Tool Sttings',
+                  background: '#212529',
+                  confirmButtonText: 'Next >',
+                });
+              }
             });
           }
         });
