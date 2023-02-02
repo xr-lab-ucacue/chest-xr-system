@@ -79,7 +79,7 @@ export class RadiologyComponent implements OnInit {
   diseases: any[] = [];
 
   // Options Horizontal Bar
-  view: [number, number]; // [view]="view" 
+  view: [number, number]; // [view]="view"
   onResize(event) {
     this.view = [event.target.innerWidth / 1.35, 400];
   }

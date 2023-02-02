@@ -5,8 +5,6 @@
 
 -- previsualizar al cargar la img
 
--- ocupar mayor parte de [pantalla] en la radiology
 
--- hacer responsib img radiology y Data
-
--- dentro de configuraciones las opciones de select aplicar estilos de fuentes para poder verlas antes de aplicarlas
+-- Reamplazar el move por el boorador y dejar defecto click derercho mover
+(cambiar tutoriales, configuracion basica del maus clasico y avanzado)
