@@ -1,124 +1,132 @@
-<!-- <input type="file" id="selectFile" > -->
-
-<button (click)="activateTools('Length')">Length</button>
-<button (click)="activateTools('EllipticalRoi')">EllipticalRoi</button>
-<button (click)="activateTools('Rotate')">Rotate</button>
-<button (click)="activateTools('Wwwc')">Wwwc</button>
-<button (click)="activateTools('Pan')">Pan</button>
-<button (click)="activateTools('Angle')">Angle</button>
-<button (click)="activateTools('Bidirectional')">Bidirectional</button>
-<button (click)="activateTools('RectangleRoi')">RectangleRoi</button>
-<br>
-
-
-<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-  <div class="btn-group" role="group">
-    <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-      Selecionar Color
-    </button>
-    <ul class="dropdown-menu">
-      <button (click)="changeColor('autumn')">autumn</button>
-      <button (click)="changeColor('blues')">blues</button>
-      <button (click)="changeColor('bone')">bone</button>
-      <button (click)="changeColor('cool')">cool</button>
-      <button (click)="changeColor('coolwarm')">coolwarm</button>
-      <button (click)="changeColor('copper')">copper</button>
-      <button (click)="changeColor('gray')">gray</button>
-      <button (click)="changeColor('hot')">hot</button>
-      <button (click)="changeColor('hotIron')">hot iron</button>
-      <button (click)="changeColor('hotMetalBlue')">hot metal blue</button>
-      <button (click)="changeColor('pet20Step')">pet20step</button>
-      <button (click)="changeColor('hsv')">hsv</button>
-      <button (click)="changeColor('jet')">jet</button>
-      <button (click)="changeColor('pet')">pet</button>
-      <button (click)="changeColor('spectral')">spectral</button>
-      <button (click)="changeColor('spring')">spring</button>
-      <button (click)="changeColor('summer')">summer</button>
-      <button (click)="changeColor('winter')">winter</button>
-
-    </ul>
-  </div>
-</div>
-
-<br>
-<br>
-
-
-<label for="exampleColorInput" class="form-label">Color Inactive</label>
-<input type="color" class="form-control form-control-color" id="exampleColorInput"  [(ngModel)]="colorToolsInactive"  title="Choose your color">
-
-<label for="exampleColorInput2" class="form-label">Color Active</label>
-<input type="color" class="form-control form-control-color" id="exampleColorInput2"  [(ngModel)]="colorToolsActive"  title="Choose your color">
-<button (click)="changeColorTools()">Aplicar</button>
-
-<br>
-<br>
-
-
 <div>
-  <select [(ngModel)]="fuenteSelecioanda"  id='dropdown'>
-    <option value='' disabled selected>Styles</option>
-    <option value="Default">Default</option>
-    <option value="Aboreto">Aboreto</option>
-    <option value="Audiowide">Audiowide</option>
-    <option value="Bangers">Bangers</option>
-    <option value="Bungee Shade">Bungee Shade</option>
-    <option value="Londrina Outline">Londrina Outline</option>
-    <option value="Megrim">Megrim</option>
-    <option value="Metamorphous">Metamorphous</option>
-    <option value="Noto Serif HK">Noto Serif HK</option>
-    <option value="Play">Play</option>
-    <option value="Poiret One">Poiret One</option>
-    <option value="Redacted Script">Redacted Script</option>
-    <option value="Slackey">Slackey</option>
-    <option value="Solitreo">Solitreo</option>
-    <option value="UnifrakturMaguntia">UnifrakturMaguntia</option>
-    <option value="Zilla Slab Highlight">Zilla Slab Highlight</option>
-  </select>
+  <div>
+    <button (click)="activateTools('Length')">Length</button>
+    <button (click)="activateTools('EllipticalRoi')">EllipticalRoi</button>
+    <button (click)="activateTools('Rotate')">Rotate</button>
+    <button (click)="activateTools('Wwwc')">Wwwc</button>
+    <button (click)="activateTools('Pan')">Pan</button>
+    <button (click)="activateTools('Angle')">Angle</button>
+    <button (click)="activateTools('Bidirectional')">Bidirectional</button>
+    <button (click)="activateTools('RectangleRoi')">RectangleRoi</button>
+  </div>
+  <br>
 
-  <input type="number" min="0" max="100" [(ngModel)]="sizeFont" ondrop="return false;" onpaste="return false;" onkeypress="return event.charCode>=48 && event.charCode<=57"/>
-  <input type="number" min="0" max="100" [(ngModel)]="lineWidhtTool" ondrop="return false;" onpaste="return false;" onkeypress="return event.charCode>=48 && event.charCode<=57"/>
 
-  <button (click)="changeTextCornerstone()">Cambiar txt</button>
-  <button (click)="onlyLineWidthToolCornerstone()">LineWidthTool</button>
+  <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+    <div class="btn-group" role="group">
+      <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+        Selecionar Color
+      </button>
+      <ul class="dropdown-menu">
+        <button (click)="changeColorXray('autumn')">autumn</button>
+        <button (click)="changeColorXray('blues')">blues</button>
+        <button (click)="changeColorXray('bone')">bone</button>
+        <button (click)="changeColorXray('cool')">cool</button>
+        <button (click)="changeColorXray('coolwarm')">coolwarm</button>
+        <button (click)="changeColorXray('copper')">copper</button>
+        <button (click)="changeColorXray('gray')">gray</button>
+        <button (click)="changeColorXray('hot')">hot</button>
+        <button (click)="changeColorXray('hotIron')">hot iron</button>
+        <button (click)="changeColorXray('hotMetalBlue')">hot metal blue</button>
+        <button (click)="changeColorXray('pet20Step')">pet20step</button>
+        <button (click)="changeColorXray('hsv')">hsv</button>
+        <button (click)="changeColorXray('jet')">jet</button>
+        <button (click)="changeColorXray('pet')">pet</button>
+        <button (click)="changeColorXray('spectral')">spectral</button>
+        <button (click)="changeColorXray('spring')">spring</button>
+        <button (click)="changeColorXray('summer')">summer</button>
+        <button (click)="changeColorXray('winter')">winter</button>
+
+      </ul>
+    </div>
+  </div>
+
+  <br>
+  <br>
+
+  <div>
+    <label for="exampleColorInput" class="form-label">Color Inactive</label>
+    <input type="color" class="form-control form-control-color" id="exampleColorInput"  [(ngModel)]="colorToolsInactive"  title="Choose your color">
+
+    <label for="exampleColorInput2" class="form-label">Color Active</label>
+    <input type="color" class="form-control form-control-color" id="exampleColorInput2"  [(ngModel)]="colorToolsActive"  title="Choose your color">
+    <button (click)="changeColorTools()">Aplicar</button>
+  </div>
+
+  <br>
+  <br>
+
+
+  <div>
+    <select [(ngModel)]="fuenteSelecioanda"  id='dropdown'>
+      <option value='' disabled selected>Styles</option>
+      <option value="Default">Default</option>
+      <option value="Aboreto">Aboreto</option>
+      <option value="Audiowide">Audiowide</option>
+      <option value="Bangers">Bangers</option>
+      <option value="Bungee Shade">Bungee Shade</option>
+      <option value="Londrina Outline">Londrina Outline</option>
+      <option value="Megrim">Megrim</option>
+      <option value="Metamorphous">Metamorphous</option>
+      <option value="Noto Serif HK">Noto Serif HK</option>
+      <option value="Play">Play</option>
+      <option value="Poiret One">Poiret One</option>
+      <option value="Redacted Script">Redacted Script</option>
+      <option value="Slackey">Slackey</option>
+      <option value="Solitreo">Solitreo</option>
+      <option value="UnifrakturMaguntia">UnifrakturMaguntia</option>
+      <option value="Zilla Slab Highlight">Zilla Slab Highlight</option>
+    </select>
+
+    <input type="number" min="0" max="100" [(ngModel)]="sizeFont" ondrop="return false;" onpaste="return false;" onkeypress="return event.charCode>=48 && event.charCode<=57"/>
+    <input type="number" min="0" max="100" [(ngModel)]="lineWidhtTool" ondrop="return false;" onpaste="return false;" onkeypress="return event.charCode>=48 && event.charCode<=57"/>
+
+    <button (click)="changeTextCornerstone()">Cambiar txt</button>
+    <button (click)="onlyLineWidthToolCornerstone()">LineWidthTool</button>
+  </div>
+
+  <br>
+  <br>
+
+  <div>
+    <div class="form-check form-switch">
+      <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"  [(ngModel)]="isInvierte" (click)="invertXray()">
+      <label class="form-check-label" for="flexSwitchCheckDefault"> switch</label>
+    </div>
+    invertir {{isInvierte}}
+    <br>
+    <div class="form-check form-switch">
+      <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"  [(ngModel)]="isPixel" (click)="pixelXray()">
+      <label class="form-check-label" for="flexSwitchCheckDefault"> switch</label>
+    </div>
+    pixelar {{isPixel}}
+    <br>
+    <div class="form-check form-switch">
+      <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"  [(ngModel)]="isFlipH" (click)="flipHXray()">
+      <label class="form-check-label" for="flexSwitchCheckDefault"> switch</label>
+    </div>
+    isFlipH {{isFlipH}}
+    <br>
+    <div class="form-check form-switch">
+      <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"  [(ngModel)]="isFlipV" (click)="flipVXray()">
+      <label class="form-check-label" for="flexSwitchCheckDefault"> switch</label>
+    </div>
+    isFlipH {{isFlipV}}
+  </div>
+
+
+  <br>
+  <br>
+
+  <div>
+    <input type="file" class="d-none" (change)="files($event)" #photoInput id="fileInput">
+    <button (click)="photoInput.click()">Clik</button>
+
+    <div class="image-canvas-wrapper my-5" id="element-1">
+      <div id="element" class="cornerstone-element"></div>
+    </div>
+  </div>
+
 </div>
 
-<br>
-<br>
 
-<!-- <div>
-  <div class="form-check form-switch">
-    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"  [(ngModel)]="isInvierte" (click)="invertXray()">
-    <label class="form-check-label" for="flexSwitchCheckDefault"> switch</label>
-  </div>
-  invertir {{isInvierte}}
-  <br>
-  <div class="form-check form-switch">
-    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"  [(ngModel)]="isPixel" (click)="pixelXray()">
-    <label class="form-check-label" for="flexSwitchCheckDefault"> switch</label>
-  </div>
-  pixelar {{isPixel}}
-  <br>
-  <div class="form-check form-switch">
-    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"  [(ngModel)]="isFlipH" (click)="flipHXray()">
-    <label class="form-check-label" for="flexSwitchCheckDefault"> switch</label>
-  </div>
-  isFlipH {{isFlipH}}
-  <br>
-  <div class="form-check form-switch">
-    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"  [(ngModel)]="isFlipV" (click)="flipVXray()">
-    <label class="form-check-label" for="flexSwitchCheckDefault"> switch</label>
-  </div>
-  isFlipH {{isFlipV}}
-</div> -->
-
-
-<br>
-<br>
-
-<input type="file" class="d-none" (change)="files($event)" #photoInput id="fileInput">
-<button (click)="photoInput.click()">Clik</button>
-
-<div class="image-canvas-wrapper my-5" id="element-1">
-  <div id="element" class="cornerstone-element"></div>
-</div>

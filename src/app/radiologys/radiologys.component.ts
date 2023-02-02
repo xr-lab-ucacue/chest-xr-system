@@ -267,7 +267,7 @@ file: File ;
       .catch((e) => console.log(e));
   }
 
-  changeColor(color : string){
+  changeColorXray(color : string){
     var element = document.getElementById('element');
 
     // cornerstone.displayImage(element, image);
@@ -406,10 +406,9 @@ flipVXray(){
       });
   }
 
-  vm = this;
-  activo = false;
   ngOnInit(): void {
   }
+
 
 
 }
