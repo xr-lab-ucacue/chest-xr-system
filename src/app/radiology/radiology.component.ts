@@ -219,6 +219,7 @@ export class RadiologyComponent implements OnInit {
     const BidirectionalTool = cornerstoneTools.BidirectionalTool; // crea una cruz tipo lenghtTool
     const FreehandRoiTool = cornerstoneTools.FreehandRoiTool; // crea lineas a partir de otras (no para hatsa llegar al punto de inico)
     const RectangleRoiTool = cornerstoneTools.RectangleRoiTool; // rectangulo calcula el area
+    const EraserTool = cornerstoneTools.EraserTool; // borrador
 
     cornerstone.enable(element);
 
@@ -253,9 +254,9 @@ export class RadiologyComponent implements OnInit {
         cornerstoneTools.setToolActive('Wwwc', { mouseButtonMask: 1 });
         break;
 
-      case 'Pan':
-        cornerstoneTools.addTool(PanTool);
-        cornerstoneTools.setToolActive('Pan', { mouseButtonMask: 1 });
+      case 'Eraser':
+        cornerstoneTools.addTool(EraserTool);
+        cornerstoneTools.setToolActive('Eraser', { mouseButtonMask: 1 });
         break;
 
       case 'Angle':
@@ -329,12 +330,12 @@ export class RadiologyComponent implements OnInit {
     cornerstoneTools.addTool(OrientationMarkersTool);
 
     //herramientas activas por defecto
-    cornerstoneTools.setToolActive('Pan', { mouseButtonMask: 16 }); // Browser Forward
+    cornerstoneTools.setToolActive('Eraser', { mouseButtonMask: 16 }); // Browser Forward
     cornerstoneTools.setToolActive('Rotate', { mouseButtonMask: 8 }); // Browser Back
 
+    cornerstoneTools.setToolActive('Pan', { mouseButtonMask: 2 }); // Borrador
     cornerstoneTools.setToolActive('ZoomMouseWheel', { mouseButtonMask: 0 }); // rueda de maus
     cornerstoneTools.setToolActive('Magnify', { mouseButtonMask: 4 }); // boton rueda
-    cornerstoneTools.setToolActive('Eraser', { mouseButtonMask: 2 }); //  click derecho
     cornerstoneTools.setToolActive('ScaleOverlay', { mouseButtonMask: 0 });
     cornerstoneTools.setToolActive('OrientationMarkers', {
       mouseButtonMask: 0,
@@ -639,6 +640,10 @@ export class RadiologyComponent implements OnInit {
           imageAlt: 'Classic mouse tutorial',
           background: '#212529',
           confirmButtonText: 'Next >',
+          showCancelButton: true,
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          allowEnterKey: false,
         }).then((result) => {
           if (result.isConfirmed) {
             Swal.fire({
@@ -650,6 +655,10 @@ export class RadiologyComponent implements OnInit {
               imageAlt: 'Tool Sttings',
               background: '#212529',
               confirmButtonText: 'Next >',
+              showCancelButton: true,
+              allowOutsideClick: false,
+              allowEscapeKey: false,
+              allowEnterKey: false,
             }).then((result) => {
               if (result.isConfirmed) {
                 Swal.fire({
@@ -660,7 +669,22 @@ export class RadiologyComponent implements OnInit {
                   imageAlt: 'Tool Sttings',
                   background: '#212529',
                   confirmButtonText: 'Next >',
-                });
+                  showCancelButton: true,
+              allowOutsideClick: false,
+              allowEscapeKey: false,
+              allowEnterKey: false,
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    Swal.fire({
+                      html: `<h1 style="color: white;">🎊🎉Congratulations!🎉🎊</h1> <br> <h4 style="color: white;">Now you can start working.</h4>`,
+                      background: '#212529',
+                      imageUrl: '../../assets/imgs/giphy.gif',
+                      imageWidth: 400,
+                      imageHeight: 200,
+                      imageAlt: 'Congratulations For end turial',
+                    });
+                  }
+                })
               }
             });
           }

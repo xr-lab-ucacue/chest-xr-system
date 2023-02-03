@@ -1,5 +1,5 @@
 <div class="fondo">
-  <ng-container *ngIf="viewUpload == !true">
+  <ng-container *ngIf="viewUpload == true">
     <div class="fondo">
       <div class="container">
         <div class="row">
@@ -71,7 +71,7 @@
     </div>
   </ng-container>
 
-  <ng-container *ngIf="viewRadiology == !true">
+  <ng-container *ngIf="viewRadiology == true">
     <div class="container-fluid text-center">
       <div class="row">
         <!-- tools de Cornerstone>>>>>> -->
@@ -446,8 +446,8 @@
             <label
               class="btn btn-outline-primary btn-group-tools"
               for="btnradio5"
-              (click)="activateTools('Pan')"
-              ><i class="bi bi-arrows-move"></i> Move</label
+              (click)="activateTools('Eraser')"
+              ><i class="bi bi-eraser-fill"></i> Eraser</label
             >
 
             <input
@@ -806,7 +806,7 @@
         <!-- <<<<<<<tools de Cornerstone -->
 
         <!-- tarjetas de enfermedad>>>> -->
-        <div class="col-2 cards-left">
+        <div class="col-2 col-xs-12 col-sm-12 col-md-12 col-lg-2 col-xl-2 col-xxl-2 cards-left">
           <div
             class="container card my-3 card-container"
             style="width: 18rem"
@@ -829,7 +829,7 @@
         <!-- <<<<tarjetas de enfermedad -->
 
         <!-- Radiologya y Data -->
-        <div class="col-10">
+        <div class="col-10 col-xs-12 col-sm-12 col-md-12 col-lg-10 col-lxg10 col-lxxg10 ">
           <div class="row">
             <!-- Radiology Image>>>> -->
             <div class="col-8">
