@@ -330,8 +330,14 @@ export class RadiologyComponent implements OnInit {
     cornerstoneTools.addTool(OrientationMarkersTool);
 
     //herramientas activas por defecto
-    cornerstoneTools.setToolActive('Eraser', { mouseButtonMask: 16 }); // Browser Forward
+    window.addEventListener('keydown', (event) => {
+      if (event.altKey) {
+        console.log('¡Genial!');
+        cornerstoneTools.setToolActive('Rotate', { mouseButtonMask: 1 }); // Browser Back
+      }
+    });
     cornerstoneTools.setToolActive('Rotate', { mouseButtonMask: 8 }); // Browser Back
+    cornerstoneTools.setToolActive('Eraser', { mouseButtonMask: 16 }); // Browser Forward
 
     cornerstoneTools.setToolActive('Pan', { mouseButtonMask: 2 }); // Borrador
     cornerstoneTools.setToolActive('ZoomMouseWheel', { mouseButtonMask: 0 }); // rueda de maus
@@ -410,8 +416,8 @@ export class RadiologyComponent implements OnInit {
     cornerstone.setViewport(element, viewport);
     cornerstone.updateImage(element);
 
-    this.isInvierte = false
-    this.isPixel = false
+    this.isInvierte = false;
+    this.isPixel = false;
   }
 
   colorToolsInactive: any = '#FFFF00';
@@ -670,9 +676,9 @@ export class RadiologyComponent implements OnInit {
                   background: '#212529',
                   confirmButtonText: 'Next >',
                   showCancelButton: true,
-              allowOutsideClick: false,
-              allowEscapeKey: false,
-              allowEnterKey: false,
+                  allowOutsideClick: false,
+                  allowEscapeKey: false,
+                  allowEnterKey: false,
                 }).then((result) => {
                   if (result.isConfirmed) {
                     Swal.fire({
@@ -684,7 +690,7 @@ export class RadiologyComponent implements OnInit {
                       imageAlt: 'Congratulations For end turial',
                     });
                   }
-                })
+                });
               }
             });
           }
