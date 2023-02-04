@@ -359,7 +359,7 @@ export class RadiologyComponent implements OnInit {
     });
   }
 
-  // prueba de stack Img
+  // funcion de ver por stack varios dicom
   stackDicom(uploadFiles: any): any {
     this.hiddenSpinner = false;
 
@@ -454,6 +454,7 @@ export class RadiologyComponent implements OnInit {
   }
   parametroTrue: boolean = true;
 
+  //esta funcion solo sirve para 1 dicom y no se esta usando
   files(fileUp: any): any {
     this.hiddenSpinner = false;
 

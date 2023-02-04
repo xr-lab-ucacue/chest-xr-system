@@ -3,8 +3,4 @@
 
 -- alerta de error si el archivo no es dicom
 
--- previsualizar al cargar la img
-
-
--- Reamplazar el move por el boorador y dejar defecto click derercho mover
-(cambiar tutoriales, configuracion basica del maus clasico y avanzado)
+-- porbar( en tool mandar toda las herramientas podria evitar el redimencionamiento al cambiar de herramienta)
