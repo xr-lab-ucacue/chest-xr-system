@@ -20,10 +20,10 @@
                 <!-- File -->
                 <input
                   type="file"
-                  accept=".dcm"
                   class="d-none"
                   (change)="onPhotoSelected($event)"
                   #photoInput
+                  multiple
                 />
                 <!-- Img -->
                 <div class="img-upload">
@@ -76,6 +76,12 @@
       <div class="row">
         <!-- tools de Cornerstone>>>>>> -->
         <div class="my-3">
+
+          <!-- btn-ctrl-desactive -->
+          <ng-container *ngIf="CtrlActive == true">
+            <button class="btn-CtrlDesactive" (click)="desactiveAltKey()">Crtl</button>
+          </ng-container>
+
           <!-- btn Configuraciones OffCanvas-->
           <button
             class="btn btn-outline-primary btn-xray mx-1"
@@ -518,6 +524,20 @@
               for="btnradio10"
               (click)="activateTools('FreehandRoi')"
               ><i class="bi bi-bezier2"></i> Polygons</label
+            >
+
+            <input
+              type="radio"
+              class="btn-check"
+              name="btnradio"
+              id="btnradio11"
+              autocomplete="off"
+            />
+            <label
+              class="btn btn-outline-primary btn-group-tools"
+              for="btnradio11"
+              (click)="activateTools('StackScroll')"
+              ><i class="bi bi-stack"></i> Stack</label
             >
           </div>
 

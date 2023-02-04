@@ -283,23 +283,14 @@ export class RadiologysComponent implements OnInit {
 
   // prueba de stack Img
   stackDicom(event: any): any {
-    // Style de tools
-    const fontFamily =
-      'Work Sans, Roboto, OpenSans, HelveticaNeue-Light, Helvetica Neue Light, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif';
-    cornerstoneTools.textStyle.setFont(`16px ${fontFamily}`);
-    // Set the tool width
-    cornerstoneTools.toolStyle.setToolWidth(1);
-    // Set color for inactive tools
-    cornerstoneTools.toolColors.setToolColor('rgb(255, 255, 0)');
-    // Set color for active tools
-    cornerstoneTools.toolColors.setActiveColor('rgb(0, 255, 0)');
-
     cornerstoneTools.external.cornerstone = cornerstone;
     cornerstoneTools.external.cornerstoneMath = cornerstoneMath;
     cornerstoneTools.external.Hammer = Hammer;
     cornerstoneTools.init();
+
     cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
     cornerstoneWADOImageLoader.external.dicomParser = dicomParser;
+
     cornerstoneWADOImageLoader.webWorkerManager.initialize({
       maxWebWorkers: navigator.hardwareConcurrency || 1,
       startWebWorkersOnDemand: true,

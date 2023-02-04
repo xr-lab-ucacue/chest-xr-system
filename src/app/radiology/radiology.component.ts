@@ -46,29 +46,28 @@ export class RadiologyComponent implements OnInit {
   hiddenTxt: boolean = true;
   hiddenSpinner: boolean = false;
   displayButton: boolean = true;
+
   // Upload photo
   onPhotoSelected(event: any): any {
     if (event.target.files && event.target.files[0]) {
-      this.file = <File>event.target.files[0];
-      // image preview
-      const reader = new FileReader();
-      // reader.onload = e => this.photoSelected = reader.result;
-      reader.onload = (e) =>
-        (this.photoSelected = '../../assets/imgs/giphy.gif');
-      reader.readAsDataURL(this.file);
+      this.file = <File>event.target.files;
+      this.photoSelected = '../../assets/imgs/giphy.gif';
+
       // hiddens
       this.hiddenTxt = false;
       this.displayButton = false;
-      //retorno file
     }
   }
+
+  multipleFile() {}
 
   // Bar progress
   loading() {
     this.hiddenSpinner = true;
     setTimeout(() => {
       // console.log('hello');
-      this.files(this.file);
+      // this.files(this.file);
+      this.stackDicom(this.file);
     }, 1500);
     this.viewUpload = false;
     this.viewRadiology = true;
@@ -206,6 +205,18 @@ export class RadiologyComponent implements OnInit {
     });
   }
 
+  CtrlActive: boolean;
+  desactiveAltKey() {
+    this.CtrlActive = false;
+    const element = document.getElementById('element');
+    cornerstone.enable(element);
+
+    const ZoomMouseWheelTool = cornerstoneTools.ZoomMouseWheelTool; // zoom
+
+    cornerstoneTools.addTool(ZoomMouseWheelTool);
+    cornerstoneTools.setToolActive('ZoomMouseWheel', {});
+  }
+
   activateTools(toolActive: string) {
     const element = document.getElementById('element');
 
@@ -220,6 +231,7 @@ export class RadiologyComponent implements OnInit {
     const FreehandRoiTool = cornerstoneTools.FreehandRoiTool; // crea lineas a partir de otras (no para hatsa llegar al punto de inico)
     const RectangleRoiTool = cornerstoneTools.RectangleRoiTool; // rectangulo calcula el area
     const EraserTool = cornerstoneTools.EraserTool; // borrador
+    const StackScrollTool = cornerstoneTools.StackScrollTool; // Add our tool, and set it's mode
 
     cornerstone.enable(element);
 
@@ -279,8 +291,13 @@ export class RadiologyComponent implements OnInit {
         cornerstoneTools.setToolActive('FreehandRoi', { mouseButtonMask: 1 });
         break;
 
+      case 'StackScroll':
+        cornerstoneTools.addTool(StackScrollTool);
+        cornerstoneTools.setToolActive('StackScroll', { mouseButtonMask: 1 });
+        break;
+
       default:
-        console.log('No such day exists!');
+        console.log('No exists!');
         break;
     }
   }
@@ -330,16 +347,10 @@ export class RadiologyComponent implements OnInit {
     cornerstoneTools.addTool(OrientationMarkersTool);
 
     //herramientas activas por defecto
-    window.addEventListener('keydown', (event) => {
-      if (event.altKey) {
-        console.log('¡Genial!');
-        cornerstoneTools.setToolActive('Rotate', { mouseButtonMask: 1 }); // Browser Back
-      }
-    });
-    cornerstoneTools.setToolActive('Rotate', { mouseButtonMask: 8 }); // Browser Back
-    cornerstoneTools.setToolActive('Eraser', { mouseButtonMask: 16 }); // Browser Forward
+    cornerstoneTools.setToolActive('Rotate', { mouseButtonMask: 8 }); // Browser Back No funciona
+    cornerstoneTools.setToolActive('Eraser', { mouseButtonMask: 16 }); // Browser Forward No funciona
 
-    cornerstoneTools.setToolActive('Pan', { mouseButtonMask: 2 }); // Borrador
+    cornerstoneTools.setToolActive('Pan', { mouseButtonMask: 2 }); // mover
     cornerstoneTools.setToolActive('ZoomMouseWheel', { mouseButtonMask: 0 }); // rueda de maus
     cornerstoneTools.setToolActive('Magnify', { mouseButtonMask: 4 }); // boton rueda
     cornerstoneTools.setToolActive('ScaleOverlay', { mouseButtonMask: 0 });
@@ -347,6 +358,101 @@ export class RadiologyComponent implements OnInit {
       mouseButtonMask: 0,
     });
   }
+
+  // prueba de stack Img
+  stackDicom(uploadFiles: any): any {
+    this.hiddenSpinner = false;
+
+    cornerstoneTools.external.cornerstone = cornerstone;
+    cornerstoneTools.external.cornerstoneMath = cornerstoneMath;
+    cornerstoneTools.external.Hammer = Hammer;
+    cornerstoneTools.init();
+
+    cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
+    cornerstoneWADOImageLoader.external.dicomParser = dicomParser;
+
+    cornerstoneWADOImageLoader.webWorkerManager.initialize({
+      maxWebWorkers: navigator.hardwareConcurrency || 1,
+      startWebWorkersOnDemand: true,
+      webWorkerPath: 'cornerstoneWADOImageLoaderWebWorker.min.js',
+      taskConfiguration: {
+        decodeTask: {
+          loadCodecsOnStartup: true,
+          initializeCodecsOnStartup: false,
+          codecsPath: 'cornerstoneWADOImageLoaderCodecs.min.js',
+        },
+      },
+    });
+
+    var element = document.getElementById('element');
+    cornerstone.enable(element);
+    this.Tools();
+
+    const imageIds = [];
+    Array.prototype.forEach.call(uploadFiles, function (file) {
+      const imageId = cornerstoneWADOImageLoader.wadouri.fileManager.add(file);
+      imageIds.push(imageId);
+    });
+
+    // Add our tool, and set it's mode
+    const StackScrollMouseWheelTool =
+      cornerstoneTools.StackScrollMouseWheelTool;
+
+    //define the stack
+    const stack = {
+      currentImageIdIndex: 0,
+      imageIds: imageIds,
+    };
+
+    // load images and set the stack
+    cornerstone
+      .loadImage(imageIds[0])
+      .then((image) => {
+        cornerstone.displayImage(element, image);
+        cornerstoneTools.addStackStateManager(element, ['stack']);
+        cornerstoneTools.addToolState(element, 'stack', stack);
+      })
+      .catch((e) => {
+        Swal.fire(
+          'Error',
+          'Something is wrong when loading the x-ray',
+          'error'
+        );
+        console.log(e);
+      });
+
+    if (imageIds.length > 1) {
+      window.addEventListener('keydown', (event) => {
+        if (event.ctrlKey) {
+          this.CtrlActive = true;
+          console.log('Frames Habilitado');
+          cornerstoneTools.addTool(StackScrollMouseWheelTool);
+          cornerstoneTools.setToolActive('StackScrollMouseWheel', {});
+        }
+      });
+    } else {
+      Swal.fire({
+        title: 'Are you sure to continue?',
+        text: "You only uploaded one .dcm, you won't be able to see the other frames",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes continue!',
+        cancelButtonText: 'No, cancel!',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        allowEnterKey: false,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.MiniTutorial();
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          window.location.reload();
+        }
+      });
+    }
+  }
+  parametroTrue: boolean = true;
 
   files(fileUp: any): any {
     this.hiddenSpinner = false;
@@ -389,7 +495,11 @@ export class RadiologyComponent implements OnInit {
         console.log(image);
       })
       .catch((e) => {
-        Swal.fire('Error', 'Algo Fallo!!', 'error');
+        Swal.fire(
+          'Error',
+          'Something is wrong when loading the x-ray',
+          'error'
+        );
         console.log(e);
       });
   }
@@ -632,10 +742,7 @@ export class RadiologyComponent implements OnInit {
       cancelButtonColor: '#3085d6',
       confirmButtonText: "OK, let's go",
       cancelButtonText: "I don't need it",
-      showCancelButton: true,
-      allowOutsideClick: false,
-      allowEscapeKey: false,
-      allowEnterKey: false,
+      showCancelButton: true
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire({
@@ -672,7 +779,7 @@ export class RadiologyComponent implements OnInit {
                   imageUrl: '../../assets/imgs/captura-switch.png',
                   imageWidth: 500,
                   imageHeight: 400,
-                  imageAlt: 'Tool Sttings',
+                  imageAlt: 'three points Sttings',
                   background: '#212529',
                   confirmButtonText: 'Next >',
                   showCancelButton: true,
@@ -682,12 +789,36 @@ export class RadiologyComponent implements OnInit {
                 }).then((result) => {
                   if (result.isConfirmed) {
                     Swal.fire({
-                      html: `<h1 style="color: white;">🎊🎉Congratulations!🎉🎊</h1> <br> <h4 style="color: white;">Now you can start working.</h4>`,
+                      html: `
+                      <h2 style="color: white;">To see the frames you can do them in two ways:</h2>
+                      <ol >
+                        <li style="color: white;">Press <kbd style="background: grey;">CTRL</kbd> to activate it and use the mouse wheel.</li>
+                        <li style="color: white;">Click on the Stack button and left click to use.</li>
+                      </ol>
+                      <br>
+                      <h4 style="color: white;">If activated by keyboard, the zoom tool on the mouse wheel will be replaced by it. To deactivate it, press the red blinking button.</h4>
+                      `,
+                      imageUrl: '../../assets/imgs/tutorial-Ctrl.png',
+                      imageWidth: 500,
+                      imageHeight: 400,
+                      imageAlt: 'Ctrl Stack Frames Settings',
                       background: '#212529',
-                      imageUrl: '../../assets/imgs/giphy.gif',
-                      imageWidth: 400,
-                      imageHeight: 200,
-                      imageAlt: 'Congratulations For end turial',
+                      confirmButtonText: 'Next >',
+                      showCancelButton: true,
+                      allowOutsideClick: false,
+                      allowEscapeKey: false,
+                      allowEnterKey: false,
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        Swal.fire({
+                          html: `<h1 style="color: white;">🎊🎉Congratulations!🎉🎊</h1> <br> <h4 style="color: white;">Now you can start working.</h4>`,
+                          background: '#212529',
+                          imageUrl: '../../assets/imgs/giphy.gif',
+                          imageWidth: 400,
+                          imageHeight: 200,
+                          imageAlt: 'Congratulations For end turial',
+                        });
+                      }
                     });
                   }
                 });
@@ -705,3 +836,4 @@ export class RadiologyComponent implements OnInit {
     this.diaseasesOnly();
   }
 }
+
