@@ -68,7 +68,7 @@ export class RadiologyComponent implements OnInit {
       // console.log('hello');
       // this.files(this.file);
       this.stackDicom(this.file);
-    }, 1500);
+    }, 500);
     this.viewUpload = false;
     this.viewRadiology = true;
     this.MiniTutorial();
@@ -208,8 +208,6 @@ export class RadiologyComponent implements OnInit {
   CtrlActive: boolean;
   desactiveAltKey() {
     this.CtrlActive = false;
-    const element = document.getElementById('element');
-    cornerstone.enable(element);
 
     const ZoomMouseWheelTool = cornerstoneTools.ZoomMouseWheelTool; // zoom
 
@@ -223,78 +221,117 @@ export class RadiologyComponent implements OnInit {
     const ArrowAnnotateTool = cornerstoneTools.ArrowAnnotateTool;
     const RotateTool = cornerstoneTools.RotateTool;
     const WwwcTool = cornerstoneTools.WwwcTool; // brillo
-    const PanTool = cornerstoneTools.PanTool; // mover img por el canvas
     const AngleTool = cornerstoneTools.AngleTool;
     const BidirectionalTool = cornerstoneTools.BidirectionalTool; // crea una cruz tipo lenghtTool
     const FreehandRoiTool = cornerstoneTools.FreehandRoiTool; // crea lineas a partir de otras (no para hatsa llegar al punto de inico)
     const RectangleRoiTool = cornerstoneTools.RectangleRoiTool; // rectangulo calcula el area
     const EraserTool = cornerstoneTools.EraserTool; // borrador
     const StackScrollTool = cornerstoneTools.StackScrollTool; // Add our tool, and set it's mode
+    const CobbAngleTool = cornerstoneTools.CobbAngleTool; // amgules cobb
+    const TextMarkerTool = cornerstoneTools.TextMarkerTool; // mark perzonalites
+    const ProbeTool = cornerstoneTools.ProbeTool;// marks
 
-    switch (toolActive) {
-      case 'Length':
-        cornerstoneTools.addTool(LengthTool);
-        cornerstoneTools.setToolActive('Length', { mouseButtonMask: 1 });
-        break;
+    try {
+      switch (toolActive) {
+        case 'Length':
+          cornerstoneTools.addTool(LengthTool);
+          cornerstoneTools.setToolActive('Length', { mouseButtonMask: 1 });
+          break;
 
-      case 'EllipticalRoi':
-        cornerstoneTools.addTool(EllipticalRoiTool);
-        cornerstoneTools.setToolActive('EllipticalRoi', { mouseButtonMask: 1 });
-        break;
+        case 'EllipticalRoi':
+          cornerstoneTools.addTool(EllipticalRoiTool);
+          cornerstoneTools.setToolActive('EllipticalRoi', {
+            mouseButtonMask: 1,
+          });
+          break;
 
-      case 'ArrowAnnotate':
-        cornerstoneTools.addTool(ArrowAnnotateTool);
-        cornerstoneTools.setToolActive('ArrowAnnotate', { mouseButtonMask: 1 });
-        break;
+        case 'ArrowAnnotate':
+          cornerstoneTools.addTool(ArrowAnnotateTool);
+          cornerstoneTools.setToolActive('ArrowAnnotate', {
+            mouseButtonMask: 1,
+          });
+          break;
 
-      case 'FreehandRoi':
-        cornerstoneTools.addTool(FreehandRoiTool);
-        cornerstoneTools.setToolActive('FreehandRoi', { mouseButtonMask: 1 });
-        break;
+        case 'FreehandRoi':
+          cornerstoneTools.addTool(FreehandRoiTool);
+          cornerstoneTools.setToolActive('FreehandRoi', { mouseButtonMask: 1 });
+          break;
 
-      case 'Rotate':
-        cornerstoneTools.addTool(RotateTool);
-        cornerstoneTools.setToolActive('Rotate', { mouseButtonMask: 1 });
-        break;
+        case 'Rotate':
+          cornerstoneTools.addTool(RotateTool);
+          cornerstoneTools.setToolActive('Rotate', { mouseButtonMask: 1 });
+          break;
 
-      case 'Wwwc':
-        cornerstoneTools.addTool(WwwcTool);
-        cornerstoneTools.setToolActive('Wwwc', { mouseButtonMask: 1 });
-        break;
+        case 'Wwwc':
+          cornerstoneTools.addTool(WwwcTool);
+          cornerstoneTools.setToolActive('Wwwc', { mouseButtonMask: 1 });
+          break;
 
-      case 'Eraser':
-        cornerstoneTools.addTool(EraserTool);
-        cornerstoneTools.setToolActive('Eraser', { mouseButtonMask: 1 });
-        break;
+        case 'Eraser':
+          cornerstoneTools.addTool(EraserTool);
+          cornerstoneTools.setToolActive('Eraser', { mouseButtonMask: 1 });
+          break;
 
-      case 'Angle':
-        cornerstoneTools.addTool(AngleTool);
-        cornerstoneTools.setToolActive('Angle', { mouseButtonMask: 1 });
-        break;
+        case 'Angle':
+          cornerstoneTools.addTool(AngleTool);
+          cornerstoneTools.setToolActive('Angle', { mouseButtonMask: 1 });
+          break;
 
-      case 'Bidirectional':
-        cornerstoneTools.addTool(BidirectionalTool);
-        cornerstoneTools.setToolActive('Bidirectional', { mouseButtonMask: 1 });
-        break;
+        case 'Bidirectional':
+          cornerstoneTools.addTool(BidirectionalTool);
+          cornerstoneTools.setToolActive('Bidirectional', {
+            mouseButtonMask: 1,
+          });
+          break;
 
-      case 'RectangleRoi':
-        cornerstoneTools.addTool(RectangleRoiTool);
-        cornerstoneTools.setToolActive('RectangleRoi', { mouseButtonMask: 1 });
-        break;
+        case 'RectangleRoi':
+          cornerstoneTools.addTool(RectangleRoiTool);
+          cornerstoneTools.setToolActive('RectangleRoi', {
+            mouseButtonMask: 1,
+          });
+          break;
 
-      case 'FreehandRoi':
-        cornerstoneTools.addTool(FreehandRoiTool);
-        cornerstoneTools.setToolActive('FreehandRoi', { mouseButtonMask: 1 });
-        break;
+        case 'FreehandRoi':
+          cornerstoneTools.addTool(FreehandRoiTool);
+          cornerstoneTools.setToolActive('FreehandRoi', { mouseButtonMask: 1 });
+          break;
 
-      case 'StackScroll':
-        cornerstoneTools.addTool(StackScrollTool);
-        cornerstoneTools.setToolActive('StackScroll', { mouseButtonMask: 1 });
-        break;
+        case 'CobbAngle':
+          cornerstoneTools.addTool(CobbAngleTool);
+          cornerstoneTools.setToolActive('CobbAngle', { mouseButtonMask: 1 });
+          break;
 
-      default:
-        console.log('No exists!');
-        break;
+        case 'StackScroll':
+          cornerstoneTools.addTool(StackScrollTool);
+          cornerstoneTools.setToolActive('StackScroll', { mouseButtonMask: 1 });
+          break;
+
+        case 'Probe':
+          cornerstoneTools.addTool(ProbeTool);
+          cornerstoneTools.setToolActive('Probe', { mouseButtonMask: 1 });
+          break;
+
+        case 'TextMarker':
+          const configuration = {
+            markers: ['F5', 'F4', 'F3', 'F2', 'F1'],
+            current: 'Double click to change text',
+            ascending: true,
+            loop: true,
+          };
+          cornerstoneTools.addTool(TextMarkerTool, { configuration });
+          cornerstoneTools.setToolActive('TextMarker', { mouseButtonMask: 1 });
+          break;
+
+        default:
+          Swal.fire(
+            "Don't found",
+            'Tool not found / or could an error occur',
+            'error'
+          );
+          break;
+      }
+    } catch (error) {
+      console.log('Error: ', error);
     }
   }
 
@@ -357,7 +394,9 @@ export class RadiologyComponent implements OnInit {
     cornerstoneTools.external.cornerstone = cornerstone;
     cornerstoneTools.external.cornerstoneMath = cornerstoneMath;
     cornerstoneTools.external.Hammer = Hammer;
-    cornerstoneTools.init();
+    cornerstoneTools.init({
+      showSVGCursors: true,
+    });
 
     cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
     cornerstoneWADOImageLoader.external.dicomParser = dicomParser;
@@ -734,7 +773,7 @@ export class RadiologyComponent implements OnInit {
       cancelButtonColor: '#3085d6',
       confirmButtonText: "OK, let's go",
       cancelButtonText: "I don't need it",
-      showCancelButton: true
+      showCancelButton: true,
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire({
@@ -828,4 +867,3 @@ export class RadiologyComponent implements OnInit {
     this.diaseasesOnly();
   }
 }
-

@@ -467,7 +467,7 @@
               class="btn btn-outline-primary btn-group-tools"
               for="btnradio6"
               (click)="activateTools('Angle')"
-              ><i class="bi bi-chevron-bar-down"></i> Angle</label
+              ><i class="bi bi-chevron-bar-left"></i> Angle</label
             >
 
             <input
@@ -495,7 +495,7 @@
               class="btn btn-outline-primary btn-group-tools"
               for="btnradio8"
               (click)="activateTools('RectangleRoi')"
-              ><i class="bi bi-aspect-ratio"></i> Rectangle</label
+              ><i class="bi bi-square"></i> Rectangle</label
             >
 
             <input
@@ -522,8 +522,8 @@
             <label
               class="btn btn-outline-primary btn-group-tools"
               for="btnradio10"
-              (click)="activateTools('FreehandRoi')"
-              ><i class="bi bi-bezier2"></i> Polygons</label
+              (click)="activateTools('TextMarker')"
+              ><i class="bi bi-fonts"></i>Marker</label
             >
 
             <input
@@ -536,6 +536,48 @@
             <label
               class="btn btn-outline-primary btn-group-tools"
               for="btnradio11"
+              (click)="activateTools('FreehandRoi')"
+              ><i class="bi bi-bezier2"></i> Polygons</label
+            >
+
+            <input
+              type="radio"
+              class="btn-check"
+              name="btnradio"
+              id="btnradio12"
+              autocomplete="off"
+            />
+            <label
+              class="btn btn-outline-primary btn-group-tools"
+              for="btnradio12"
+              (click)="activateTools('CobbAngle')"
+              ><i class="bi bi-chevron-bar-expand"></i> CobbAngle</label
+            >
+
+            <input
+              type="radio"
+              class="btn-check"
+              name="btnradio"
+              id="btnradio13"
+              autocomplete="off"
+            />
+            <label
+              class="btn btn-outline-primary btn-group-tools"
+              for="btnradio13"
+              (click)="activateTools('Probes')"
+              ><i class="bi bi-record-circle"></i> Probe</label
+            >
+
+            <input
+              type="radio"
+              class="btn-check"
+              name="btnradio"
+              id="btnradio14"
+              autocomplete="off"
+            />
+            <label
+              class="btn btn-outline-primary btn-group-tools"
+              for="btnradio14"
               (click)="activateTools('StackScroll')"
               ><i class="bi bi-stack"></i> Stack</label
             >

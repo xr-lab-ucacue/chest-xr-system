@@ -53,6 +53,7 @@ export class RadiologysComponent implements OnInit {
     const BidirectionalTool = cornerstoneTools.BidirectionalTool; // crea una cruz tipo lenghtTool
     const FreehandRoiTool = cornerstoneTools.FreehandRoiTool; // crea lineas a partir de otras (no para hatsa llegar al punto de inico)
     const RectangleRoiTool = cornerstoneTools.RectangleRoiTool; // rectangulo calcula el area
+    const TextMarkerTool = cornerstoneTools.TextMarkerTool // mark perzonalites
 
     cornerstone.enable(element);
 
@@ -105,6 +106,17 @@ export class RadiologysComponent implements OnInit {
       case 'RectangleRoi':
         cornerstoneTools.addTool(RectangleRoiTool);
         cornerstoneTools.setToolActive('RectangleRoi', { mouseButtonMask: 1 });
+        break;
+
+      case 'TextMarker':
+        const configuration = {
+          markers: ['F5', 'F4', 'F3', 'F2', 'F1'],
+          current: 'Double click to change text',
+          ascending: true,
+          loop: true,
+        }
+        cornerstoneTools.addTool(TextMarkerTool, { configuration })
+        cornerstoneTools.setToolActive('TextMarker', { mouseButtonMask: 1 })
         break;
 
       default:
@@ -206,15 +218,13 @@ export class RadiologysComponent implements OnInit {
     cornerstoneTools.toolColors.setActiveColor('rgb(0, 255, 0)');
 
     // Despligue de herramientas
-    const element = document.getElementById('element');
+    // const element = document.getElementById('element');
 
     const ZoomMouseWheelTool = cornerstoneTools.ZoomMouseWheelTool; // zoom
     const EraserTool = cornerstoneTools.EraserTool; // borrador
     const MagnifyTool = cornerstoneTools.MagnifyTool; // lupa
     const ScaleOverlayTool = cornerstoneTools.ScaleOverlayTool; // escala
     const OrientationMarkersTool = cornerstoneTools.OrientationMarkersTool; // letras de orientacion
-
-    cornerstone.enable(element);
 
     cornerstoneTools.addTool(ZoomMouseWheelTool);
     cornerstoneTools.addTool(EraserTool);
@@ -286,7 +296,9 @@ export class RadiologysComponent implements OnInit {
     cornerstoneTools.external.cornerstone = cornerstone;
     cornerstoneTools.external.cornerstoneMath = cornerstoneMath;
     cornerstoneTools.external.Hammer = Hammer;
-    cornerstoneTools.init();
+    cornerstoneTools.init({
+      showSVGCursors: true,
+    });
 
     cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
     cornerstoneWADOImageLoader.external.dicomParser = dicomParser;
@@ -307,6 +319,29 @@ export class RadiologysComponent implements OnInit {
     var element = document.getElementById('element');
     cornerstone.enable(element);
     this.Tools()
+
+
+
+    // Grab a cursor
+    const cursors = cornerstoneTools.import('tools/cursors');
+    const cursor = cursors.arrowAnnotateCursor; // `MouseCursor` class
+
+    // Create and display cursor image
+    const cursorImg = document.createElement('img');
+    // const cursorImgUrl = window.URL.createObjectURL(cursor.iconSVG);
+    const cursorImgUrl = 'http://www.w3.org/2000/svg'
+
+    cursorImg.src = cursorImgUrl;
+    document.querySelector('body').appendChild(cursorImg);
+
+    // Create and display cursor image w/ pointer
+    const cursorImgPointer = document.createElement('img');
+    // const cursorImgPointerUrl = window.URL.createObjectURL(cursor.blob);
+    const cursorImgPointerUrl = "http://www.w3.org/2000/svg"
+
+    cursorImgPointer.src = cursorImgPointerUrl;
+    document.querySelector('body').appendChild(cursorImgPointer);
+
 
     this.file = <File>event.target.files;
 

@@ -8,6 +8,7 @@
     <button (click)="activateTools('Angle')">Angle</button>
     <button (click)="activateTools('Bidirectional')">Bidirectional</button>
     <button (click)="activateTools('RectangleRoi')">RectangleRoi</button>
+    <button (click)="activateTools('TextMarker')">TextMarker</button>
   </div>
   <br>
 
@@ -118,6 +119,7 @@
   <br>
   <br>
 
+  <div class="cursor-list-with-pointer"></div>
   <div>
     <h4>File</h4>
     <input type="file" class="d-none" (change)="files($event)" #photoInput id="fileInput">
