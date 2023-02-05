@@ -218,8 +218,6 @@ export class RadiologyComponent implements OnInit {
   }
 
   activateTools(toolActive: string) {
-    const element = document.getElementById('element');
-
     const LengthTool = cornerstoneTools.LengthTool;
     const EllipticalRoiTool = cornerstoneTools.EllipticalRoiTool;
     const ArrowAnnotateTool = cornerstoneTools.ArrowAnnotateTool;
@@ -232,8 +230,6 @@ export class RadiologyComponent implements OnInit {
     const RectangleRoiTool = cornerstoneTools.RectangleRoiTool; // rectangulo calcula el area
     const EraserTool = cornerstoneTools.EraserTool; // borrador
     const StackScrollTool = cornerstoneTools.StackScrollTool; // Add our tool, and set it's mode
-
-    cornerstone.enable(element);
 
     switch (toolActive) {
       case 'Length':
@@ -314,9 +310,6 @@ export class RadiologyComponent implements OnInit {
     // Set color for active tools
     cornerstoneTools.toolColors.setActiveColor('rgb(0, 255, 0)');
 
-    // Despligue de herramientas
-    const element = document.getElementById('element');
-
     // herramientas activadas
     const ZoomMouseWheelTool = cornerstoneTools.ZoomMouseWheelTool; // zoom
     const EraserTool = cornerstoneTools.EraserTool; // borrador
@@ -330,8 +323,6 @@ export class RadiologyComponent implements OnInit {
 
     //toll activa por defecto
     const LengthTool = cornerstoneTools.LengthTool;
-
-    cornerstone.enable(element);
 
     //primera toll activa
     cornerstoneTools.addTool(LengthTool);

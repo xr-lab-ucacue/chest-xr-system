@@ -3,4 +3,4 @@
 
 -- alerta de error si el archivo no es dicom
 
--- porbar( en tool mandar toda las herramientas podria evitar el redimencionamiento al cambiar de herramienta)
+-- al presionar Ctrl otra vez se desactive la herramienta
