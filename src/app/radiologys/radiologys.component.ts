@@ -53,7 +53,7 @@ export class RadiologysComponent implements OnInit {
     const BidirectionalTool = cornerstoneTools.BidirectionalTool; // crea una cruz tipo lenghtTool
     const FreehandRoiTool = cornerstoneTools.FreehandRoiTool; // crea lineas a partir de otras (no para hatsa llegar al punto de inico)
     const RectangleRoiTool = cornerstoneTools.RectangleRoiTool; // rectangulo calcula el area
-    const TextMarkerTool = cornerstoneTools.TextMarkerTool // mark perzonalites
+    const TextMarkerTool = cornerstoneTools.TextMarkerTool; // mark perzonalites
 
     cornerstone.enable(element);
 
@@ -114,9 +114,9 @@ export class RadiologysComponent implements OnInit {
           current: 'Double click to change text',
           ascending: true,
           loop: true,
-        }
-        cornerstoneTools.addTool(TextMarkerTool, { configuration })
-        cornerstoneTools.setToolActive('TextMarker', { mouseButtonMask: 1 })
+        };
+        cornerstoneTools.addTool(TextMarkerTool, { configuration });
+        cornerstoneTools.setToolActive('TextMarker', { mouseButtonMask: 1 });
         break;
 
       default:
@@ -318,9 +318,7 @@ export class RadiologysComponent implements OnInit {
 
     var element = document.getElementById('element');
     cornerstone.enable(element);
-    this.Tools()
-
-
+    this.Tools();
 
     // Grab a cursor
     const cursors = cornerstoneTools.import('tools/cursors');
@@ -329,7 +327,7 @@ export class RadiologysComponent implements OnInit {
     // Create and display cursor image
     const cursorImg = document.createElement('img');
     // const cursorImgUrl = window.URL.createObjectURL(cursor.iconSVG);
-    const cursorImgUrl = 'http://www.w3.org/2000/svg'
+    const cursorImgUrl = 'http://www.w3.org/2000/svg';
 
     cursorImg.src = cursorImgUrl;
     document.querySelector('body').appendChild(cursorImg);
@@ -337,11 +335,10 @@ export class RadiologysComponent implements OnInit {
     // Create and display cursor image w/ pointer
     const cursorImgPointer = document.createElement('img');
     // const cursorImgPointerUrl = window.URL.createObjectURL(cursor.blob);
-    const cursorImgPointerUrl = "http://www.w3.org/2000/svg"
+    const cursorImgPointerUrl = 'http://www.w3.org/2000/svg';
 
     cursorImgPointer.src = cursorImgPointerUrl;
     document.querySelector('body').appendChild(cursorImgPointer);
-
 
     this.file = <File>event.target.files;
 
@@ -361,11 +358,14 @@ export class RadiologysComponent implements OnInit {
     };
 
     // load images and set the stack
-    cornerstone.loadImage(imageIds[0]).then((image) => {
-      cornerstone.displayImage(element, image);
-      cornerstoneTools.addStackStateManager(element, ['stack']);
-      cornerstoneTools.addToolState(element, 'stack', stack);
-    }).catch((e) => console.log(e));
+    cornerstone
+      .loadImage(imageIds[0])
+      .then((image) => {
+        cornerstone.displayImage(element, image);
+        cornerstoneTools.addStackStateManager(element, ['stack']);
+        cornerstoneTools.addToolState(element, 'stack', stack);
+      })
+      .catch((e) => console.log(e));
 
     cornerstoneTools.addTool(StackScrollTool);
     cornerstoneTools.setToolActive('StackScroll', { mouseButtonMask: 2 });
@@ -507,6 +507,107 @@ export class RadiologysComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  // pruebas de Syncronisacion
+  SyncCornerstone() {
+    cornerstoneTools.external.cornerstone = cornerstone;
+    cornerstoneTools.external.cornerstoneMath = cornerstoneMath;
+    cornerstoneTools.external.Hammer = Hammer;
+    cornerstoneTools.init({
+      showSVGCursors: true,
+      globalToolSyncEnabled: true,
+    });
+
+    cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
+    cornerstoneWADOImageLoader.external.dicomParser = dicomParser;
+
+    var firstElement = document.getElementById('element1');
+    var secondElement = document.getElementById('element2');
+    const elements = [firstElement, secondElement];
+
+    // image enable the dicomImage element and add canvas to it
+    elements.forEach(element => {
+      cornerstone.enable(element);
+    });
+
+    // Enable our elements
+    const scheme = 'wadouri';
+    // Create our Stack data
+    const firstSeries = ['../../assets/Dicom/cuerpo/IM0'];
+
+    const secondSeries = [
+      '../../assets/Dicom/xr/IM0',
+      '../../assets/Dicom/xr/IM1',
+      '../../assets/Dicom/xr/IM2',
+      '../../assets/Dicom/xr/IM3',
+    ];
+
+    const firstStack = {
+      currentImageIdIndex: 0,
+      imageIds: firstSeries.map((seriesImage) => `${scheme}:${seriesImage}`),
+    };
+
+    const secondStack = {
+      currentImageIdIndex: 0,
+      imageIds: secondSeries.map((seriesImage) => `${scheme}:${seriesImage}`),
+    };
+
+    // Create the synchronizer
+    const synchronizer = new cornerstoneTools.Synchronizer(
+      // Cornerstone event that should trigger synchronizer
+      'cornerstonenewimage',
+      // Logic that should run on target elements when event is observed on source elements
+      cornerstoneTools.updateImageSynchronizer
+    );
+
+    // Add and activate tools
+    cornerstoneTools.addTool(cornerstoneTools.StackScrollTool);
+    cornerstoneTools.addTool(cornerstoneTools.StackScrollMouseWheelTool);
+    cornerstoneTools.setToolActive('StackScroll', { mouseButtonMask: 1 });
+    cornerstoneTools.setToolActive('StackScrollMouseWheel', {});
+    cornerstoneTools.addTool(cornerstoneTools.WwwcTool)
+
+
+
+    // load images and set the stack
+    const firstLoadImagePromise = cornerstone
+      .loadImage(firstStack.imageIds[0])
+      .then((image) => {
+        cornerstone.displayImage(firstElement, image);
+
+        // set the stack as tool state
+        synchronizer.add(firstElement);
+        cornerstoneTools.addStackStateManager(firstElement, [
+          'stack',
+          'Crosshairs',
+        ]);
+        cornerstoneTools.addToolState(firstElement, 'stack', firstStack);
+        cornerstoneTools.setToolActive('Wwwc', { mouseButtonMask: 4 })
+      });
+
+    const secondLoadImagePromise = cornerstone
+      .loadImage(secondStack.imageIds[0])
+      .then((image) => {
+        cornerstone.displayImage(secondElement, image);
+
+        // set the stack as tool state
+        synchronizer.add(secondElement);
+        cornerstoneTools.addStackStateManager(secondElement, [
+          'stack',
+          'Crosshairs',
+        ]);
+        cornerstoneTools.addToolState(secondElement, 'stack', secondStack);
+
+      });
+
+    // After images have loaded, and our sync context has added both elements
+    Promise.all([firstLoadImagePromise, secondLoadImagePromise]).then(() => {
+      cornerstoneTools.addTool(cornerstoneTools.ReferenceLinesTool);
+      cornerstoneTools.setToolEnabled('ReferenceLines', {
+        synchronizationContext: synchronizer,
+      });
+    });
+  }
 }
 
 /* modificado --> node_modules/dicom-parser/index.d.ts:104:92
