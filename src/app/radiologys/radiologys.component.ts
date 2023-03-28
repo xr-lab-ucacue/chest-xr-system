@@ -373,8 +373,8 @@ export class RadiologysComponent implements OnInit {
   }
 
   // pruebas de Syncronisacion
-  @ViewChild("input1",{read: ElementRef}) input1: ElementRef;
-  @ViewChild("input2",{read: ElementRef}) input2: ElementRef;
+  @ViewChild('input1', { read: ElementRef }) input1: ElementRef;
+  @ViewChild('input2', { read: ElementRef }) input2: ElementRef;
   SyncCornerstone(): any {
     cornerstoneTools.external.cornerstone = cornerstone;
     cornerstoneTools.external.cornerstoneMath = cornerstoneMath;
@@ -391,15 +391,11 @@ export class RadiologysComponent implements OnInit {
     var secondElement = document.getElementById('element2');
     const elements = [firstElement, secondElement];
 
-    elements.forEach(element => {
-      cornerstone.enable(element);
-    });
-
     //first Img Radiologi
     this.file = this.input1.nativeElement.files;
     const imageIds = [];
 
-    Array.prototype.forEach.call(this.file, function (file:any) {
+    Array.prototype.forEach.call(this.file, function (file: any) {
       const imageId = cornerstoneWADOImageLoader.wadouri.fileManager.add(file);
       imageIds.push(imageId);
     });
@@ -408,20 +404,20 @@ export class RadiologysComponent implements OnInit {
     this.file2 = this.input2.nativeElement.files;
     const imageIds2 = [];
 
-    Array.prototype.forEach.call(this.file2, function (file:any) {
+    Array.prototype.forEach.call(this.file2, function (file: any) {
       const imageId = cornerstoneWADOImageLoader.wadouri.fileManager.add(file);
       imageIds2.push(imageId);
     });
 
     const firstStack = {
       currentImageIdIndex: 0,
-      imageIds: imageIds
-    }
+      imageIds: imageIds,
+    };
 
     const secondStack = {
       currentImageIdIndex: 0,
-      imageIds: imageIds2
-    }
+      imageIds: imageIds2,
+    };
 
     // Create the synchronizer
     const synchronizer = new cornerstoneTools.Synchronizer(
@@ -430,19 +426,25 @@ export class RadiologysComponent implements OnInit {
       // Logic that should run on target elements when event is observed on source elements
       cornerstoneTools.updateImageSynchronizer
     );
+    const synchronizer2 = new cornerstoneTools.Synchronizer(
+      'cornerstoneimagerendered',
+      cornerstoneTools.wwwcSynchronizer,
+      // cornerstoneTools.panZoomSynchronizer
+    );
 
-    //xxxxxxxxxxxxxxxxxxxxxxxxxx
-    const synchronizer2 = new cornerstoneTools.Synchronizer("cornerstoneimagerendered", cornerstoneTools.wwwcSynchronizer);
-    cornerstone.enable(firstElement)
-    cornerstone.enable(secondElement)
+    elements.forEach((element) => {
+      cornerstone.enable(element);
+    });
 
     // Add and activate tools
     cornerstoneTools.addTool(cornerstoneTools.StackScrollTool);
     cornerstoneTools.addTool(cornerstoneTools.StackScrollMouseWheelTool);
+    cornerstoneTools.addTool(cornerstoneTools.WwwcTool);
+    // cornerstoneTools.addTool(cornerstoneTools.PanTool);
+
 
     cornerstoneTools.setToolActive('StackScroll', { mouseButtonMask: 1 });
     cornerstoneTools.setToolActive('StackScrollMouseWheel', {});
-
 
     // load images and set the stack
     const firstLoadImagePromise = cornerstone
@@ -450,11 +452,8 @@ export class RadiologysComponent implements OnInit {
       .then((image) => {
         cornerstone.displayImage(firstElement, image);
 
-        //xxxxxxxxxxxxxxxxxxxxxx
-        // cornerstoneTools.pan.activate(firstElement, 3);
-        cornerstoneTools.addTool(cornerstoneTools.WwwcTool);
         cornerstoneTools.setToolActive('Wwwc', { mouseButtonMask: 2 });
-        // add each element to the synchronizer2
+        // cornerstoneTools.setToolActive('Pan', { mouseButtonMask: 2 })
         synchronizer2.add(firstElement);
 
         // set the stack as tool state
@@ -464,7 +463,6 @@ export class RadiologysComponent implements OnInit {
           'Crosshairs',
         ]);
         cornerstoneTools.addToolState(firstElement, 'stack', firstStack);
-
       });
 
     const secondLoadImagePromise = cornerstone
@@ -472,11 +470,8 @@ export class RadiologysComponent implements OnInit {
       .then((image) => {
         cornerstone.displayImage(secondElement, image);
 
-        //xxxxxxxxxxxxxxxxxxxxxx
-        // cornerstoneTools.pan.activate(secondElement, 3);
-        cornerstoneTools.addTool(cornerstoneTools.WwwcTool);
         cornerstoneTools.setToolActive('Wwwc', { mouseButtonMask: 2 });
-        // add each element to the synchronizer2
+        // cornerstoneTools.setToolActive('Pan', { mouseButtonMask: 2 })
         synchronizer2.add(secondElement);
 
         // set the stack as tool state
@@ -491,12 +486,11 @@ export class RadiologysComponent implements OnInit {
     // After images have loaded, and our sync context has added both elements
     Promise.all([firstLoadImagePromise, secondLoadImagePromise]).then(() => {
       cornerstoneTools.addTool(cornerstoneTools.ReferenceLinesTool);
-      cornerstoneTools.setToolEnabled('ReferenceLines', {synchronizationContext: synchronizer,});
-      // cornerstoneTools.addToolState('Wwwc', { synchronizationContext: {synchronizer2} });
+      cornerstoneTools.setToolEnabled('ReferenceLines', {
+        synchronizationContext: synchronizer,
+      });
     });
   }
-
-
 
   changeColorXray(color: string) {
     var element = document.getElementById('element');
@@ -635,7 +629,6 @@ export class RadiologysComponent implements OnInit {
 
   ngOnInit(): void {}
 
-
   // SyncCornerstone() {
   //   cornerstoneTools.external.cornerstone = cornerstone;
   //   cornerstoneTools.external.cornerstoneMath = cornerstoneMath;
@@ -711,7 +704,6 @@ export class RadiologysComponent implements OnInit {
   //   cornerstoneTools.setToolActive('StackScroll', { mouseButtonMask: 1 });
   //   cornerstoneTools.setToolActive('StackScrollMouseWheel', {});
 
-
   //   // load images and set the stack
   //   const firstLoadImagePromise = cornerstone
   //     .loadImage(firstStack.imageIds[0])
@@ -747,7 +739,6 @@ export class RadiologysComponent implements OnInit {
   //     cornerstoneTools.setToolEnabled('ReferenceLines', {synchronizationContext: synchronizer,});
   //   });
   // }
-
 }
 
 /* modificado --> node_modules/dicom-parser/index.d.ts:104:92

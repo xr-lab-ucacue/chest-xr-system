@@ -432,6 +432,9 @@ export class RadiologyComponent implements OnInit {
     const stack = {
       currentImageIdIndex: 0,
       imageIds: imageIds,
+      options: {
+        opacity: 0.7,
+      }
     };
 
     // load images and set the stack
@@ -458,7 +461,7 @@ export class RadiologyComponent implements OnInit {
           console.log('Frames Habilitado');
           cornerstoneTools.addTool(StackScrollMouseWheelTool);
           cornerstoneTools.setToolActive('StackScrollMouseWheel', {});
-        } 
+        }
       });
     } else {
       Swal.fire({
