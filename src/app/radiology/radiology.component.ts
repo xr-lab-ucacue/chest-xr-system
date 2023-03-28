@@ -229,7 +229,7 @@ export class RadiologyComponent implements OnInit {
     const StackScrollTool = cornerstoneTools.StackScrollTool; // Add our tool, and set it's mode
     const CobbAngleTool = cornerstoneTools.CobbAngleTool; // amgules cobb
     const TextMarkerTool = cornerstoneTools.TextMarkerTool; // mark perzonalites
-    const ProbeTool = cornerstoneTools.ProbeTool;// marks
+    const ProbeTool = cornerstoneTools.ProbeTool; // marks
 
     try {
       switch (toolActive) {
@@ -458,7 +458,7 @@ export class RadiologyComponent implements OnInit {
           console.log('Frames Habilitado');
           cornerstoneTools.addTool(StackScrollMouseWheelTool);
           cornerstoneTools.setToolActive('StackScrollMouseWheel', {});
-        }
+        } 
       });
     } else {
       Swal.fire({

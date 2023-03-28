@@ -2,5 +2,3 @@
 -- preguntar si esta seguro de cambiar de vista cuando este en /radiology
 
 -- alerta de error si el archivo no es dicom
-
--- al presionar Ctrl otra vez se desactive la herramienta

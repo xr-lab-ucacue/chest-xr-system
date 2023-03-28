@@ -243,6 +243,7 @@ export class RadiologysComponent implements OnInit {
   }
 
   file: File;
+  file2: File;
 
   files(event: any): any {
     cornerstoneTools.external.cornerstone = cornerstone;
@@ -370,6 +371,132 @@ export class RadiologysComponent implements OnInit {
     cornerstoneTools.addTool(StackScrollTool);
     cornerstoneTools.setToolActive('StackScroll', { mouseButtonMask: 2 });
   }
+
+  // pruebas de Syncronisacion
+  @ViewChild("input1",{read: ElementRef}) input1: ElementRef;
+  @ViewChild("input2",{read: ElementRef}) input2: ElementRef;
+  SyncCornerstone(): any {
+    cornerstoneTools.external.cornerstone = cornerstone;
+    cornerstoneTools.external.cornerstoneMath = cornerstoneMath;
+    cornerstoneTools.external.Hammer = Hammer;
+    cornerstoneTools.init({
+      showSVGCursors: true,
+      globalToolSyncEnabled: true,
+    });
+
+    cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
+    cornerstoneWADOImageLoader.external.dicomParser = dicomParser;
+
+    var firstElement = document.getElementById('element1');
+    var secondElement = document.getElementById('element2');
+    const elements = [firstElement, secondElement];
+
+    elements.forEach(element => {
+      cornerstone.enable(element);
+    });
+
+    //first Img Radiologi
+    this.file = this.input1.nativeElement.files;
+    const imageIds = [];
+
+    Array.prototype.forEach.call(this.file, function (file:any) {
+      const imageId = cornerstoneWADOImageLoader.wadouri.fileManager.add(file);
+      imageIds.push(imageId);
+    });
+
+    //Second Stack radiology
+    this.file2 = this.input2.nativeElement.files;
+    const imageIds2 = [];
+
+    Array.prototype.forEach.call(this.file2, function (file:any) {
+      const imageId = cornerstoneWADOImageLoader.wadouri.fileManager.add(file);
+      imageIds2.push(imageId);
+    });
+
+    const firstStack = {
+      currentImageIdIndex: 0,
+      imageIds: imageIds
+    }
+
+    const secondStack = {
+      currentImageIdIndex: 0,
+      imageIds: imageIds2
+    }
+
+    // Create the synchronizer
+    const synchronizer = new cornerstoneTools.Synchronizer(
+      // Cornerstone event that should trigger synchronizer
+      'cornerstonenewimage',
+      // Logic that should run on target elements when event is observed on source elements
+      cornerstoneTools.updateImageSynchronizer
+    );
+
+    //xxxxxxxxxxxxxxxxxxxxxxxxxx
+    const synchronizer2 = new cornerstoneTools.Synchronizer("cornerstoneimagerendered", cornerstoneTools.wwwcSynchronizer);
+    cornerstone.enable(firstElement)
+    cornerstone.enable(secondElement)
+
+    // Add and activate tools
+    cornerstoneTools.addTool(cornerstoneTools.StackScrollTool);
+    cornerstoneTools.addTool(cornerstoneTools.StackScrollMouseWheelTool);
+
+    cornerstoneTools.setToolActive('StackScroll', { mouseButtonMask: 1 });
+    cornerstoneTools.setToolActive('StackScrollMouseWheel', {});
+
+
+    // load images and set the stack
+    const firstLoadImagePromise = cornerstone
+      .loadImage(firstStack.imageIds[0])
+      .then((image) => {
+        cornerstone.displayImage(firstElement, image);
+
+        //xxxxxxxxxxxxxxxxxxxxxx
+        // cornerstoneTools.pan.activate(firstElement, 3);
+        cornerstoneTools.addTool(cornerstoneTools.WwwcTool);
+        cornerstoneTools.setToolActive('Wwwc', { mouseButtonMask: 2 });
+        // add each element to the synchronizer2
+        synchronizer2.add(firstElement);
+
+        // set the stack as tool state
+        synchronizer.add(firstElement);
+        cornerstoneTools.addStackStateManager(firstElement, [
+          'stack',
+          'Crosshairs',
+        ]);
+        cornerstoneTools.addToolState(firstElement, 'stack', firstStack);
+
+      });
+
+    const secondLoadImagePromise = cornerstone
+      .loadImage(secondStack.imageIds[0])
+      .then((image) => {
+        cornerstone.displayImage(secondElement, image);
+
+        //xxxxxxxxxxxxxxxxxxxxxx
+        // cornerstoneTools.pan.activate(secondElement, 3);
+        cornerstoneTools.addTool(cornerstoneTools.WwwcTool);
+        cornerstoneTools.setToolActive('Wwwc', { mouseButtonMask: 2 });
+        // add each element to the synchronizer2
+        synchronizer2.add(secondElement);
+
+        // set the stack as tool state
+        synchronizer.add(secondElement);
+        cornerstoneTools.addStackStateManager(secondElement, [
+          'stack',
+          'Crosshairs',
+        ]);
+        cornerstoneTools.addToolState(secondElement, 'stack', secondStack);
+      });
+
+    // After images have loaded, and our sync context has added both elements
+    Promise.all([firstLoadImagePromise, secondLoadImagePromise]).then(() => {
+      cornerstoneTools.addTool(cornerstoneTools.ReferenceLinesTool);
+      cornerstoneTools.setToolEnabled('ReferenceLines', {synchronizationContext: synchronizer,});
+      // cornerstoneTools.addToolState('Wwwc', { synchronizationContext: {synchronizer2} });
+    });
+  }
+
+
 
   changeColorXray(color: string) {
     var element = document.getElementById('element');
@@ -508,106 +635,119 @@ export class RadiologysComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  // pruebas de Syncronisacion
-  SyncCornerstone() {
-    cornerstoneTools.external.cornerstone = cornerstone;
-    cornerstoneTools.external.cornerstoneMath = cornerstoneMath;
-    cornerstoneTools.external.Hammer = Hammer;
-    cornerstoneTools.init({
-      showSVGCursors: true,
-      globalToolSyncEnabled: true,
-    });
 
-    cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
-    cornerstoneWADOImageLoader.external.dicomParser = dicomParser;
+  // SyncCornerstone() {
+  //   cornerstoneTools.external.cornerstone = cornerstone;
+  //   cornerstoneTools.external.cornerstoneMath = cornerstoneMath;
+  //   cornerstoneTools.external.Hammer = Hammer;
+  //   cornerstoneTools.init({
+  //     showSVGCursors: true,
+  //     globalToolSyncEnabled: true,
+  //   });
 
-    var firstElement = document.getElementById('element1');
-    var secondElement = document.getElementById('element2');
-    const elements = [firstElement, secondElement];
+  //   cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
+  //   cornerstoneWADOImageLoader.external.dicomParser = dicomParser;
 
-    // image enable the dicomImage element and add canvas to it
-    elements.forEach(element => {
-      cornerstone.enable(element);
-    });
+  //   var firstElement = document.getElementById('element1');
+  //   var secondElement = document.getElementById('element2');
+  //   const elements = [firstElement, secondElement];
 
-    // Enable our elements
-    const scheme = 'wadouri';
-    // Create our Stack data
-    const firstSeries = ['../../assets/Dicom/cuerpo/IM0'];
+  //   // image enable the dicomImage element and add canvas to it
+  //   elements.forEach(element => {
+  //     cornerstone.enable(element);
+  //   });
 
-    const secondSeries = [
-      '../../assets/Dicom/xr/IM0',
-      '../../assets/Dicom/xr/IM1',
-      '../../assets/Dicom/xr/IM2',
-      '../../assets/Dicom/xr/IM3',
-    ];
+  //   // Enable our elements
+  //   const scheme = 'wadouri';
+  //   // Create our Stack data
+  //   const firstSeries = ['../../assets/Dicom/cuerpo/IM0'];
 
-    const firstStack = {
-      currentImageIdIndex: 0,
-      imageIds: firstSeries.map((seriesImage) => `${scheme}:${seriesImage}`),
-    };
+  //   const secondSeries = [
+  //     '../../assets/Dicom/xr/IM0',
+  //     '../../assets/Dicom/xr/IM1',
+  //     '../../assets/Dicom/xr/IM2',
+  //     '../../assets/Dicom/xr/IM3',
+  //     '../../assets/Dicom/xr/IM4',
+  //     '../../assets/Dicom/xr/IM5',
+  //     '../../assets/Dicom/xr/IM6',
+  //     '../../assets/Dicom/xr/IM7',
+  //     '../../assets/Dicom/xr/IM8',
+  //     '../../assets/Dicom/xr/IM9',
+  //     '../../assets/Dicom/xr/IM10',
+  //     '../../assets/Dicom/xr/IM11',
+  //     '../../assets/Dicom/xr/IM12',
+  //     '../../assets/Dicom/xr/IM13',
+  //     '../../assets/Dicom/xr/IM14',
+  //     '../../assets/Dicom/xr/IM15',
+  //     '../../assets/Dicom/xr/IM16',
+  //     '../../assets/Dicom/xr/IM17',
+  //     '../../assets/Dicom/xr/IM18',
+  //     '../../assets/Dicom/xr/IM19',
+  //     '../../assets/Dicom/xr/IM20',
+  //   ];
 
-    const secondStack = {
-      currentImageIdIndex: 0,
-      imageIds: secondSeries.map((seriesImage) => `${scheme}:${seriesImage}`),
-    };
+  //   const firstStack = {
+  //     currentImageIdIndex: 0,
+  //     imageIds: firstSeries.map((seriesImage) => `${scheme}:${seriesImage}`),
+  //   };
 
-    // Create the synchronizer
-    const synchronizer = new cornerstoneTools.Synchronizer(
-      // Cornerstone event that should trigger synchronizer
-      'cornerstonenewimage',
-      // Logic that should run on target elements when event is observed on source elements
-      cornerstoneTools.updateImageSynchronizer
-    );
+  //   const secondStack = {
+  //     currentImageIdIndex: 0,
+  //     imageIds: secondSeries.map((seriesImage) => `${scheme}:${seriesImage}`),
+  //   };
 
-    // Add and activate tools
-    cornerstoneTools.addTool(cornerstoneTools.StackScrollTool);
-    cornerstoneTools.addTool(cornerstoneTools.StackScrollMouseWheelTool);
-    cornerstoneTools.setToolActive('StackScroll', { mouseButtonMask: 1 });
-    cornerstoneTools.setToolActive('StackScrollMouseWheel', {});
-    cornerstoneTools.addTool(cornerstoneTools.WwwcTool)
+  //   // Create the synchronizer
+  //   const synchronizer = new cornerstoneTools.Synchronizer(
+  //     // Cornerstone event that should trigger synchronizer
+  //     'cornerstonenewimage',
+  //     // Logic that should run on target elements when event is observed on source elements
+  //     cornerstoneTools.updateImageSynchronizer
+  //   );
+
+  //   // Add and activate tools
+  //   cornerstoneTools.addTool(cornerstoneTools.StackScrollTool);
+  //   cornerstoneTools.addTool(cornerstoneTools.StackScrollMouseWheelTool);
+
+  //   cornerstoneTools.setToolActive('StackScroll', { mouseButtonMask: 1 });
+  //   cornerstoneTools.setToolActive('StackScrollMouseWheel', {});
 
 
+  //   // load images and set the stack
+  //   const firstLoadImagePromise = cornerstone
+  //     .loadImage(firstStack.imageIds[0])
+  //     .then((image) => {
+  //       cornerstone.displayImage(firstElement, image);
 
-    // load images and set the stack
-    const firstLoadImagePromise = cornerstone
-      .loadImage(firstStack.imageIds[0])
-      .then((image) => {
-        cornerstone.displayImage(firstElement, image);
+  //       // set the stack as tool state
+  //       synchronizer.add(firstElement);
+  //       cornerstoneTools.addStackStateManager(firstElement, [
+  //         'stack',
+  //         'Crosshairs',
+  //       ]);
+  //       cornerstoneTools.addToolState(firstElement, 'stack', firstStack);
+  //     });
 
-        // set the stack as tool state
-        synchronizer.add(firstElement);
-        cornerstoneTools.addStackStateManager(firstElement, [
-          'stack',
-          'Crosshairs',
-        ]);
-        cornerstoneTools.addToolState(firstElement, 'stack', firstStack);
-        cornerstoneTools.setToolActive('Wwwc', { mouseButtonMask: 4 })
-      });
+  //   const secondLoadImagePromise = cornerstone
+  //     .loadImage(secondStack.imageIds[0])
+  //     .then((image) => {
+  //       cornerstone.displayImage(secondElement, image);
 
-    const secondLoadImagePromise = cornerstone
-      .loadImage(secondStack.imageIds[0])
-      .then((image) => {
-        cornerstone.displayImage(secondElement, image);
+  //       // set the stack as tool state
+  //       synchronizer.add(secondElement);
+  //       cornerstoneTools.addStackStateManager(secondElement, [
+  //         'stack',
+  //         'Crosshairs',
+  //       ]);
+  //       cornerstoneTools.addToolState(secondElement, 'stack', secondStack);
+  //     });
 
-        // set the stack as tool state
-        synchronizer.add(secondElement);
-        cornerstoneTools.addStackStateManager(secondElement, [
-          'stack',
-          'Crosshairs',
-        ]);
-        cornerstoneTools.addToolState(secondElement, 'stack', secondStack);
+  //   // After images have loaded, and our sync context has added both elements
+  //   Promise.all([firstLoadImagePromise, secondLoadImagePromise]).then(() => {
+  //     cornerstoneTools.addTool(cornerstoneTools.ReferenceLinesTool);
+  //     cornerstoneTools.setToolEnabled('ReferenceLines', {synchronizationContext: synchronizer,});
+  //   });
+  // }
 
-      });
-
-    // After images have loaded, and our sync context has added both elements
-    Promise.all([firstLoadImagePromise, secondLoadImagePromise]).then(() => {
-      cornerstoneTools.addTool(cornerstoneTools.ReferenceLinesTool);
-      cornerstoneTools.setToolEnabled('ReferenceLines', {
-        synchronizationContext: synchronizer,
-      });
-    });
-  }
 }
 
 /* modificado --> node_modules/dicom-parser/index.d.ts:104:92
