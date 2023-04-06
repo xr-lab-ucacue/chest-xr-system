@@ -215,6 +215,40 @@ export class RadiologyComponent implements OnInit {
     cornerstoneTools.setToolActive('ZoomMouseWheel', {});
   }
 
+  //Borra las herramientas selecionadas (Tool Management)
+  opciones = [
+    { texto: 'Length', seleccionado: false },
+    { texto: 'EllipticalRoi', seleccionado: false },
+    { texto: 'Angle', seleccionado: false },
+    { texto: 'Bidirectional', seleccionado: false },
+    { texto: 'RectangleRoi', seleccionado: false },
+    { texto: 'ArrowAnnotate', seleccionado: false },
+    { texto: 'TextMarker', seleccionado: false },
+    { texto: 'FreehandRoi', seleccionado: false },
+    { texto: 'CobbAngle', seleccionado: false },
+    { texto: 'Probe', seleccionado: false },
+    { texto: 'All', seleccionado: false },
+  ];
+  seleccionados: any[] = [];
+  toolSelectToDelete() {
+    this.seleccionados = this.opciones.filter((opcion) => opcion.seleccionado);
+    var element = document.getElementById('element');
+    cornerstone.enable(element);
+
+    if (this.opciones[0].seleccionado == true) {
+      this.opciones.forEach((e) => {
+        cornerstoneTools.clearToolState(element, e.texto);
+      });
+    } else {
+      this.seleccionados.forEach((e) => {
+        cornerstoneTools.clearToolState(element, e.texto);
+      });
+    }
+    cornerstone.updateImage(element);
+
+    this.opciones.forEach((e) => (e.seleccionado = false));
+  }
+
   activateTools(toolActive: string) {
     const LengthTool = cornerstoneTools.LengthTool;
     const EllipticalRoiTool = cornerstoneTools.EllipticalRoiTool;
@@ -230,6 +264,7 @@ export class RadiologyComponent implements OnInit {
     const CobbAngleTool = cornerstoneTools.CobbAngleTool; // amgules cobb
     const TextMarkerTool = cornerstoneTools.TextMarkerTool; // mark perzonalites
     const ProbeTool = cornerstoneTools.ProbeTool; // marks
+    const WwwcRegionTool = cornerstoneTools.WwwcRegionTool;
 
     try {
       switch (toolActive) {
@@ -311,6 +346,11 @@ export class RadiologyComponent implements OnInit {
           cornerstoneTools.setToolActive('Probe', { mouseButtonMask: 1 });
           break;
 
+        case 'WwwcRegion':
+          cornerstoneTools.addTool(WwwcRegionTool);
+          cornerstoneTools.setToolActive('WwwcRegion', { mouseButtonMask: 1 });
+          break;
+
         case 'TextMarker':
           const configuration = {
             markers: ['F5', 'F4', 'F3', 'F2', 'F1'],
@@ -335,6 +375,7 @@ export class RadiologyComponent implements OnInit {
     }
   }
 
+  //Herramientas por defecto activas
   Tools() {
     // Style de tools
     const fontFamily =
@@ -434,7 +475,7 @@ export class RadiologyComponent implements OnInit {
       imageIds: imageIds,
       options: {
         opacity: 0.7,
-      }
+      },
     };
 
     // load images and set the stack
@@ -485,83 +526,31 @@ export class RadiologyComponent implements OnInit {
       });
     }
   }
-  parametroTrue: boolean = true;
-
-  //esta funcion solo sirve para 1 dicom y no se esta usando
-  files(fileUp: any): any {
-    this.hiddenSpinner = false;
-
-    cornerstoneTools.external.cornerstone = cornerstone;
-    cornerstoneTools.external.cornerstoneMath = cornerstoneMath;
-    cornerstoneTools.external.Hammer = Hammer;
-    cornerstoneTools.init();
-
-    cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
-    cornerstoneWADOImageLoader.external.dicomParser = dicomParser;
-
-    cornerstoneWADOImageLoader.webWorkerManager.initialize({
-      maxWebWorkers: navigator.hardwareConcurrency || 1,
-      startWebWorkersOnDemand: true,
-      webWorkerPath: 'cornerstoneWADOImageLoaderWebWorker.min.js',
-      taskConfiguration: {
-        decodeTask: {
-          loadCodecsOnStartup: true,
-          initializeCodecsOnStartup: false,
-          codecsPath: 'cornerstoneWADOImageLoaderCodecs.min.js',
-        },
-      },
-    });
-
-    var element = document.getElementById('element');
-
-    const imageId = cornerstoneWADOImageLoader.wadouri.fileManager.add(fileUp);
-
-    cornerstone.enable(element);
-    this.Tools();
-
-    cornerstone
-      .loadImage(imageId)
-      .then((image) => {
-        image.windowWidth = 400;
-        image.windowCenter = 60;
-
-        cornerstone.displayImage(element, image);
-        console.log(image);
-      })
-      .catch((e) => {
-        Swal.fire(
-          'Error',
-          'Something is wrong when loading the x-ray',
-          'error'
-        );
-        console.log(e);
-      });
-  }
 
   changeColorXray(color: string) {
     var element = document.getElementById('element');
 
     // cornerstone.displayImage(element, image);
     var viewport = {
-      invert: false,
-      pixelReplication: false,
-      voi: {
-        windowWidth: 400,
-        windowCenter: 60,
-      },
-      scale: 1.0,
-      translation: {
-        x: 0,
-        y: 0,
-      },
+      // invert: false,
+      // pixelReplication: false,
+      // voi: {
+      //   windowWidth: 400,
+      //   windowCenter: 60,
+      // },
+      // scale: 1.0,
+      // translation: {
+      //   x: 0,
+      //   y: 0,
+      // },
       colormap: color,
     };
 
     cornerstone.setViewport(element, viewport);
     cornerstone.updateImage(element);
 
-    this.isInvierte = false;
-    this.isPixel = false;
+    // this.isInvierte = false;
+    // this.isPixel = false;
   }
 
   colorToolsInactive: any = '#FFFF00';

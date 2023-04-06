@@ -165,9 +165,25 @@
   box-shadow: 0px 0px 15px 0.2px rgb(66, 64, 212);
 }
 
+.dropwon-switch-toolDelete:focus {
+  border-color: rgb(237, 100, 141);
+  box-shadow: 0px 0px 15px 0.2px rgb(212, 64, 113);
+}
+.dropwon-switch-toolDelete{
+  margin-top: 3px;
+  border-radius: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .icon-dropwon-switch {
   font-size: 1rem;
   color: cornflowerblue;
+}
+.icon-dropwon-switch-deleteTool {
+  font-size: 1rem;
+  color: rgb(237, 100, 123);
 }
 
 .btn-xray {
@@ -258,23 +274,6 @@
   animation-play-state: paused;
   color: white;
 }
-
-/* selecionador de fuente */
-/* font-family: 'Aboreto', cursive;
-font-family: 'Audiowide', cursive;
-font-family: 'Bangers', cursive;
-font-family: 'Bungee Shade', cursive;
-font-family: 'Londrina Outline', cursive;
-font-family: 'Megrim', cursive;
-font-family: 'Metamorphous', cursive;
-font-family: 'Noto Serif HK', serif;
-font-family: 'Play', sans-serif;
-font-family: 'Poiret One', cursive;
-font-family: 'Redacted Script', cursive;
-font-family: 'Slackey', cursive;
-font-family: 'Solitreo', cursive;
-font-family: 'UnifrakturMaguntia', cursive;
-font-family: 'Zilla Slab Highlight', cursive; */
 
 /* Dropdaowns */
 #dropdown option {
