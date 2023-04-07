@@ -65,13 +65,13 @@ constructor(private _route: Router, private authService: AuthService) {}
         icon: 'success',
         title: 'Bienvenido'
       })
-      this._route.navigateByUrl('/modelo1');
+      this._route.navigateByUrl('/radiology');
     })
   }
 
   ngOnInit(): void {
     if (this.authService.isAuthenticated()) {
-      this._route.navigateByUrl('/modelo1');
+      this._route.navigateByUrl('/radiology');
     } else {
       this._route.navigateByUrl('/login');
     }

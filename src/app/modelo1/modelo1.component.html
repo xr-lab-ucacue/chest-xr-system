@@ -14,7 +14,7 @@
                   <input type="file" accept="image/*" class="d-none" (change)="onPhotoSelected($event)" #photoInput>
                   <!-- Img -->
                   <div class="img-upload">
-                    <img [src]="photoSelected || '../../assets/no-image2.png'" class="img-fluid" alt="No image" (click)="photoInput.click()">
+                    <img [src]="photoSelected || '../../assets/imgs/no-image2.png'" class="img-fluid" alt="No image" (click)="photoInput.click()">
                     <h6 *ngIf="hiddenTxt != false" class="text-center txt-up">Clik en la imagen para subir una foto</h6>
                   </div>
                   <!-- Buttton -->

@@ -2,6 +2,15 @@
   background-color: rgb(24, 23, 23);
   /* height: 100vh; */
 }
+.btn-block{
+  width: 100%;
+}
+a{
+  color: white;
+}
+a:link, a:visited, a:active {
+  text-decoration:none;
+}
 
 label{
   color: white;

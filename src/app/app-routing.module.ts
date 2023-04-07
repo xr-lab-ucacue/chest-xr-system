@@ -19,12 +19,12 @@ const routes: Routes = [
   { path: 'lostPassword', component: LostPasswordComponent
   },
   { path: 'register', component: RegisterComponent },
-  { path: 'modelo1', component: Modelo1Component, canActivate: [AuthGuard] },
+  // { path: 'modelo1', component: Modelo1Component, canActivate: [AuthGuard] },
   { path: 'radiology', component: RadiologyComponent, canActivate: [AuthGuard] },
   { path: 'admin', component: AdminComponent, canActivate: [RoleGuard] },
   { path: 'userPage/:id', component: PageUserComponent, canActivate: [RoleGuard]},
   { path: 'profile/:id', component: ProfileComponent, canActivate: [AuthGuard]},
-  // { path: 'radiologys', component: RadiologysComponent },
+  { path: 'radiologys', component: RadiologysComponent },
   { path: '', pathMatch: 'full', component: LoginComponent },
   { path: '**', pathMatch: 'full', component: LoginComponent }
 ];

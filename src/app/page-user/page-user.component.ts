@@ -36,8 +36,7 @@ export class PageUserComponent implements OnInit {
         if (err.status == 0) {
           Swal.fire('Servicio', 'No esta Disponible', 'error');
         }
-      },
-      () => {}
+      }
     );
   }
 
@@ -145,24 +144,6 @@ export class PageUserComponent implements OnInit {
       Toast.fire({
         icon: 'info',
         title: 'Numero de telefono no valido',
-      });
-    } else if (data.estado != false||true ) {
-      const Toast = Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 2000,
-        background: '#000000',
-        color: '#ccc',
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.addEventListener('mouseenter', Swal.stopTimer);
-          toast.addEventListener('mouseleave', Swal.resumeTimer);
-        },
-      });
-      Toast.fire({
-        icon: 'info',
-        title: 'Selecione el estado',
       });
     } else {
       Swal.fire({
