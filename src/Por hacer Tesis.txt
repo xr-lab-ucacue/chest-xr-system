@@ -1,6 +1,4 @@
 
-minitutorial Aumentar (Como eliminar herramientas)
-
 -- preguntar si esta seguro de cambiar de vista cuando este en /radiology
 -- poner un odrby en el array donde estan los dicon para probar ordenar el stack
 
@@ -15,6 +13,14 @@ Herramientas nuevas
   -Save Image Example (descarga la imagen--probar si se descarga png o dicom)
 
 )
+
+
+
+
+
+
+
+
 
 
 

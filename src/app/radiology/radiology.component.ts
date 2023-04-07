@@ -813,18 +813,12 @@ export class RadiologyComponent implements OnInit {
                   if (result.isConfirmed) {
                     Swal.fire({
                       html: `
-                      <h2 style="color: white;">To see the frames you can do them in two ways:</h2>
-                      <ol >
-                        <li style="color: white;">Press <kbd style="background: grey;">CTRL</kbd> to activate it and use the mouse wheel.</li>
-                        <li style="color: white;">Click on the Stack button and left click to use.</li>
-                      </ol>
-                      <br>
-                      <h4 style="color: white;">If activated by keyboard, the zoom tool on the mouse wheel will be replaced by it. To deactivate it, press the red blinking button.</h4>
+                      <h2 style="color: white;">You can clear all tools from the radiograph by selecting it.</h2>
                       `,
-                      imageUrl: '../../assets/imgs/tutorial-Ctrl.png',
+                      imageUrl: '../../assets/imgs/SelectToolTuto.png',
                       imageWidth: 500,
                       imageHeight: 400,
-                      imageAlt: 'Ctrl Stack Frames Settings',
+                      imageAlt: 'Clean radiograph',
                       background: '#212529',
                       confirmButtonText: 'Next >',
                       showCancelButton: true,
@@ -834,12 +828,36 @@ export class RadiologyComponent implements OnInit {
                     }).then((result) => {
                       if (result.isConfirmed) {
                         Swal.fire({
-                          html: `<h1 style="color: white;">🎊🎉Congratulations!🎉🎊</h1> <br> <h4 style="color: white;">Now you can start working.</h4>`,
+                          html: `
+                            <h2 style="color: white;">To see the frames you can do them in two ways:</h2>
+                            <ol >
+                              <li style="color: white;">Press <kbd style="background: grey;">CTRL</kbd> to activate it and use the mouse wheel.</li>
+                              <li style="color: white;">Click on the Stack button and left click to use.</li>
+                            </ol>
+                            <br>
+                            <h4 style="color: white;">If activated by keyboard, the zoom tool on the mouse wheel will be replaced by it. To deactivate it, press the red blinking button.</h4>
+                          `,
+                          imageUrl: '../../assets/imgs/tutorial-Ctrl.png',
+                          imageWidth: 500,
+                          imageHeight: 400,
+                          imageAlt: 'Ctrl Stack Frames Settings',
                           background: '#212529',
-                          imageUrl: '../../assets/imgs/giphy.gif',
-                          imageWidth: 400,
-                          imageHeight: 200,
-                          imageAlt: 'Congratulations For end turial',
+                          confirmButtonText: 'Next >',
+                          showCancelButton: true,
+                          allowOutsideClick: false,
+                          allowEscapeKey: false,
+                          allowEnterKey: false,
+                        }).then((result) => {
+                          if (result.isConfirmed) {
+                            Swal.fire({
+                              html: `<h1 style="color: white;">🎊🎉Congratulations!🎉🎊</h1> <br> <h4 style="color: white;">Now you can start working.</h4>`,
+                              background: '#212529',
+                              imageUrl: '../../assets/imgs/giphy.gif',
+                              imageWidth: 400,
+                              imageHeight: 200,
+                              imageAlt: 'Congratulations For end turial',
+                            });
+                          }
                         });
                       }
                     });
