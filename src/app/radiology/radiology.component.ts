@@ -217,6 +217,7 @@ export class RadiologyComponent implements OnInit {
 
   //Borra las herramientas selecionadas (Tool Management)
   opciones = [
+    { texto: 'All', seleccionado: false },
     { texto: 'Length', seleccionado: false },
     { texto: 'EllipticalRoi', seleccionado: false },
     { texto: 'Angle', seleccionado: false },
@@ -227,7 +228,6 @@ export class RadiologyComponent implements OnInit {
     { texto: 'FreehandRoi', seleccionado: false },
     { texto: 'CobbAngle', seleccionado: false },
     { texto: 'Probe', seleccionado: false },
-    { texto: 'All', seleccionado: false },
   ];
   seleccionados: any[] = [];
   toolSelectToDelete() {
@@ -529,8 +529,6 @@ export class RadiologyComponent implements OnInit {
 
   changeColorXray(color: string) {
     var element = document.getElementById('element');
-
-    // cornerstone.displayImage(element, image);
     var viewport = {
       // invert: false,
       // pixelReplication: false,
@@ -548,9 +546,6 @@ export class RadiologyComponent implements OnInit {
 
     cornerstone.setViewport(element, viewport);
     cornerstone.updateImage(element);
-
-    // this.isInvierte = false;
-    // this.isPixel = false;
   }
 
   colorToolsInactive: any = '#FFFF00';
@@ -632,6 +627,16 @@ export class RadiologyComponent implements OnInit {
     cornerstoneTools.toolStyle.setToolWidth(this.lineWidhtTool);
   }
 
+  ResetRotate(){
+    var element = document.getElementById('element');
+    var viewport = {
+      rotation: 0
+    };
+
+    cornerstone.setViewport(element, viewport);
+    cornerstone.updateImage(element);
+  }
+
   // dropdown de switchs
   isInvierte: boolean = false;
   // invierte colores de negro y blanco
@@ -698,6 +703,7 @@ export class RadiologyComponent implements OnInit {
     }, 100);
   }
 
+  //ejemplos de perzonalizacion de herramienta
   infoToolModal(tipo: string) {
     if (tipo === 'Inactive') {
       Swal.fire({
@@ -738,6 +744,7 @@ export class RadiologyComponent implements OnInit {
     }
   }
 
+  //tutoriales de los botones y herramientas a usar
   MiniTutorial() {
     // BOTTOM DRAWER
     Swal.fire({
