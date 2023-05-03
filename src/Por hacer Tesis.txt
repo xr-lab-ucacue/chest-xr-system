@@ -2,25 +2,6 @@
 -- preguntar si esta seguro de cambiar de vista cuando este en /radiology
 -- poner un odrby en el array donde estan los dicon para probar ordenar el stack
 
--- Stack en dicon controlar (Controla la opacidad el filtro-- http://45.116.32.158:5555/layeredImageStacks/index.html)
-options: {
-      opacity: 0.7,
-      visible: true,
-    }
-
-Herramientas nuevas
-(
-  -Save Image Example (descarga la imagen--probar si se descarga png o dicom)
-
-)
-
-
-
-
-
-
-
-
 
 
 

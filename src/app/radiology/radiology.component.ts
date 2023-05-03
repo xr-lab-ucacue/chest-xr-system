@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
 import { DiseasesService } from '../services/diseases.service';
 import { ViewChild, ElementRef } from '@angular/core';
+
 //Alertas sweealert
 import Swal from 'sweetalert2';
 
