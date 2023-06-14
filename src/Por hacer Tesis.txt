@@ -3,6 +3,12 @@
 -- poner un odrby en el array donde estan los dicon para probar ordenar el stack
 
 
+**************************************************************************
+-- En el backend ResponseEntity<Object[]> response = restTemplate.exchange(flaskServiceUrl, requestMethod, requestEntity, Object[].class);
+   cambiar ... creando un modelo(un objeto)
+
+-- Consumir desde Angular
+**************************************************************************
 
 
 ////////-------- CODIGO PARA VER TODO DATA DEL CANVAS-------------/////////////////////

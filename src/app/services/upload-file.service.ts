@@ -7,25 +7,19 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class UploadFileService {
+
   constructor(private http: HttpClient) {}
 
   uploadFile(file: File) {
     let json = JSON.stringify(file);
     let params = json;
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    let headers = new HttpHeaders({ 'Content-Type': 'multipart/form-data' });
     return this.http
-      .post(environment.Url + 'uploadFile', params, { headers: headers })
+      .post(environment.Url + 'upload', params, { headers: headers })
       .pipe(
         map((data) => {
           return data;
         })
       );
-
-    // const req = new HttpRequest('POST', `${environment.Url}/uploadFile`,
-    // {
-    //   reportProgress: true,
-    //   responseType: 'json'
-    // })
-    // return this.http.request(req);
   }
 }
