@@ -57,6 +57,8 @@ export class RadiologyComponent implements OnInit {
   displayButton: boolean = true;
 
   // Upload photo
+  isDataLoaded = false; //Placeholder Card
+  isDataLoadedBar = false; //Placeholder Grafica Barras
   onPhotoSelected(event: any): any {
     if (event.target.files && event.target.files[0]) {
       this.file = <File>event.target.files;
@@ -77,6 +79,10 @@ export class RadiologyComponent implements OnInit {
           }));
           this.diseasesNGX = resultArray;
           await this.myColor();
+
+          //Cargo los datos y cambio el Placeholders
+          this.isDataLoaded = true;
+          this.isDataLoadedBar = true;
           },
           (err) => {
             console.log('ERROR: ', err);
@@ -85,6 +91,9 @@ export class RadiologyComponent implements OnInit {
                   `${err.error}`,
                   'warning'
                 );
+            // Marcar como cargado incluso en caso de error
+            this.isDataLoaded = true;
+            this.isDataLoadedBar = true;
           }
         );
 

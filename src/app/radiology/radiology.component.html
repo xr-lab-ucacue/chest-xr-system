@@ -883,232 +883,278 @@
         <!-- <<<<<<<tools de Cornerstone -->
 
         <!-- tarjetas de enfermedad>>>> -->
-        <div class="col-2 col-xs-12 col-sm-12 col-md-12 col-lg-2 col-xl-2 col-xxl-2 cards-left">
-          <div
-            class="container card my-3 card-container"
-            style="width: 18rem"
-            *ngFor="let disease of diseasesAll"
-          >
-            <img
-              src="{{ 'data:image/png;base64,' + disease.imagen }}"
-              class="card-img-top img-fluid img-card-radiology mt-1"
-              [alt]="disease.nombre"
-              (click)="
-                expandCardRadiology(disease.imagen, disease.nombre, disease.porcentaje)
-              "
-            />
-            <div class="card-body txt-card">
-              <h2 class="card-title">{{ disease.nombre }}</h2>
-              <p>Percent: {{ disease.porcentaje }}%</p>
+        <ng-container *ngIf="isDataLoaded; else placeholder">
+          <!-- Código HTML para mostrar los datos reales -->
+          <div class="col-2 col-xs-12 col-sm-12 col-md-12 col-lg-2 col-xl-2 col-xxl-2 cards-left">
+            <div
+              class="container card my-3 card-container"
+              style="width: 18rem"
+              *ngFor="let disease of diseasesAll"
+            >
+              <img
+                src="{{ 'data:image/png;base64,' + disease.imagen }}"
+                class="card-img-top img-fluid img-card-radiology mt-1"
+                [alt]="disease.nombre"
+                (click)="
+                  expandCardRadiology(disease.imagen, disease.nombre, disease.porcentaje)
+                "
+              />
+              <div class="card-body txt-card">
+                <h2 class="card-title">{{ disease.nombre }}</h2>
+                <p>Percent: {{ disease.porcentaje }}%</p>
+              </div>
             </div>
           </div>
-        </div>
+        </ng-container>
+
+        <ng-template #placeholder>
+          <!-- Código HTML para mostrar el marcador de posición -->
+          <div class="col-2 col-xs-12 col-sm-12 col-md-12 col-lg-2 col-xl-2 col-xxl-2 cards-left">
+            <div class="container card my-3 card-container" style="width: 18rem" aria-hidden="true" *ngFor="let uno of [1,1,1,1]">
+              <img src="../../assets/imgs/Loading.gif" class="card-img-top" alt="Loading">
+              <div class="card-body">
+                <h5 class="card-title placeholder-glow">
+                  <span class="placeholder col-6"></span>
+                </h5>
+                <p class="card-text placeholder-glow">
+                  <span class="placeholder col-7"></span>
+                  <span class="placeholder col-4"></span>
+                  <span class="placeholder col-4"></span>
+                  <span class="placeholder col-6"></span>
+                  <span class="placeholder col-8"></span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </ng-template>
         <!-- <<<<tarjetas de enfermedad -->
 
         <!-- Radiologya y Data -->
-        <div class="col-10 col-xs-12 col-sm-12 col-md-12 col-lg-10 col-lxg10 col-lxxg10 ">
-          <div class="row">
-            <!-- Radiology Image>>>> -->
-            <div class="col-8">
-              <div class="sombra-photo-radiology">
-                <!-- Top de radiology -->
-                <div class="row">
-                  <!-- dropdown Switchs -->
-                  <div class="col-md-1">
-                    <div
-                      class="btn-group btn-group-switch ms-3"
-                      role="group"
-                      aria-label="Button group with nested dropdown"
-                    >
-                      <button
-                        type="button"
-                        class="btn btn-online-secondary dropdown-toggle dropwon-switch-btn"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
+          <div class="col-10 col-xs-12 col-sm-12 col-md-12 col-lg-10 col-lxg10 col-lxxg10 ">
+            <div class="row">
+              <!-- Radiology Image>>>> -->
+              <div class="col-8">
+                <div class="sombra-photo-radiology">
+                  <!-- Top de radiology -->
+                  <div class="row">
+                    <!-- dropdown Switchs -->
+                    <div class="col-md-1">
+                      <div
+                        class="btn-group btn-group-switch ms-3"
+                        role="group"
+                        aria-label="Button group with nested dropdown"
                       >
-                        <i
-                          class="bi bi-three-dots-vertical icon-dropwon-switch"
-                        ></i>
-                      </button>
-                      <ul class="dropdown-menu dropdown-menu-dark">
-                        <li>
-                          <div class="form-check form-switch mx-2">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              role="switch"
-                              id="flexSwitchCheckDefault"
-                              [(ngModel)]="isInvierte"
-                              (click)="invertXray()"
-                            />
-                            <label
-                              class="form-check-label"
-                              for="flexSwitchCheckDefault"
-                            >
-                              Invert</label
-                            >
+                        <button
+                          type="button"
+                          class="btn btn-online-secondary dropdown-toggle dropwon-switch-btn"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                        >
+                          <i
+                            class="bi bi-three-dots-vertical icon-dropwon-switch"
+                          ></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                          <li>
+                            <div class="form-check form-switch mx-2">
+                              <input
+                                class="form-check-input"
+                                type="checkbox"
+                                role="switch"
+                                id="flexSwitchCheckDefault"
+                                [(ngModel)]="isInvierte"
+                                (click)="invertXray()"
+                              />
+                              <label
+                                class="form-check-label"
+                                for="flexSwitchCheckDefault"
+                              >
+                                Invert</label
+                              >
+                            </div>
+                          </li>
+
+                          <li><hr class="dropdown-divider" /></li>
+
+                          <li>
+                            <div class="form-check form-switch mx-2">
+                              <input
+                                class="form-check-input"
+                                type="checkbox"
+                                role="switch"
+                                id="flexSwitchCheckDefault"
+                                [(ngModel)]="isPixel"
+                                (click)="pixelXray()"
+                              />
+                              <label
+                                class="form-check-label"
+                                for="flexSwitchCheckDefault"
+                              >
+                                Pixelar</label
+                              >
+                            </div>
+                          </li>
+
+                          <li><hr class="dropdown-divider" /></li>
+
+                          <li>
+                            <div class="form-check form-switch mx-2">
+                              <input
+                                class="form-check-input"
+                                type="checkbox"
+                                role="switch"
+                                id="flexSwitchCheckDefault"
+                                [(ngModel)]="isFlipH"
+                                (click)="flipHXray()"
+                              />
+                              <label
+                                class="form-check-label"
+                                for="flexSwitchCheckDefault"
+                                style="font-size: 14px"
+                              >
+                                Flip horizontally</label
+                              >
+                            </div>
+                          </li>
+
+                          <li><hr class="dropdown-divider" /></li>
+
+                          <li>
+                            <div class="form-check form-switch mx-2">
+                              <input
+                                class="form-check-input"
+                                type="checkbox"
+                                role="switch"
+                                id="flexSwitchCheckDefault"
+                                [(ngModel)]="isFlipV"
+                                (click)="flipVXray()"
+                              />
+                              <label
+                                class="form-check-label"
+                                for="flexSwitchCheckDefault"
+                              >
+                                Flip vertically</label
+                              >
+                            </div>
+                          </li>
+
+                           <li><hr class="dropdown-divider" /></li>
+
+                           <!-- Reseteo de Rotacion por defecto-->
+                           <div class="mx-2">
+                            <button class="btn btn-sm btn-info" (click)="ResetRotate()"><i class="bi bi-arrow-clockwise"></i> Reset Rotate</button>
                           </div>
-                        </li>
+                        </ul>
+                      </div>
+                    </div>
 
-                        <li><hr class="dropdown-divider" /></li>
-
-                        <li>
-                          <div class="form-check form-switch mx-2">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              role="switch"
-                              id="flexSwitchCheckDefault"
-                              [(ngModel)]="isPixel"
-                              (click)="pixelXray()"
-                            />
-                            <label
-                              class="form-check-label"
-                              for="flexSwitchCheckDefault"
-                            >
-                              Pixelar</label
-                            >
+                    <!-- nombre de enfermedad selecionada -->
+                    <div class="col-md-10">
+                      <div>
+                        <input
+                          type="text"
+                          class="form-control-plaintext form-control-lg text-center txt-diseases"
+                          readonly
+                          [value]="showDiseases"
+                        />
+                      </div>
+                    </div>
+                    <!-- dropdown delete selectTools -->
+                    <div class="col-md-1">
+                      <div class="btn-group btn-group-switch">
+                        <button class="btn btn-sm btn-online-secondary dropdown-toggle dropwon-switch-toolDelete" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          <i
+                            class="bi bi bi-x icon-dropwon-switch-deleteTool"
+                          ></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark p-2">
+                          <h4 class="text-start m-0"><b>Clean Tools</b></h4>
+                          <div *ngFor="let opcion of opciones">
+                            <input class="form-check-input" type="checkbox"  [(ngModel)]="opcion.seleccionado" id="flexCheckDefault">
+                            <label class="form-check-label ms-1" for="flexCheckDefault">
+                              {{ opcion.texto }}
+                            </label>
                           </div>
-                        </li>
-
-                        <li><hr class="dropdown-divider" /></li>
-
-                        <li>
-                          <div class="form-check form-switch mx-2">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              role="switch"
-                              id="flexSwitchCheckDefault"
-                              [(ngModel)]="isFlipH"
-                              (click)="flipHXray()"
-                            />
-                            <label
-                              class="form-check-label"
-                              for="flexSwitchCheckDefault"
-                              style="font-size: 14px"
-                            >
-                              Flip horizontally</label
-                            >
+                          <div class="d-flex justify-content-end">
+                            <button class="btn btn-sm btn-danger mt-4" (click)="toolSelectToDelete()"><i class="bi bi-x-lg"></i> Delete</button>
                           </div>
-                        </li>
-
-                        <li><hr class="dropdown-divider" /></li>
-
-                        <li>
-                          <div class="form-check form-switch mx-2">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              role="switch"
-                              id="flexSwitchCheckDefault"
-                              [(ngModel)]="isFlipV"
-                              (click)="flipVXray()"
-                            />
-                            <label
-                              class="form-check-label"
-                              for="flexSwitchCheckDefault"
-                            >
-                              Flip vertically</label
-                            >
-                          </div>
-                        </li>
-
-                         <li><hr class="dropdown-divider" /></li>
-
-                         <!-- Reseteo de Rotacion por defecto-->
-                         <div class="mx-2">
-                          <button class="btn btn-sm btn-info" (click)="ResetRotate()"><i class="bi bi-arrow-clockwise"></i> Reset Rotate</button>
-                        </div>
-                      </ul>
+                        </ul>
+                      </div>
                     </div>
                   </div>
 
-                  <!-- nombre de enfermedad selecionada -->
-                  <div class="col-md-10">
-                    <div>
-                      <input
-                        type="text"
-                        class="form-control-plaintext form-control-lg text-center txt-diseases"
-                        readonly
-                        [value]="showDiseases"
-                      />
+                  <!-- Section: Spinner progress -->
+                  <ng-container *ngIf="hiddenSpinner != false">
+                    <!-- Spinner progress -->
+                    <div class="d-flex justify-content-center">
+                      <div
+                        class="spinner-border text-info"
+                        role="status"
+                        style="width: 5rem; height: 5rem"
+                      >
+                        <span class="visually-hidden">Loading...</span>
+                      </div>
                     </div>
-                  </div>
-                  <!-- dropdown delete selectTools -->
-                  <div class="col-md-1">
-                    <div class="btn-group btn-group-switch">
-                      <button class="btn btn-sm btn-online-secondary dropdown-toggle dropwon-switch-toolDelete" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i
-                          class="bi bi bi-x icon-dropwon-switch-deleteTool"
-                        ></i>
-                      </button>
-                      <ul class="dropdown-menu dropdown-menu-dark p-2">
-                        <h4 class="text-start m-0"><b>Clean Tools</b></h4>
-                        <div *ngFor="let opcion of opciones">
-                          <input class="form-check-input" type="checkbox"  [(ngModel)]="opcion.seleccionado" id="flexCheckDefault">
-                          <label class="form-check-label ms-1" for="flexCheckDefault">
-                            {{ opcion.texto }}
-                          </label>
-                        </div>
-                        <div class="d-flex justify-content-end">
-                          <button class="btn btn-sm btn-danger mt-4" (click)="toolSelectToDelete()"><i class="bi bi-x-lg"></i> Delete</button>
-                        </div>
-                      </ul>
-                    </div>
+                  </ng-container>
+
+                  <!-- canvas radiology -->
+                  <div class="image-canvas-wrapper my-1" id="element-1">
+                    <div id="element" class="cornerstone-element"></div>
                   </div>
                 </div>
+              </div>
+              <!-- <<<<<Radiology Image -->
 
-                <!-- Section: Spinner progress -->
-                <ng-container *ngIf="hiddenSpinner != false">
-                  <!-- Spinner progress -->
-                  <div class="d-flex justify-content-center">
-                    <div
-                      class="spinner-border text-info"
-                      role="status"
-                      style="width: 5rem; height: 5rem"
+              <!-- Data Visual>>>>> -->
+              <ng-container *ngIf="isDataLoadedBar; else placeholderBars">
+                <!-- Código HTML para mostrar los datos reales -->
+                <div class="col-4" style="max-height: 860px;">
+                  <!-- Therd Model Horizontal Bar -->
+                  <div #containerRef class="sombra-card-data grafica">
+                    <ngx-charts-bar-horizontal
+                      (window:resize)="onResize($event)"
+                      [scheme]="colorScheme"
+                      [results]="diseasesNGX"
+                      [gradient]="gradient"
+                      [xAxis]="showXAxis"
+                      [yAxis]="showYAxis"
+                      [showXAxisLabel]="showXAxisLabel"
+                      [showYAxisLabel]="showYAxisLabel"
+                      [xAxisLabel]="showXAxisHorizontal"
+                      [yAxisLabel]="showYAxisVertical"
+                      [showDataLabel]="showDataLabel"
+                      [xAxisTickFormatting]="formatPercent"
+                      [tooltipDisabled]="tooltipDisabled"
+                      [trimYAxisTicks]="trimYAxisTicks"
+                      [animations]="true"
+                      (select)="onSelect($event)"
+                      style="fill: #ffffff; font-size: 25px"
                     >
-                      <span class="visually-hidden">Loading...</span>
+                    </ngx-charts-bar-horizontal>
+                  </div>
+                </div>
+              </ng-container>
+
+              <ng-template #placeholderBars>
+                <!-- Código HTML para mostrar el marcador de posición -->
+                <div class="col-4" style="max-height: 860px;">
+                  <div class="d-flex align-items-center justify-content-center vh-100">
+                    <div class="loader-container">
+                      <div class="loader">
+                        <div class="face1"></div>
+                        <div class="face2"></div>
+                        <div class="face3"></div>
+                        <div class="face4"></div>
+                        <div class="face5"></div>
+                        <div class="face6"></div>
+                      </div>
                     </div>
                   </div>
-                </ng-container>
-
-                <!-- canvas radiology -->
-                <div class="image-canvas-wrapper my-1" id="element-1">
-                  <div id="element" class="cornerstone-element"></div>
                 </div>
-              </div>
-            </div>
-            <!-- <<<<<Radiology Image -->
-
-            <!-- Data Visual>>>>> -->
-            <div class="col-4" style="max-height: 860px;">
-              <!-- Therd Model Horizontal Bar -->
-              <div #containerRef class="sombra-card-data grafica">
-                <ngx-charts-bar-horizontal
-                  (window:resize)="onResize($event)"
-                  [scheme]="colorScheme"
-                  [results]="diseasesNGX"
-                  [gradient]="gradient"
-                  [xAxis]="showXAxis"
-                  [yAxis]="showYAxis"
-                  [showXAxisLabel]="showXAxisLabel"
-                  [showYAxisLabel]="showYAxisLabel"
-                  [xAxisLabel]="showXAxisHorizontal"
-                  [yAxisLabel]="showYAxisVertical"
-                  [showDataLabel]="showDataLabel"
-                  [xAxisTickFormatting]="formatPercent"
-                  [tooltipDisabled]="tooltipDisabled"
-                  [trimYAxisTicks]="trimYAxisTicks"
-                  [animations]="true"
-                  (select)="onSelect($event)"
-                  style="fill: #ffffff; font-size: 25px"
-                >
-                </ngx-charts-bar-horizontal>
-              </div>
+              </ng-template>
             </div>
           </div>
-        </div>
       </div>
     </div>
   </ng-container>

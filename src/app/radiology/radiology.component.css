@@ -413,3 +413,80 @@
   font-family: 'Zilla Slab Highlight', cursive;
   font-size: 30px;
 }
+
+/*Cubo de espera*/
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.loader {
+  position: relative;
+  transform-style: preserve-3d;
+  animation: spin 2s infinite linear;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotateX(0) rotateY(0);
+  }
+  100% {
+    transform: rotateX(1turn) rotateY(1turn);
+  }
+}
+
+.loader div {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  animation: color-change 6s infinite;
+  opacity: 0.9;
+}
+
+@keyframes color-change {
+  0% {
+    background-color: #007bff;
+  }
+  20% {
+    background-color: #e83e8c;
+  }
+  40% {
+    background-color: #fd7e14;
+  }
+  60% {
+    background-color: #20c997;
+  }
+  80% {
+    background-color: #17a2b8;
+  }
+  100% {
+    background-color: #6610f2;
+  }
+}
+
+.face1 {
+  transform: translateZ(25px);
+}
+
+.face2 {
+  transform: rotateY(90deg) translateZ(25px);
+}
+
+.face3 {
+  transform: rotateY(180deg) translateZ(25px);
+}
+
+.face4 {
+  transform: rotateY(-90deg) translateZ(25px);
+}
+
+.face5 {
+  transform: rotateX(90deg) translateZ(25px);
+}
+
+.face6 {
+  transform: rotateX(-90deg) translateZ(25px);
+}
+
