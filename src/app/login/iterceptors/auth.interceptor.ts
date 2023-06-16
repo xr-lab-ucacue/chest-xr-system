@@ -35,7 +35,7 @@ export class AuthInterceptor implements HttpInterceptor {
         }
         if(e.status == 500){
           swal.fire(
-            "Información, Error",
+            "Ocurrio un Error",
             'Estamos trabajando en ello ' ,
             "warning"
           );

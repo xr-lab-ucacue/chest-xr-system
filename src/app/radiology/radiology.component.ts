@@ -1,3 +1,4 @@
+import { UploadFileService } from './../services/upload-file.service';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
 import { DiseasesService } from '../services/diseases.service';
@@ -13,6 +14,7 @@ import cornerstoneWADOImageLoader from 'cornerstone-wado-image-loader';
 import * as dicomParser from 'dicom-parser';
 import cornerstoneMath from 'cornerstone-math';
 import 'hammerjs';
+import { connect } from 'rxjs';
 
 //Config Cornestone
 var config = {
@@ -34,7 +36,10 @@ cornerstoneWADOImageLoader.webWorkerManager.initialize(config);
   encapsulation: ViewEncapsulation.None,
 })
 export class RadiologyComponent implements OnInit {
-  constructor(private diseasesService: DiseasesService) {
+  constructor(
+    private diseasesService: DiseasesService,
+    private uploadFileService: UploadFileService
+  ) {
     // this.view = [innerWidth / 1.60, 600];
   }
 
@@ -51,23 +56,56 @@ export class RadiologyComponent implements OnInit {
   // Upload photo
   onPhotoSelected(event: any): any {
     if (event.target.files && event.target.files[0]) {
-      this.file = <File>event.target.files;
-      this.photoSelected = '../../assets/imgs/giphy.gif';
+      const files: File[] = event.target.files;
+      const invalidFiles: File[] = [];
 
-      // hiddens
-      this.hiddenTxt = false;
-      this.displayButton = false;
+      //Recorremos todo los archivos y obtenemos los invalidos
+      for (const file of files) {
+        const fileName: string = file.name;
+        //Acepto solo archivos con extension .dcm o sin extension
+        if (fileName.endsWith('.dcm') || fileName.indexOf('.') === -1) {
+          ///
+        } else {
+          // Obtengo los archivos invalidos
+          invalidFiles.push(file);
+        }
+      }
+
+      //metodo para subir archivos
+      if(invalidFiles.length === 0){
+        //Metodo para subir archivos
+        this.file = <File>event.target.files;
+        this.photoSelected = '../../assets/imgs/giphy.gif';
+
+        // hiddens
+        this.hiddenTxt = false;
+        this.displayButton = false;
+
+        //prueba para server de flask
+        // this.uploadFileService.uploadFile(this.file[0]).subscribe(
+        //   (res: any) => {
+        //     console.log('Respuesta de Flask: ', res);
+        //   },
+        //   (err) => {
+        //     console.log('ERROR FLASK: ', err);
+        //   }
+        // );
+      }else{
+        const nameInvalids = invalidFiles.map((element) => element.name).join(',\n');
+
+        Swal.fire(
+          'Invalid file format',
+          `Only ."dcm" formats are accepted and you have: ${nameInvalids}`,
+          'warning'
+        );
+      }
     }
   }
-
-  multipleFile() {}
 
   // Bar progress
   loading() {
     this.hiddenSpinner = true;
     setTimeout(() => {
-      // console.log('hello');
-      // this.files(this.file);
       this.stackDicom(this.file);
     }, 500);
     this.viewUpload = false;
@@ -189,6 +227,7 @@ export class RadiologyComponent implements OnInit {
     });
   }
 
+  //Tarjetas de la Izquierda
   expandCardRadiology(urlPhoto: string, nameDisease: string, percent: number) {
     Swal.fire({
       //html
@@ -206,6 +245,7 @@ export class RadiologyComponent implements OnInit {
     });
   }
 
+  //Bandera para activar el stack de imagenes y para desactivarlo
   CtrlActive: boolean;
   desactiveAltKey() {
     this.CtrlActive = false;
@@ -250,6 +290,7 @@ export class RadiologyComponent implements OnInit {
     this.opciones.forEach((e) => (e.seleccionado = false));
   }
 
+  //Activa las herramientas selecionadas (Tool Management)
   activateTools(toolActive: string) {
     const LengthTool = cornerstoneTools.LengthTool;
     const EllipticalRoiTool = cornerstoneTools.EllipticalRoiTool;
@@ -628,10 +669,10 @@ export class RadiologyComponent implements OnInit {
     cornerstoneTools.toolStyle.setToolWidth(this.lineWidhtTool);
   }
 
-  ResetRotate(){
+  ResetRotate() {
     var element = document.getElementById('element');
     var viewport = {
-      rotation: 0
+      rotation: 0,
     };
 
     cornerstone.setViewport(element, viewport);
