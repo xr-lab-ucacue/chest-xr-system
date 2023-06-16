@@ -1,4 +1,4 @@
-export type Diaseases = {
+export interface Diaseases {
   imagen:     string;
   nombre:     string;
   porcentaje: string;

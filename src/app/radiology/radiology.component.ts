@@ -14,7 +14,8 @@ import cornerstoneWADOImageLoader from 'cornerstone-wado-image-loader';
 import * as dicomParser from 'dicom-parser';
 import cornerstoneMath from 'cornerstone-math';
 import 'hammerjs';
-import { connect } from 'rxjs';
+import { async, connect } from 'rxjs';
+import { Diaseases } from '../interfaces/Diseases';
 
 //Config Cornestone
 var config = {
@@ -48,6 +49,8 @@ export class RadiologyComponent implements OnInit {
   viewRadiology: boolean = false;
 
   file!: File;
+  diseasesAll: Diaseases[] = [];
+  diseasesNGX: any[] = [];
   photoSelected!: string | ArrayBuffer | null;
   hiddenTxt: boolean = true;
   hiddenSpinner: boolean = false;
@@ -56,49 +59,71 @@ export class RadiologyComponent implements OnInit {
   // Upload photo
   onPhotoSelected(event: any): any {
     if (event.target.files && event.target.files[0]) {
-      const files: File[] = event.target.files;
-      const invalidFiles: File[] = [];
-
-      //Recorremos todo los archivos y obtenemos los invalidos
-      for (const file of files) {
-        const fileName: string = file.name;
-        //Acepto solo archivos con extension .dcm o sin extension
-        if (fileName.endsWith('.dcm') || fileName.indexOf('.') === -1) {
-          ///
-        } else {
-          // Obtengo los archivos invalidos
-          invalidFiles.push(file);
-        }
-      }
-
-      //metodo para subir archivos
-      if(invalidFiles.length === 0){
-        //Metodo para subir archivos
-        this.file = <File>event.target.files;
+      this.file = <File>event.target.files;
         this.photoSelected = '../../assets/imgs/giphy.gif';
 
         // hiddens
         this.hiddenTxt = false;
         this.displayButton = false;
 
-        //prueba para server de flask
-        // this.uploadFileService.uploadFile(this.file[0]).subscribe(
-        //   (res: any) => {
-        //     console.log('Respuesta de Flask: ', res);
-        //   },
-        //   (err) => {
-        //     console.log('ERROR FLASK: ', err);
-        //   }
-        // );
-      }else{
-        const nameInvalids = invalidFiles.map((element) => element.name).join(',\n');
-
-        Swal.fire(
-          'Invalid file format',
-          `Only ."dcm" formats are accepted and you have: ${nameInvalids}`,
-          'warning'
+      //prueba para server de flask
+        this.uploadFileService.uploadFile(this.file[0]).subscribe(
+          async (res: any) => {
+            this.diseasesAll = res;
+            //Guardo datos solo para grafico de Barras
+            const resultArray = res.map(obj => ({
+            name: obj.nombre,
+            value: obj.porcentaje
+          }));
+          this.diseasesNGX = resultArray;
+          await this.myColor();
+          },
+          (err) => {
+            console.log('ERROR: ', err);
+            Swal.fire(
+                  'An error occurred',
+                  `${err.error}`,
+                  'warning'
+                );
+          }
         );
-      }
+
+
+      //*********IMPLEMENTAR DESPUES DE LAS PRUEBAS******************* */
+      // const files: File[] = event.target.files;
+      // const invalidFiles: File[] = [];
+
+      // //Recorremos todo los archivos y obtenemos los invalidos
+      // for (const file of files) {
+      //   const fileName: string = file.name;
+      //   //Acepto solo archivos con extension .dcm o sin extension
+      //   if (fileName.endsWith('.dcm') || fileName.indexOf('.') === -1) {
+      //     ///
+      //   } else {
+      //     // Obtengo los archivos invalidos
+      //     invalidFiles.push(file);
+      //   }
+      // }
+
+      // //metodo para subir archivos
+      // if(invalidFiles.length === 0){
+      //   //Metodo para subir archivos
+      //   this.file = <File>event.target.files;
+      //   this.photoSelected = '../../assets/imgs/giphy.gif';
+
+      //   // hiddens
+      //   this.hiddenTxt = false;
+      //   this.displayButton = false;
+      //   //Cnx con Flask
+      // }else{
+      //   const nameInvalids = invalidFiles.map((element) => element.name).join(',\n');
+
+      //   Swal.fire(
+      //     'Invalid file format',
+      //     `Only ."dcm" formats are accepted and you have: ${nameInvalids}`,
+      //     'warning'
+      //   );
+      // }
     }
   }
 
@@ -137,23 +162,18 @@ export class RadiologyComponent implements OnInit {
   tooltipDisabled = false;
   //Recortar labels eje Y
   trimYAxisTicks = false;
-  //(No funcional)
-  activeEntries = [{ name: 'Edema', label: 'Edema', value: 50 }];
 
   backgroundColor: any[] = [];
   //Custom Color
-  myColor() {
-    this.diseases = [...this.diseasesService.diseasesData];
-    console.log('diseases', this.diseases);
-
+  async myColor() {
     const rojo = 'rgb(255, 0, 0)';
     const verde = 'rgb(0, 255, 14)';
     const amarillo = 'rgb(255, 242, 0)';
 
-    this.diseases.forEach((disease) => {
-      if (disease.value >= 51) {
+    this.diseasesNGX.forEach((disease) => {
+      if (parseFloat(disease.value) >= 0.51) {
         this.backgroundColor.push(rojo);
-      } else if (disease.value >= 21 && disease.value <= 50) {
+      } else if (parseFloat(disease.value) >= 0.21 && parseFloat(disease.value) <= 0.50) {
         this.backgroundColor.push(amarillo);
       } else {
         this.backgroundColor.push(verde);
@@ -168,7 +188,7 @@ export class RadiologyComponent implements OnInit {
     domain: this.backgroundColor,
   };
 
-  // Obtener datos
+  //Obtener datos de emfermedades para la grafica
   get single() {
     return this.diseasesService.diseasesData;
   }
@@ -178,7 +198,7 @@ export class RadiologyComponent implements OnInit {
     return val + '%';
   }
 
-  // Datos seleccionados
+  // Datos seleccionados en la grafica de Barras (Por ve par aq usar)
   showDiseases = '';
   photo: string = '';
   diseasesSelect: string = '';
@@ -218,29 +238,20 @@ export class RadiologyComponent implements OnInit {
     }
   }
 
-  onlyDiseases: any[] = [];
-  diaseasesOnly() {
-    this.diseases.forEach((disease) => {
-      if (disease.value >= 51) {
-        this.onlyDiseases.push(disease);
-      }
-    });
-  }
 
   //Tarjetas de la Izquierda
-  expandCardRadiology(urlPhoto: string, nameDisease: string, percent: number) {
+  expandCardRadiology(urlPhoto: string, nameDisease: string, percent: string) {
     Swal.fire({
-      //html
       html: `<hr style="color: white;">
           <h1 class="text-center" style="color: white; line-height:0.1;">${nameDisease}</h1>
           <p class="text-start"  style="color: rgb(59, 86, 134); font-size: 15px; line-height:0.1;">Percent: ${percent}%</p>
           `,
-      imageUrl: `${urlPhoto}`,
+      imageUrl: `data:image/png;base64,${urlPhoto}`,
       backdrop: 'rgba(0, 0, 0, 0.7)',
       imageHeight: 600,
-      imageWidth: 600,
+      imageWidth: 10000,
       showConfirmButton: false,
-      imageAlt: 'Radiology',
+      imageAlt: `${nameDisease}`,
       background: '#000000',
     });
   }
@@ -922,7 +933,5 @@ export class RadiologyComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.myColor();
-    this.diaseasesOnly();
   }
 }

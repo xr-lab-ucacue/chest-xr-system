@@ -1,9 +1,4 @@
 
--- preguntar si esta seguro de cambiar de vista cuando este en /radiology
--- poner un odrby en el array donde estan los dicon para probar ordenar el stack
-
-****
-aceptar formatos dicon
 
 ////////-------- CODIGO PARA VER TODO DATA DEL CANVAS-------------/////////////////////
 const enabledElements = cornerstone.getEnabledElements();

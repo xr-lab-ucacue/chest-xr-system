@@ -156,4 +156,34 @@
 
 </div>
 
+<h1>PRUEBA DE NGX-CHART CON FLASK</h1>
+                <!-- File -->
+                <input
+                  type="file"
+                  class="d-none"
+                  (change)="serverFlask($event)"
+                  #photoInput3
+                  multiple
+                />
+                <button (click)="photoInput3.click()">Clcik Flask</button>
 
+<pre>RESPUESTA: {{ diseases1 }}</pre>
+<ngx-charts-bar-horizontal
+                  [view]="[900,500]"
+                  [scheme]="colorScheme"
+                  [results]="diseases2"
+                  [gradient]="gradient"
+                  [xAxis]="showXAxis"
+                  [yAxis]="showYAxis"
+                  [showXAxisLabel]="showXAxisLabel"
+                  [showYAxisLabel]="showYAxisLabel"
+                  [xAxisLabel]="showXAxisHorizontal"
+                  [yAxisLabel]="showYAxisVertical"
+                  [showDataLabel]="showDataLabel"
+                  [xAxisTickFormatting]="formatPercent"
+                  [tooltipDisabled]="tooltipDisabled"
+                  [trimYAxisTicks]="trimYAxisTicks"
+                  [animations]="true"
+                  style="fill: #ffffff; font-size: 25px"
+                >
+                </ngx-charts-bar-horizontal>

@@ -887,19 +887,19 @@
           <div
             class="container card my-3 card-container"
             style="width: 18rem"
-            *ngFor="let disease of onlyDiseases"
+            *ngFor="let disease of diseasesAll"
           >
             <img
-              src="{{ disease.photo }}"
+              src="{{ 'data:image/png;base64,' + disease.imagen }}"
               class="card-img-top img-fluid img-card-radiology mt-1"
-              [alt]="disease.name"
+              [alt]="disease.nombre"
               (click)="
-                expandCardRadiology(disease.photo, disease.name, disease.value)
+                expandCardRadiology(disease.imagen, disease.nombre, disease.porcentaje)
               "
             />
             <div class="card-body txt-card">
-              <h2 class="card-title">{{ disease.name }}</h2>
-              <p>Percent: {{ disease.value }}%</p>
+              <h2 class="card-title">{{ disease.nombre }}</h2>
+              <p>Percent: {{ disease.porcentaje }}%</p>
             </div>
           </div>
         </div>
@@ -1088,7 +1088,7 @@
                 <ngx-charts-bar-horizontal
                   (window:resize)="onResize($event)"
                   [scheme]="colorScheme"
-                  [results]="single"
+                  [results]="diseasesNGX"
                   [gradient]="gradient"
                   [xAxis]="showXAxis"
                   [yAxis]="showYAxis"
@@ -1100,7 +1100,6 @@
                   [xAxisTickFormatting]="formatPercent"
                   [tooltipDisabled]="tooltipDisabled"
                   [trimYAxisTicks]="trimYAxisTicks"
-                  [activeEntries]="activeEntries"
                   [animations]="true"
                   (select)="onSelect($event)"
                   style="fill: #ffffff; font-size: 25px"
