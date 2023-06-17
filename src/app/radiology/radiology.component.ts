@@ -14,8 +14,9 @@ import cornerstoneWADOImageLoader from 'cornerstone-wado-image-loader';
 import * as dicomParser from 'dicom-parser';
 import cornerstoneMath from 'cornerstone-math';
 import 'hammerjs';
-import { async, connect } from 'rxjs';
+import { Observable, async, connect } from 'rxjs';
 import { Diaseases } from '../interfaces/Diseases';
+import { CanDeactivateGuardGuard } from '../auth/can-deactivate-guard.guard';
 
 //Config Cornestone
 var config = {
@@ -37,16 +38,13 @@ cornerstoneWADOImageLoader.webWorkerManager.initialize(config);
   encapsulation: ViewEncapsulation.None,
 })
 export class RadiologyComponent implements OnInit {
+
   constructor(
     private diseasesService: DiseasesService,
     private uploadFileService: UploadFileService
   ) {
     // this.view = [innerWidth / 1.60, 600];
   }
-
-  //>>>>>>> Variables photo
-  viewUpload: boolean = true;
-  viewRadiology: boolean = false;
 
   file!: File;
   diseasesAll: Diaseases[] = [];
@@ -61,87 +59,81 @@ export class RadiologyComponent implements OnInit {
   isDataLoadedBar = false; //Placeholder Grafica Barras
   onPhotoSelected(event: any): any {
     if (event.target.files && event.target.files[0]) {
-      this.file = <File>event.target.files;
-      this.photoSelected = '../../assets/imgs/giphy.gif';
+      const files: File[] = event.target.files;
+      const invalidFiles: File[] = [];
 
-      // hiddens
-      this.hiddenTxt = false;
-      this.displayButton = false;
-
-      //prueba para server de flask
-      this.uploadFileService.uploadFile(this.file[0]).subscribe(
-        async (res: any) => {
-          this.diseasesAll = res;
-          //Guardo datos solo para grafico de Barras
-          const resultArray = res.map((obj) => ({
-            name: obj.nombre,
-            value: obj.porcentaje,
-          }));
-          this.diseasesNGX = resultArray;
-          await this.myColor();
-
-          //Cargo los datos y cambio el Placeholders
-          this.isDataLoaded = true;
-          this.isDataLoadedBar = true;
-        },
-        (err) => {
-          console.log('ERROR: ', err);
-          Swal.fire('An error occurred', `${err.error}`, 'warning');
-          // Marcar como cargado incluso en caso de error
-          this.isDataLoaded = true;
-          this.isDataLoadedBar = true;
+      //Recorremos todo los archivos y obtenemos los invalidos
+      for (const file of files) {
+        const fileName: string = file.name;
+        //Acepto solo archivos con extension .dcm o sin extension
+        if (fileName.endsWith('.dcm') || fileName.indexOf('.') === -1) {
+          ///
+        } else {
+          // Obtengo los archivos invalidos
+          invalidFiles.push(file);
         }
-      );
+      }
 
-      //*********IMPLEMENTAR DESPUES DE LAS PRUEBAS******************* */
-      // const files: File[] = event.target.files;
-      // const invalidFiles: File[] = [];
+      //metodo para subir archivos
+      if (invalidFiles.length === 0) {
+        //Metodo para subir archivos
+        this.file = <File>event.target.files;
+        this.photoSelected = '../../assets/imgs/giphy.gif';
 
-      // //Recorremos todo los archivos y obtenemos los invalidos
-      // for (const file of files) {
-      //   const fileName: string = file.name;
-      //   //Acepto solo archivos con extension .dcm o sin extension
-      //   if (fileName.endsWith('.dcm') || fileName.indexOf('.') === -1) {
-      //     ///
-      //   } else {
-      //     // Obtengo los archivos invalidos
-      //     invalidFiles.push(file);
-      //   }
-      // }
+        // hiddens
+        this.hiddenTxt = false;
+        this.displayButton = false;
 
-      // //metodo para subir archivos
-      // if(invalidFiles.length === 0){
-      //   //Metodo para subir archivos
-      //   this.file = <File>event.target.files;
-      //   this.photoSelected = '../../assets/imgs/giphy.gif';
+        //Consumo el servicio de Flask
+        this.uploadFileService.uploadFile(this.file[0]).subscribe(
+          async (res: any) => {
+            this.diseasesAll = res;
+            //Guardo datos solo para grafico de Barras
+            const resultArray = res.map((obj) => ({
+              name: obj.nombre,
+              value: obj.porcentaje,
+            }));
+            this.diseasesNGX = resultArray;
+            await this.myColor();
 
-      //   // hiddens
-      //   this.hiddenTxt = false;
-      //   this.displayButton = false;
-      //   //Cnx con Flask
-      // }else{
-      //   const nameInvalids = invalidFiles.map((element) => element.name).join(',\n');
+            //Cargo los datos y cambio el Placeholders
+            this.isDataLoaded = true;
+            this.isDataLoadedBar = true;
+          },
+          (err) => {
+            console.log('ERROR: ', err);
+            Swal.fire('An error occurred', `${err.error}`, 'warning');
+            // Marcar como cargado incluso en caso de error
+            this.isDataLoaded = true;
+            this.isDataLoadedBar = true;
+          }
+        );
+      } else {
+        const nameInvalids = invalidFiles
+          .map((element) => element.name)
+          .join(',\n');
 
-      //   Swal.fire(
-      //     'Invalid file format',
-      //     `Only ."dcm" formats are accepted and you have: ${nameInvalids}`,
-      //     'warning'
-      //   );
-      // }
+        Swal.fire(
+          'Invalid file format',
+          `Only ."dcm" formats are accepted and you have: ${nameInvalids}`,
+          'warning'
+        );
+      }
     }
   }
 
-  // Bar progress
+  //variables subida de archivo y interfaz de radiologia
+  viewUpload: boolean = false;
+
   loading() {
     this.hiddenSpinner = true;
     setTimeout(() => {
       this.stackDicom(this.file);
     }, 500);
-    this.viewUpload = false;
-    this.viewRadiology = true;
+    this.viewUpload = true;
     this.MiniTutorial();
   }
-  // <<<<<<<<<
+  //   *ngIf="viewUpload; else radiologyInterfaz" #radiologyInterfaz
 
   diseases: any[] = [];
 
@@ -245,10 +237,10 @@ export class RadiologyComponent implements OnInit {
     }
   }
 
-  //Tarjetas de la Izquierda
+  //Tarjetas de predicion de enfermedades
   expandCardRadiology(urlPhoto: string, nameDisease: string, percent: string) {
     Swal.fire({
-      imageUrl: 'data:image/png;base64,'+ urlPhoto,
+      imageUrl: 'data:image/png;base64,' + urlPhoto,
       imageWidth: 1000,
       imageHeight: 700,
       imageAlt: nameDisease,
@@ -264,7 +256,7 @@ export class RadiologyComponent implements OnInit {
   }
 
   //Bandera para activar el stack de imagenes y para desactivarlo
-  CtrlActive: boolean;
+  CtrlActive: boolean = false;
   desactiveAltKey() {
     this.CtrlActive = false;
 
@@ -556,12 +548,19 @@ export class RadiologyComponent implements OnInit {
       });
 
     if (imageIds.length > 1) {
-      window.addEventListener('keydown', (event) => {
-        if (event.ctrlKey) {
-          this.CtrlActive = true;
-          console.log('Frames Habilitado');
-          cornerstoneTools.addTool(StackScrollMouseWheelTool);
-          cornerstoneTools.setToolActive('StackScrollMouseWheel', {});
+      window.addEventListener('keydown', (event) => { // Agrega un event listener para el evento 'keydown' en el objeto window.
+        if (event.key === 'Control') { // Verifica si la tecla presionada es la tecla "Ctrl".
+          this.CtrlActive = !this.CtrlActive;
+          console.log(this.CtrlActive ? 'Frames Habilitado' : 'Frames Deshabilitado');
+
+          if (this.CtrlActive) {
+            cornerstoneTools.addTool(StackScrollMouseWheelTool);
+            cornerstoneTools.setToolActive('StackScrollMouseWheel', {});
+          } else {
+            const ZoomMouseWheelTool = cornerstoneTools.ZoomMouseWheelTool; // zoom
+            cornerstoneTools.addTool(ZoomMouseWheelTool);
+            cornerstoneTools.setToolActive('ZoomMouseWheel', {});
+          }
         }
       });
     } else {
@@ -898,7 +897,7 @@ export class RadiologyComponent implements OnInit {
                           html: `
                             <h2 style="color: white;">To see the frames you can do them in two ways:</h2>
                             <ol >
-                              <li style="color: white;">Press <kbd style="background: grey;">CTRL</kbd> to activate it and use the mouse wheel.</li>
+                              <li style="color: white;">Press <kbd style="background: grey;">CTRL</kbd> to activate or deactivate it and use the mouse wheel.</li>
                               <li style="color: white;">Click on the Stack button and left click to use.</li>
                             </ol>
                             <br>

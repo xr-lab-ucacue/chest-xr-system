@@ -12,15 +12,16 @@ import { AuthGuard } from './auth/auth.guard';
 import { RoleGuard } from './auth/role.guard';
 import { PageUserComponent } from './page-user/page-user.component';
 import { ProfileComponent } from './profile/profile.component';
+import { CanDeactivateGuardGuard } from './auth/can-deactivate-guard.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent
   },
   { path: 'lostPassword', component: LostPasswordComponent
   },
-  { path: 'register', component: RegisterComponent },
+  { path: 'register', component: RegisterComponent, canDeactivate: [CanDeactivateGuardGuard] },
   // { path: 'modelo1', component: Modelo1Component, canActivate: [AuthGuard] },
-  { path: 'radiology', component: RadiologyComponent, canActivate: [AuthGuard] },
+  { path: 'radiology', component: RadiologyComponent, canActivate: [AuthGuard], canDeactivate: [CanDeactivateGuardGuard]},
   { path: 'admin', component: AdminComponent, canActivate: [RoleGuard] },
   { path: 'userPage/:id', component: PageUserComponent, canActivate: [RoleGuard]},
   { path: 'profile/:id', component: ProfileComponent, canActivate: [AuthGuard]},
