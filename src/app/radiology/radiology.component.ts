@@ -62,20 +62,20 @@ export class RadiologyComponent implements OnInit {
   onPhotoSelected(event: any): any {
     if (event.target.files && event.target.files[0]) {
       this.file = <File>event.target.files;
-        this.photoSelected = '../../assets/imgs/giphy.gif';
+      this.photoSelected = '../../assets/imgs/giphy.gif';
 
-        // hiddens
-        this.hiddenTxt = false;
-        this.displayButton = false;
+      // hiddens
+      this.hiddenTxt = false;
+      this.displayButton = false;
 
       //prueba para server de flask
-        this.uploadFileService.uploadFile(this.file[0]).subscribe(
-          async (res: any) => {
-            this.diseasesAll = res;
-            //Guardo datos solo para grafico de Barras
-            const resultArray = res.map(obj => ({
+      this.uploadFileService.uploadFile(this.file[0]).subscribe(
+        async (res: any) => {
+          this.diseasesAll = res;
+          //Guardo datos solo para grafico de Barras
+          const resultArray = res.map((obj) => ({
             name: obj.nombre,
-            value: obj.porcentaje
+            value: obj.porcentaje,
           }));
           this.diseasesNGX = resultArray;
           await this.myColor();
@@ -83,20 +83,15 @@ export class RadiologyComponent implements OnInit {
           //Cargo los datos y cambio el Placeholders
           this.isDataLoaded = true;
           this.isDataLoadedBar = true;
-          },
-          (err) => {
-            console.log('ERROR: ', err);
-            Swal.fire(
-                  'An error occurred',
-                  `${err.error}`,
-                  'warning'
-                );
-            // Marcar como cargado incluso en caso de error
-            this.isDataLoaded = true;
-            this.isDataLoadedBar = true;
-          }
-        );
-
+        },
+        (err) => {
+          console.log('ERROR: ', err);
+          Swal.fire('An error occurred', `${err.error}`, 'warning');
+          // Marcar como cargado incluso en caso de error
+          this.isDataLoaded = true;
+          this.isDataLoadedBar = true;
+        }
+      );
 
       //*********IMPLEMENTAR DESPUES DE LAS PRUEBAS******************* */
       // const files: File[] = event.target.files;
@@ -182,7 +177,10 @@ export class RadiologyComponent implements OnInit {
     this.diseasesNGX.forEach((disease) => {
       if (parseFloat(disease.value) >= 0.51) {
         this.backgroundColor.push(rojo);
-      } else if (parseFloat(disease.value) >= 0.21 && parseFloat(disease.value) <= 0.50) {
+      } else if (
+        parseFloat(disease.value) >= 0.21 &&
+        parseFloat(disease.value) <= 0.5
+      ) {
         this.backgroundColor.push(amarillo);
       } else {
         this.backgroundColor.push(verde);
@@ -247,20 +245,20 @@ export class RadiologyComponent implements OnInit {
     }
   }
 
-
   //Tarjetas de la Izquierda
   expandCardRadiology(urlPhoto: string, nameDisease: string, percent: string) {
     Swal.fire({
-      html: `<hr style="color: white;">
-          <h1 class="text-center" style="color: white; line-height:0.1;">${nameDisease}</h1>
-          <p class="text-start"  style="color: rgb(59, 86, 134); font-size: 15px; line-height:0.1;">Percent: ${percent}%</p>
-          `,
-      imageUrl: `data:image/png;base64,${urlPhoto}`,
+      imageUrl: 'data:image/png;base64,'+ urlPhoto,
+      imageWidth: 1000,
+      imageHeight: 700,
+      imageAlt: nameDisease,
+      html: `
+        <hr style="color: white;">
+        <h1 class="text-center" style="color: white; line-height:0.1;">${nameDisease}</h1>
+        <p class="text-start"  style="color: rgb(59, 86, 134); font-size: 15px; line-height:0.1;">Percent: ${percent}%</p>
+      `,
       backdrop: 'rgba(0, 0, 0, 0.7)',
-      imageHeight: 600,
-      imageWidth: 10000,
       showConfirmButton: false,
-      imageAlt: `${nameDisease}`,
       background: '#000000',
     });
   }
@@ -941,6 +939,5 @@ export class RadiologyComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 }
