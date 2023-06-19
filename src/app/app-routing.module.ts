@@ -25,7 +25,7 @@ const routes: Routes = [
   { path: 'admin', component: AdminComponent, canActivate: [RoleGuard] },
   { path: 'userPage/:id', component: PageUserComponent, canActivate: [RoleGuard]},
   { path: 'profile/:id', component: ProfileComponent, canActivate: [AuthGuard]},
-  { path: 'radiologys', component: RadiologysComponent },
+  { path: 'radiologys', component: RadiologysComponent, canActivate: [RoleGuard] },
   { path: '', pathMatch: 'full', component: LoginComponent },
   { path: '**', pathMatch: 'full', component: LoginComponent }
 ];

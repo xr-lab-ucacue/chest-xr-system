@@ -344,7 +344,6 @@
                     aria-labelledby="panelsStayOpen-headingFor"
                   >
                     <div class="accordion-body">
-                      <!-- poner img de botones aki -->
                       <div class="mb-2">
                         <h4><em>Tool buttons:</em></h4>
                         <label for="exampleColorInput" class="form-label"
@@ -359,7 +358,7 @@
                         >
                       </div>
 
-                      <div class="my-2">
+                      <!-- <div class="my-2">
                         <label for="exampleColorInput2" class="form-label"
                           >Advanced mouse:</label
                         >
@@ -369,6 +368,19 @@
                           style="font-size: 0.9rem; color: cornflowerblue"
                           (click)="infoToolModal('MausAdvanced')"
                           >Show buttons</i
+                        >
+                      </div> -->
+
+                      <div class="my-2">
+                        <label for="exampleColorInput3" class="form-label"
+                          >Tutorial:</label
+                        >
+                        <br />
+                        <i
+                        class="bi bi-info-square mx-2 change-puntero"
+                          style="font-size: 0.9rem; color: cornflowerblue"
+                          (click)="MiniTutorial()"
+                          >Show</i
                         >
                       </div>
                     </div>

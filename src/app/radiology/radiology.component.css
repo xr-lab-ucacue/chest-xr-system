@@ -414,6 +414,16 @@
   font-size: 30px;
 }
 
+
+/* SweetAlert2 Css */
+/* .swal2-container.swal2-center>.swal2-popup {
+  width: 1000px !important;
+} */
+
+.swal2-container .swal2-center> .swal2-popup .custom-swal-container, .custom-swal-popup {
+  width: 1000px !important;
+}
+
 /*Cubo de espera*/
 .loader-container {
   display: flex;

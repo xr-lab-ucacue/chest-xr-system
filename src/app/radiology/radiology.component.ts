@@ -87,11 +87,18 @@ export class RadiologyComponent implements OnInit {
         //Consumo el servicio de Flask
         this.uploadFileService.uploadFile(this.file[0]).subscribe(
           async (res: any) => {
-            this.diseasesAll = res;
+            // Guardo todo los datos del servidor
+            const resultAllArray = res.map((obj: Diaseases) => ({
+              imagen: obj.imagen,
+              nombre: obj.nombre,
+              porcentaje: (obj.porcentaje * 100).toFixed(2),
+            }))
+            this.diseasesAll = resultAllArray;
+
             //Guardo datos solo para grafico de Barras
-            const resultArray = res.map((obj) => ({
+            const resultArray = res.map((obj:any) => ({
               name: obj.nombre,
-              value: obj.porcentaje,
+              value: obj.porcentaje * 100,
             }));
             this.diseasesNGX = resultArray;
             await this.myColor();
@@ -167,11 +174,11 @@ export class RadiologyComponent implements OnInit {
     const amarillo = 'rgb(255, 242, 0)';
 
     this.diseasesNGX.forEach((disease) => {
-      if (parseFloat(disease.value) >= 0.51) {
+      if (parseFloat(disease.value) >= 51) {
         this.backgroundColor.push(rojo);
       } else if (
-        parseFloat(disease.value) >= 0.21 &&
-        parseFloat(disease.value) <= 0.5
+        parseFloat(disease.value) >= 21 &&
+        parseFloat(disease.value) <= 50
       ) {
         this.backgroundColor.push(amarillo);
       } else {
@@ -238,13 +245,15 @@ export class RadiologyComponent implements OnInit {
   }
 
   //Tarjetas de predicion de enfermedades
-  expandCardRadiology(urlPhoto: string, nameDisease: string, percent: string) {
+  expandCardRadiology(urlPhoto: string, nameDisease: string, percent: number) {
+    const urlPhoto64 = 'data:image/png;base64,' + urlPhoto ;
     Swal.fire({
-      imageUrl: 'data:image/png;base64,' + urlPhoto,
-      imageWidth: 1000,
-      imageHeight: 700,
+      imageUrl: urlPhoto64,
+      imageWidth: '200%',
+      imageHeight: 750,
       imageAlt: nameDisease,
       html: `
+
         <hr style="color: white;">
         <h1 class="text-center" style="color: white; line-height:0.1;">${nameDisease}</h1>
         <p class="text-start"  style="color: rgb(59, 86, 134); font-size: 15px; line-height:0.1;">Percent: ${percent}%</p>
@@ -252,6 +261,10 @@ export class RadiologyComponent implements OnInit {
       backdrop: 'rgba(0, 0, 0, 0.7)',
       showConfirmButton: false,
       background: '#000000',
+      customClass: {
+        container: 'custom-swal-container',
+        popup: 'custom-swal-popup',
+       }
     });
   }
 
