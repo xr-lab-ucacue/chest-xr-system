@@ -14,7 +14,7 @@ import cornerstoneWADOImageLoader from 'cornerstone-wado-image-loader';
 import * as dicomParser from 'dicom-parser';
 import cornerstoneMath from 'cornerstone-math';
 import 'hammerjs';
-import { Observable, async, connect } from 'rxjs';
+import { Observable, async, connect, map } from 'rxjs';
 import { Diaseases } from '../interfaces/Diseases';
 import { CanDeactivateGuardGuard } from '../auth/can-deactivate-guard.guard';
 
@@ -38,7 +38,6 @@ cornerstoneWADOImageLoader.webWorkerManager.initialize(config);
   encapsulation: ViewEncapsulation.None,
 })
 export class RadiologyComponent implements OnInit {
-
   constructor(
     private diseasesService: DiseasesService,
     private uploadFileService: UploadFileService
@@ -88,15 +87,17 @@ export class RadiologyComponent implements OnInit {
         this.uploadFileService.uploadFile(this.file[0]).subscribe(
           async (res: any) => {
             // Guardo todo los datos del servidor
-            const resultAllArray = res.map((obj: Diaseases) => ({
-              imagen: obj.imagen,
-              nombre: obj.nombre,
-              porcentaje: (obj.porcentaje * 100).toFixed(2),
-            }))
-            this.diseasesAll = resultAllArray;
+            console.log('res', res);
+
+              const resultAllArray = res.map((obj: Diaseases) => ({
+                imagen: obj.imagen,
+                nombre: obj.nombre,
+                porcentaje: (obj.porcentaje * 100).toFixed(2),
+              }));
+              this.diseasesAll = resultAllArray;
 
             //Guardo datos solo para grafico de Barras
-            const resultArray = res.map((obj:any) => ({
+            const resultArray = res.map((obj: any) => ({
               name: obj.nombre,
               value: obj.porcentaje * 100,
             }));
@@ -246,7 +247,7 @@ export class RadiologyComponent implements OnInit {
 
   //Tarjetas de predicion de enfermedades
   expandCardRadiology(urlPhoto: string, nameDisease: string, percent: number) {
-    const urlPhoto64 = 'data:image/png;base64,' + urlPhoto ;
+    const urlPhoto64 = 'data:image/png;base64,' + urlPhoto;
     Swal.fire({
       imageUrl: urlPhoto64,
       imageWidth: '200%',
@@ -264,7 +265,7 @@ export class RadiologyComponent implements OnInit {
       customClass: {
         container: 'custom-swal-container',
         popup: 'custom-swal-popup',
-       }
+      },
     });
   }
 
@@ -561,10 +562,14 @@ export class RadiologyComponent implements OnInit {
       });
 
     if (imageIds.length > 1) {
-      window.addEventListener('keydown', (event) => { // Agrega un event listener para el evento 'keydown' en el objeto window.
-        if (event.key === 'Control') { // Verifica si la tecla presionada es la tecla "Ctrl".
+      window.addEventListener('keydown', (event) => {
+        // Agrega un event listener para el evento 'keydown' en el objeto window.
+        if (event.key === 'Control') {
+          // Verifica si la tecla presionada es la tecla "Ctrl".
           this.CtrlActive = !this.CtrlActive;
-          console.log(this.CtrlActive ? 'Frames Habilitado' : 'Frames Deshabilitado');
+          console.log(
+            this.CtrlActive ? 'Frames Habilitado' : 'Frames Deshabilitado'
+          );
 
           if (this.CtrlActive) {
             cornerstoneTools.addTool(StackScrollMouseWheelTool);
