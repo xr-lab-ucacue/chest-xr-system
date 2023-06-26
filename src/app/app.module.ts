@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-// import {MatStepperModule} from '@angular/material/stepper';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
@@ -10,7 +9,6 @@ import { FooterComponent } from './footer/footer.component';
 import { RadiologyComponent } from './radiology/radiology.component';
 import { RadiologysComponent } from './radiologys/radiologys.component';
 import { NgxChartsModule } from "@swimlane/ngx-charts";
-// import { NgChartsModule } from 'ng2-charts';
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
@@ -19,12 +17,11 @@ import { TokenInterceptor } from './login/iterceptors/token.interceptor';
 import { AuthInterceptor } from './login/iterceptors/auth.interceptor';
 import { AdminComponent } from './admin/admin.component';
 import { NgxPaginationModule } from 'ngx-pagination';
-// import { NgbAlertModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { PageUserComponent } from './page-user/page-user.component';
 import { ProfileComponent } from './profile/profile.component';
 import { LostPasswordComponent } from './lost-password/lost-password.component';
-// import {CornerstoneModule} from 'cornerstone-core';
+import { ReferenceLinesToolComponent } from './reference-lines-tool/reference-lines-tool.component';
 
 
 @NgModule({
@@ -39,21 +36,18 @@ import { LostPasswordComponent } from './lost-password/lost-password.component';
     AdminComponent,
     PageUserComponent,
     ProfileComponent,
-    LostPasswordComponent
+    LostPasswordComponent,
+    ReferenceLinesToolComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    // MatStepperModule,
     FormsModule,
     NgxChartsModule,
-    // NgChartsModule,
     HttpClientModule,
-    // NgbPaginationModule, NgbAlertModule,
     NgxPaginationModule,
     Ng2SearchPipeModule,
-    // CornerstoneModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass:AuthInterceptor, multi:true},

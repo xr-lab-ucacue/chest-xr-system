@@ -12,26 +12,49 @@ import { RoleGuard } from './auth/role.guard';
 import { PageUserComponent } from './page-user/page-user.component';
 import { ProfileComponent } from './profile/profile.component';
 import { CanDeactivateGuardGuard } from './auth/can-deactivate-guard.guard';
+import { ReferenceLinesToolComponent } from './reference-lines-tool/reference-lines-tool.component';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent
+  { path: 'login', component: LoginComponent },
+  { path: 'lostPassword', component: LostPasswordComponent },
+  {
+    path: 'register',
+    component: RegisterComponent,
+    canDeactivate: [CanDeactivateGuardGuard],
   },
-  { path: 'lostPassword', component: LostPasswordComponent
+  {
+    path: 'radiology',
+    component: RadiologyComponent,
+    canActivate: [AuthGuard],
+    canDeactivate: [CanDeactivateGuardGuard],
   },
-  { path: 'register', component: RegisterComponent, canDeactivate: [CanDeactivateGuardGuard] },
-  // { path: 'modelo1', component: Modelo1Component, canActivate: [AuthGuard] },
-  { path: 'radiology', component: RadiologyComponent, canActivate: [AuthGuard], canDeactivate: [CanDeactivateGuardGuard]},
   { path: 'admin', component: AdminComponent, canActivate: [RoleGuard] },
-  { path: 'userPage/:id', component: PageUserComponent, canActivate: [RoleGuard]},
-  { path: 'profile/:id', component: ProfileComponent, canActivate: [AuthGuard]},
-  { path: 'radiologys', component: RadiologysComponent, canActivate: [RoleGuard] },
+  {
+    path: 'userPage/:id',
+    component: PageUserComponent,
+    canActivate: [RoleGuard],
+  },
+  {
+    path: 'profile/:id',
+    component: ProfileComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'radiologys',
+    component: RadiologysComponent,
+    canActivate: [RoleGuard],
+  },
+  {
+    path: 'referenceLines',
+    component: ReferenceLinesToolComponent,
+  },
   { path: '', pathMatch: 'full', component: LoginComponent },
-  { path: '**', pathMatch: 'full', component: LoginComponent }
+  { path: '**', pathMatch: 'full', component: LoginComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  providers:[AuthGuard, AuthService],
-  exports: [RouterModule]
+  providers: [AuthGuard, AuthService],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

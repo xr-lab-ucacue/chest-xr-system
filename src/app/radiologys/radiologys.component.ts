@@ -12,7 +12,6 @@ import cornerstoneTools from 'cornerstone-tools';
 import * as cornerstone from 'cornerstone-core';
 import * as dicomParser from 'dicom-parser';
 import cornerstoneWADOImageLoader from 'cornerstone-wado-image-loader';
-// import cornerstoneWADOImageLoader from 'cornerstone-wado-image-loader/dist/dynamic-import/cornerstoneWADOImageLoader.min.js';
 import cornerstoneMath from 'cornerstone-math';
 import 'hammerjs';
 import { UploadFileService } from '../services/upload-file.service';
@@ -20,6 +19,10 @@ import { UploadFileService } from '../services/upload-file.service';
 
 import { Color, ScaleType } from '@swimlane/ngx-charts';
 import { Diaseases } from '../interfaces/Diseases';
+
+
+// Importa las bibliotecas necesarias Para TRANFORMAR .DCM A .JPG
+
 
 
 var config = {
@@ -46,6 +49,10 @@ export class RadiologysComponent implements OnInit {
     private uploadFileService: UploadFileService
   ) {}
   conditionView: number = 1;
+
+
+
+
 
   activateTools(toolActive: string) {
     const element = document.getElementById('element');
@@ -281,6 +288,7 @@ export class RadiologysComponent implements OnInit {
     const imageId = cornerstoneWADOImageLoader.wadouri.fileManager.add(
       this.file
     );
+
     console.log('-file:', this.file);
     console.log('ImageIDs: ', imageId);
 

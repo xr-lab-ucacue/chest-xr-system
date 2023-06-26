@@ -1,0 +1,27 @@
+<div class="fondo">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div>
+          <h4>Files StackSync</h4>
+          <input type="file" #input1 id="foto1" />
+          <input type="file" #input2 id="fotos2" multiple />
+          <button (click)="SyncCornerstone()">cargar Sync</button>
+
+          <div class="row">
+            <div class="col-6">
+              <div class="image-canvas-wrapper my-5" id="element-1">
+                <div id="element1" class="cornerstone-element"></div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="image-canvas-wrapper my-5" id="element-1">
+                <div id="element2" class="cornerstone-element"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
