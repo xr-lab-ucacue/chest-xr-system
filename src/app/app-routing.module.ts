@@ -4,7 +4,6 @@ import { RegisterComponent } from './register/register.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
-import { Modelo1Component } from './modelo1/modelo1.component';
 import { RadiologyComponent } from './radiology/radiology.component';
 import { RadiologysComponent } from './radiologys/radiologys.component';
 import { AdminComponent } from './admin/admin.component';

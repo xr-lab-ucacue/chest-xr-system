@@ -5,7 +5,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import { Modelo1Component } from './modelo1/modelo1.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { RadiologyComponent } from './radiology/radiology.component';
@@ -31,7 +30,6 @@ import { LostPasswordComponent } from './lost-password/lost-password.component';
 @NgModule({
   declarations: [
     AppComponent,
-    Modelo1Component,
     NavbarComponent,
     FooterComponent,
     RadiologyComponent,
