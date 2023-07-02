@@ -12,28 +12,30 @@
         <div class="col-lg-4 mt-5 mx-auto card1">
           <!-- Card -->
           <div class="card perspective sombra">
-            <!-- Header Card -->
-            <div class="card-header text-center" style="padding: 1rem">
-              <i
-                class="bi bi-cloud-arrow-up-fill"
-                style="font-size: 5rem; color: white"
-              >
-                <h4>Upload a Dicom</h4></i
-              >
-            </div>
-            <!-- Body Card -->
-            <div class="card-body" style="background-color: white">
-              <!-- Img -->
-              <div class="img-upload">
-                <img
-                  [src]="photoSelected || '../../assets/imgs/no-image2.png'"
-                  class="img-fluid"
-                  alt="No image"
-                  (click)="[input1.click(), evento()]"
-                />
-                <h6 class="text-center txt-up">
-                  Click on the image to upload a photo
-                </h6>
+            <div class="neon-border">
+              <!-- Header Card -->
+              <div class="card-header text-center" style="padding: 1rem">
+                <i
+                  class="bi bi-cloud-arrow-up-fill"
+                  style="font-size: 5rem; color: white"
+                >
+                  <h4>Upload a Dicom</h4></i
+                >
+              </div>
+              <!-- Body Card -->
+              <div class="card-body" style="background-color: white">
+                <!-- Img -->
+                <div class="img-upload">
+                  <img
+                    [src]="photoSelected || '../../assets/imgs/no-image2.png'"
+                    class="img-fluid"
+                    alt="No image"
+                    (click)="[input1.click(), evento()]"
+                  />
+                  <h6 class="text-center txt-up">
+                    Click on the image to upload a photo
+                  </h6>
+                </div>
               </div>
             </div>
           </div>
@@ -42,7 +44,7 @@
         <div class="col-lg-4 mt-5 mx-auto">
           <div class="" style="margin-top: 40%;">
             <div class="row">
-              <div class="col-4 mt-5">
+              <div class="col-4 mt-5 border-col-left ">
                 <div class="linea-color">
                 <div class="circulo-color">
                     <div class="face front"></div>
@@ -91,7 +93,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-4 mt-5">
+              <div class="col-4 mt-5 border-col-right">
                 <div class="linea-color">
                 <div class="circulo-color2">
                   <div class="face front"></div>
