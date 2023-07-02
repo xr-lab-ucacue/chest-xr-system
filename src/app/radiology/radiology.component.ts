@@ -741,25 +741,42 @@ export class RadiologyComponent implements OnInit {
         }
       });
     } else {
-      Swal.fire({
-        title: 'Are you sure to continue?',
-        text: "Solo subiste un .dcm, no podrás usar la herramienta Stack",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes continue!',
-        cancelButtonText: 'No, cancel!',
-        allowOutsideClick: false,
-        allowEscapeKey: false,
-        allowEnterKey: false,
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.MiniTutorial();
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-          window.location.reload();
+      // Swal.fire({
+      //   title: 'Are you sure to continue?',
+      //   text: "Solo subiste un .dcm, no podrás usar la herramienta Stack",
+      //   icon: 'warning',
+      //   showCancelButton: true,
+      //   confirmButtonColor: '#3085d6',
+      //   cancelButtonColor: '#d33',
+      //   confirmButtonText: 'Yes continue!',
+      //   cancelButtonText: 'No, cancel!',
+      //   allowOutsideClick: false,
+      //   allowEscapeKey: false,
+      //   allowEnterKey: false,
+      // }).then((result) => {
+      //   if (result.isConfirmed) {
+      //     this.MiniTutorial();
+      //   } else if (result.dismiss === Swal.DismissReason.cancel) {
+      //     window.location.reload();
+      //   }
+      // });
+
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 5000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
         }
-      });
+      })
+
+      Toast.fire({
+        icon: 'warning',
+        title: "You only uploaded a .dcm, you won't be able to use the Stack tool"
+      })
     }
   }
 

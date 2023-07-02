@@ -5,7 +5,7 @@
         <div class="row">
           <div class="col-lg-4 mx-auto mt-5" *ngIf="hiddenSpinner != true">
             <!-- Card -->
-            <div class="card sombra">
+            <div class="card perspective sombra">
               <!-- Header Card -->
               <div class="card-header text-center" style="padding: 1rem">
                 <i
@@ -55,7 +55,7 @@
         <ng-template #convert>
           <div class="row">
             <div class="col-lg-5 mx-auto mt-2">
-          <div class="card sombra mb-3" style="max-width: 640px;">
+          <div class="card perspective sombra mb-3" style="max-width: 640px;">
             <div class="row g-0">
               <div class="col-md-4">
                 <img src="../../assets/imgs/convert.png" style="height: 100%; width: 100%;" class="img-fluid rounded-start" alt="...">
@@ -1041,7 +1041,7 @@
           >
             <div style="overflow-x: hidden;" *ngFor="let disease of diseasesAll">
               <div
-                class="container card my-3 card-container"
+                class="container card perspective my-3 card-container"
                 *ngIf="disease.porcentaje >= 50"
               >
                 <img
@@ -1076,11 +1076,27 @@
               aria-hidden="true"
               *ngFor="let uno of [1, 1, 1, 1]"
             >
-              <img
-                src="../../assets/imgs/Loading.gif"
-                class="card-img-top"
-                alt="Loading"
-              />
+            <div class="d-flex align-items-center justify-content-center">
+              <div class="box box__large">
+                <div class="box box__midium">
+                  <div class="face front"></div>
+                  <div class="face back"></div>
+                  <div class="face right"></div>
+                  <div class="face left"></div>
+                  <div class="face top"></div>
+                  <div class="face bottom"></div>
+
+                  <div class="box box__small">
+                    <div class="face front"></div>
+                    <div class="face back"></div>
+                    <div class="face right"></div>
+                    <div class="face left"></div>
+                    <div class="face top"></div>
+                    <div class="face bottom"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
               <div class="card-body">
                 <h5 class="card-title placeholder-glow">
                   <span class="placeholder col-6"></span>

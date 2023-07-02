@@ -1,7 +1,5 @@
-*** Problemas al editar usaurio (No value present)
-*** Problemas perfiles de usuario (Pueden ver los demas perfiles)
-
-*** Probar con diferenres formatos y modificar if si es el caso
+*** Problemas al editar usaurio solo en el admin (No value present)
+*** Problemas perfiles de usuario (Pueden ver los demas perfiles) siendo usuarios
 
 
 
