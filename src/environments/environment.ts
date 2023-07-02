@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   Url: "http://localhost:8080/api",
   UrlAuth:"http://localhost:8080/",
+  Flask:"http://127.0.0.1:5000/",
 };
 
 /*

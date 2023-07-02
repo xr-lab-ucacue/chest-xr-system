@@ -22,6 +22,7 @@ import { PageUserComponent } from './page-user/page-user.component';
 import { ProfileComponent } from './profile/profile.component';
 import { LostPasswordComponent } from './lost-password/lost-password.component';
 import { ReferenceLinesToolComponent } from './reference-lines-tool/reference-lines-tool.component';
+import { PruebaComponent } from './prueba/prueba.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { ReferenceLinesToolComponent } from './reference-lines-tool/reference-li
     PageUserComponent,
     ProfileComponent,
     LostPasswordComponent,
-    ReferenceLinesToolComponent
+    ReferenceLinesToolComponent,
+    PruebaComponent
   ],
   imports: [
     BrowserModule,

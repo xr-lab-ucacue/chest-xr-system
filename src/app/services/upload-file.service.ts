@@ -7,7 +7,6 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class UploadFileService {
-
   constructor(private http: HttpClient) {}
 
   uploadFile(file: File) {
@@ -15,5 +14,22 @@ export class UploadFileService {
     formData.append('file', file, file.name);
 
     return this.http.post(environment.Url + '/upload', formData);
+  }
+
+  convertToDicom(file: File): Promise<Blob> {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return this.http
+      .post(environment.Flask + '/convert', formData, {
+        responseType: 'blob',
+        headers: new HttpHeaders().append('Accept', 'application/octet-stream'),
+      })
+      .toPromise()
+      .then((response: Blob) => response)
+      .catch((error: any) => {
+        console.error('Error al convertir el archivo:', error);
+        throw error; // O maneja el error de otra forma según tus necesidades
+      });
   }
 }

@@ -17,6 +17,7 @@ import 'hammerjs';
 import { Observable, async, connect, map } from 'rxjs';
 import { Diaseases } from '../interfaces/Diseases';
 import { CanDeactivateGuardGuard } from '../auth/can-deactivate-guard.guard';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 //Config Cornestone
 var config = {
@@ -40,7 +41,8 @@ cornerstoneWADOImageLoader.webWorkerManager.initialize(config);
 export class RadiologyComponent implements OnInit {
   constructor(
     private diseasesService: DiseasesService,
-    private uploadFileService: UploadFileService
+    private uploadFileService: UploadFileService,
+    private sanitizer: DomSanitizer
   ) {
     // this.view = [innerWidth / 1.60, 600];
   }
@@ -52,11 +54,141 @@ export class RadiologyComponent implements OnInit {
   hiddenTxt: boolean = true;
   hiddenSpinner: boolean = false;
   displayButton: boolean = true;
+  displayButton2: boolean = true;
+  fileNmae: string;
+  hiddenTxtDicom: boolean = true;
+  photoSelectedDicom!: any;
+  viewConveret: boolean = false;
+  cubeloading: boolean = false;
+  controlImg: any = "cursor: pointer;"
+
+  //Metodos de vizualisacion Card-Convert-Dicom
+  getSafeUrl(photo: File): SafeUrl {
+    return (this.photoSelectedDicom = this.sanitizer.bypassSecurityTrustUrl(
+      window.URL.createObjectURL(photo)
+    ));
+  }
+  onFileSelectedDicomConvert(event: any): void {
+    this.selectedFile = event.target.files[0];
+    if (event.target.files[0]) {
+      this.getSafeUrl(this.selectedFile);
+      this.displayButton2 = false;
+      this.hiddenTxtDicom = false;
+      this.fileNmae = event.target.files[0].name;
+    } else {
+      this.displayButton2 = true;
+      this.hiddenTxtDicom = true;
+      this.fileNmae = 'File Name';
+      return (this.photoSelectedDicom = null);
+    }
+  }
+  viewCardConvert(estado: boolean) {
+    this.viewConveret = estado;
+  }
+  //Cobertir a formato .dcm
+  selectedFile: File | undefined;
+  convertAndDownload(): void {
+    this.cubeloading = true;
+    setTimeout(() => {
+      if (this.selectedFile) {
+        const allowedExtensions = ['.jpg', '.jpeg', '.png'];
+        const fileExtension = this.selectedFile.name
+          .toLowerCase()
+          .substring(this.selectedFile.name.lastIndexOf('.'));
+
+        if (allowedExtensions.includes(fileExtension)) {
+          this.uploadFileService
+            .convertToDicom(this.selectedFile)
+            .then((blob: Blob) => {
+              const downloadUrl = URL.createObjectURL(blob);
+              const a = document.createElement('a');
+              a.href = downloadUrl;
+              a.download = 'converted.dcm';
+              document.body.appendChild(a);
+              a.click();
+              document.body.removeChild(a);
+
+              URL.revokeObjectURL(downloadUrl);
+            })
+            .catch((error) => {
+              console.error('Error al convertir el archivo:', error);
+              Swal.fire('An error occurred', 'Error converting file', 'error');
+            });
+        } else {
+          Swal.fire('Error', 'Only JPG,PNG,JPEG files are allowed', 'warning');
+        }
+      }
+      this.cubeloading = false;
+      this.viewConveret = false;
+    }, 5000);
+  }
 
   // Upload photo
   isDataLoaded = false; //Placeholder Card
   isDataLoadedBar = false; //Placeholder Grafica Barras
   onPhotoSelected(event: any): any {
+    /* //Metodo para subir archivos JPG (Cambiar a app.py original)
+      this.file = <File>event.target.files;
+      this.photoSelected = '../../assets/imgs/giphy.gif';
+
+      // hiddens
+      this.hiddenTxt = false;
+      this.displayButton = false;
+
+      //Consumo el servicio de Flask
+      this.uploadFileService.uploadFile(this.file[0]).subscribe(
+        async (res: any) => {
+          // Guardo todo los datos del servidor
+          console.log('res', res);
+
+          const resultAllArray = res.map((obj: Diaseases) => ({
+            imagen: obj.imagen,
+            nombre: obj.nombre,
+            porcentaje: (obj.porcentaje * 100).toFixed(2),
+          }));
+          this.diseasesAll = resultAllArray;
+
+          //Guardo datos solo para grafico de Barras
+          const resultArray = res.map((obj: any) => ({
+            name: obj.nombre,
+            value: obj.porcentaje * 100,
+          }));
+          this.diseasesNGX = resultArray;
+          await this.myColor();
+
+          //Cargo los datos y cambio el Placeholders
+          this.isDataLoaded = true;
+          this.isDataLoadedBar = true;
+        },
+        (err) => {
+          console.log('ERROR: ', err);
+          if (err.error.error === 'Internal Server Error') {
+            Swal.fire({
+              title: 'An error occurred',
+              text: 'Server Error',
+              icon: 'warning',
+              showCancelButton: false,
+              confirmButtonColor: '#3085d6',
+              confirmButtonText: 'Ok',
+            }).then((result) => {
+              if (result.isConfirmed) {
+                location.reload();
+              }
+            });
+          } else {
+            Swal.fire('An error occurred', `${err.error}`, 'warning').then(
+              (result) => {
+                if (result.isConfirmed) {
+                  location.reload();
+                }
+              }
+            );
+          }
+          this.isDataLoaded = true;
+          this.isDataLoadedBar = true;
+        }
+      ); */
+
     if (event.target.files && event.target.files[0]) {
       const files: File[] = event.target.files;
       const invalidFiles: File[] = [];
@@ -77,7 +209,8 @@ export class RadiologyComponent implements OnInit {
       if (invalidFiles.length === 0) {
         //Metodo para subir archivos
         this.file = <File>event.target.files;
-        this.photoSelected = '../../assets/imgs/giphy.gif';
+        this.photoSelected = '../../assets/imgs/8ZBI.gif';
+        this.controlImg = "cursor: pointer; height: 100%; width: 100%;"
 
         // hiddens
         this.hiddenTxt = false;
@@ -89,12 +222,12 @@ export class RadiologyComponent implements OnInit {
             // Guardo todo los datos del servidor
             console.log('res', res);
 
-              const resultAllArray = res.map((obj: Diaseases) => ({
-                imagen: obj.imagen,
-                nombre: obj.nombre,
-                porcentaje: (obj.porcentaje * 100).toFixed(2),
-              }));
-              this.diseasesAll = resultAllArray;
+            const resultAllArray = res.map((obj: Diaseases) => ({
+              imagen: obj.imagen,
+              nombre: obj.nombre,
+              porcentaje: (obj.porcentaje * 100).toFixed(2),
+            }));
+            this.diseasesAll = resultAllArray;
 
             //Guardo datos solo para grafico de Barras
             const resultArray = res.map((obj: any) => ({
@@ -110,8 +243,28 @@ export class RadiologyComponent implements OnInit {
           },
           (err) => {
             console.log('ERROR: ', err);
-            Swal.fire('An error occurred', `${err.error}`, 'warning');
-            // Marcar como cargado incluso en caso de error
+            if (err.error.error === 'Internal Server Error') {
+              Swal.fire({
+                title: 'An error occurred',
+                text: 'Server Error',
+                icon: 'warning',
+                showCancelButton: false,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Ok',
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  location.reload();
+                }
+              });
+            } else {
+              Swal.fire('An error occurred', `${err.error}`, 'warning').then(
+                (result) => {
+                  if (result.isConfirmed) {
+                    location.reload();
+                  }
+                }
+              );
+            }
             this.isDataLoaded = true;
             this.isDataLoadedBar = true;
           }
@@ -127,6 +280,12 @@ export class RadiologyComponent implements OnInit {
           'warning'
         );
       }
+    } else {
+      // hiddens
+      this.hiddenTxt = true;
+      this.displayButton = true;
+      this.photoSelected = null;
+      this.controlImg = "cursor: pointer;"
     }
   }
 
@@ -584,7 +743,7 @@ export class RadiologyComponent implements OnInit {
     } else {
       Swal.fire({
         title: 'Are you sure to continue?',
-        text: "You only uploaded one .dcm, you won't be able to see the other frames",
+        text: "Solo subiste un .dcm, no podrás usar la herramienta Stack",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -936,7 +1095,7 @@ export class RadiologyComponent implements OnInit {
                             Swal.fire({
                               html: `<h1 style="color: white;">🎊🎉Congratulations!🎉🎊</h1> <br> <h4 style="color: white;">Now you can start working.</h4>`,
                               background: '#212529',
-                              imageUrl: '../../assets/imgs/giphy.gif',
+                              imageUrl: '../../assets/imgs/medicalXray.png',
                               imageWidth: 400,
                               imageHeight: 200,
                               imageAlt: 'Congratulations For end turial',

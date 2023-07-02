@@ -1,3 +1,11 @@
+*** Problemas al editar usaurio (No value present)
+*** Problemas perfiles de usuario (Pueden ver los demas perfiles)
+
+*** Probar con diferenres formatos y modificar if si es el caso
+
+
+
+
 
 
 ////////-------- CODIGO PARA VER TODO DATA DEL CANVAS-------------/////////////////////

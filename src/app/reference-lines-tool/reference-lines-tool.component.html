@@ -1,5 +1,5 @@
 <div class="fondo">
-  <div class="container">
+  <!-- <div class="container">
     <div class="row">
       <div class="col-md-12">
         <div>
@@ -23,5 +23,114 @@
         </div>
       </div>
     </div>
+  </div> -->
+
+  <!-- inputs ocultos -->
+  <div>
+    <input type="file" class="d-none" #input1 id="foto1" />
+      <input type="file" class="d-none" #input2 id="fotos2" multiple />
   </div>
+
+  <ng-template #radiologyTZ>
+    <div class="container">
+      <div class="row">
+        <!-- Solo un Dicon -->
+        <div class="col-lg-4 mx-auto card1">
+          <!-- Card -->
+          <div class="card sombra">
+            <!-- Header Card -->
+            <div class="card-header text-center" style="padding: 1rem">
+              <i
+                class="bi bi-cloud-arrow-up-fill"
+                style="font-size: 5rem; color: white"
+              >
+                <h4>Upload a Dicom</h4></i
+              >
+            </div>
+            <!-- Body Card -->
+            <div class="card-body" style="background-color: white">
+
+              <!-- Img -->
+              <div class="img-upload">
+                <img
+                  [src]="photoSelected || '../../assets/imgs/no-image2.png'"
+                  class="img-fluid"
+                  alt="No image"
+                  (click)="[input1.click(), evento()]"
+                />
+                <h6 class="text-center txt-up">
+                  Clik en la imagen para subir una foto
+                </h6>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Varios Dicom -->
+        <div class="col-lg-4 mx-auto card2">
+          <!-- Card -->
+          <div class="card sombra">
+            <!-- Header Card -->
+            <div class="card-header text-center" style="padding: 1rem">
+              <i
+                class="bi bi-cloud-arrow-up-fill"
+                style="font-size: 5rem; color: white"
+              >
+                <h4>Upload multiple  Dicom</h4></i
+              >
+            </div>
+            <!-- Body Card -->
+            <div class="card-body" style="background-color: white">
+              <!-- Img -->
+              <div class="img-upload">
+                <img
+                  [src]="photoSelected2 || '../../assets/imgs/no-image2.png'"
+                  class="img-fluid"
+                  alt="No image"
+                  (click)="[input2.click(), evento2()]"
+                />
+                <h6 class="text-center txt-up">
+                  Clik en la imagen para subir una foto
+                </h6>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Buttton -->
+      <div class="alinearBtn">
+        <button
+        class="btn btn-success btn-block mt-3 mx-3"
+        (click)="loading()"
+      >
+        cargar Sync
+      </button>
+      </div>
+
+    </div>
+  </ng-template>
+
+  <!-- Imagenes Cornerstone-->
+  <ng-container *ngIf="viewUpload; else radiologyTZ">
+
+
+
+    <div class="">
+      <div class="row" style="justify-content: center;">
+        <div class="col-5 sombra">
+          <div class="image-canvas-wrapper my-5" id="element-1">
+            <div id="element1" class="cornerstone-element"></div>
+          </div>
+        </div>
+        <div class="col-5 sombra">
+          <div class="image-canvas-wrapper my-5" id="element-1">
+            <div id="element2" class="cornerstone-element"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
 </div>

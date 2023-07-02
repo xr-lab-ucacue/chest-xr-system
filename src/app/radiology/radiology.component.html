@@ -1,6 +1,6 @@
 <div class="fondo">
   <ng-template #radiologyTZ>
-    <div class="fondo">
+    <div class="card-fondo-upload">
       <div class="container">
         <div class="row">
           <div class="col-lg-4 mx-auto mt-5" *ngIf="hiddenSpinner != true">
@@ -12,7 +12,7 @@
                   class="bi bi-cloud-arrow-up-fill"
                   style="font-size: 5rem; color: white"
                 >
-                  <h4>Upload a Photo</h4></i
+                  <h4>Upload a Dicom</h4></i
                 >
               </div>
               <!-- Body Card -->
@@ -32,9 +32,10 @@
                     class="img-fluid"
                     alt="No image"
                     (click)="photoInput.click()"
+                    [style]="controlImg"
                   />
                   <h6 *ngIf="hiddenTxt != false" class="text-center txt-up">
-                    Clik en la imagen para subir una foto
+                    Click on the image to upload a photo
                   </h6>
                 </div>
                 <!-- Buttton -->
@@ -49,6 +50,144 @@
             </div>
           </div>
         </div>
+
+        <!-- Tajeta disparadora de convertidor -->
+        <ng-template #convert>
+          <div class="row">
+            <div class="col-lg-5 mx-auto mt-2">
+          <div class="card sombra mb-3" style="max-width: 640px;">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img src="../../assets/imgs/convert.png" style="height: 100%; width: 100%;" class="img-fluid rounded-start" alt="...">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body" style="background-color: white; border-top-right-radius: 5%; border-bottom-right-radius: 5%;">
+                  <h3 class="card-title text-center my-5"><b>Do you have another format?</b> </h3>
+                  <p class="card-text mt-5">Do you have a JPG or PNG format? You can convert them by <mark (click)="viewCardConvert(true)" style="cursor: pointer;">Click here!</mark>.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+            </div>
+          </div>
+        </ng-template>
+
+
+        <!-- Tarjeta de convertidor a .DCM -->
+        <ng-container *ngIf="viewConveret; else convert">
+
+          <ng-template #loadCube>
+            <div class="row">
+              <div class="col-lg-7 mx-auto mt-2">
+                <div class="card sombra mb-3 perspective" style="max-width: 740px;">
+                  <div class="row g-0">
+                    <div class="col-md-4 card-left-convert" style="border-top-left-radius: 8%; border-bottom-left-radius: 3%;">
+                      <div class="container">
+                        <button type="button" class="btn-close" aria-label="Close" (click)="viewCardConvert(false)"></button>
+                        <div class="d-flex justify-content-center aling-items-center mt-5">
+                          <i
+                              class="bi bi-cloud-arrow-down-fill"
+                              style="font-size: 5rem; color: white"
+                            >
+                            <h4> <b>Converter</b> </h4>
+                          </i>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-header text-center" style="padding: 1rem; background-color: rgb(237, 139, 100);">
+                        <i class="bi bi-file-earmark-image"  style="font-size: 5rem; color: white"> <h4><b>Upload File</b></h4></i>
+                      </div>
+                      <div class="card-body" style="background-color: white; border-bottom-right-radius: 2%;">
+                        <h3 class="card-title text-center">Convert an <strong>image</strong> to <strong>dicom</strong> format here!.</h3>
+
+                          <img
+                            [src]="photoSelectedDicom|| '../../assets/imgs/no-image2.png'"
+                            class="img-fluid"
+                            alt="No image"
+                            (click)="photoInputDicom.click()"
+                            style="cursor: pointer;"
+                          />
+                          <h6 *ngIf="hiddenTxtDicom != false" class="text-center txt-up">
+                            Click on the image to upload a photo
+                          </h6>
+
+                        <input type="file" accept=".jpg, .jpeg, .png" class="d-none" #photoInputDicom (change)="onFileSelectedDicomConvert($event)">
+                        <div class="input-group flex-nowrap mt-2">
+                          <span class="input-group-text" id="addon-wrapping"><i class="bi bi-card-image"> <label>Your File:</label></i></span>
+                          <input type="text" disabled class="form-control" placeholder="File Name" aria-label="File Name" aria-describedby="addon-wrapping" [ngModel]="fileNmae">
+                        </div>
+                        <button
+                          class="btn btn-success btn-block mt-3"
+                          [disabled]="displayButton2"
+                          (click)="convertAndDownload()"
+                        >
+                        Download DICOM
+                    </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+
+          <!-- CARGA DE CONVERCION Cubo-->
+          <ng-container *ngIf="cubeloading; else loadCube">
+            <div class="row">
+              <div class="col-lg-7 mx-auto mt-2">
+                <div class="card sombra mb-3" style="max-width: 740px;">
+                  <div class="row g-0">
+                    <div class="col-md-4 card-left-convert" style="border-top-left-radius: 8%; border-bottom-left-radius: 3%;">
+                      <div class="container">
+                        <button type="button" class="btn-close" aria-label="Close" (click)="viewCardConvert(false)"></button>
+                        <div class="d-flex justify-content-center aling-items-center mt-5">
+                          <i
+                              class="bi bi-cloud-arrow-down-fill"
+                              style="font-size: 5rem; color: white"
+                            >
+                            <h4> <b>Converter</b> </h4>
+                          </i>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-header text-center" style="padding: 1rem; background-color: rgb(237, 139, 100);">
+                        <i class="bi bi-file-earmark-image"  style="font-size: 5rem; color: white"> <h4><b>Upload File</b></h4></i>
+                      </div>
+                      <div class="card-body" style="background-color: white; border-bottom-right-radius: 2%;">
+                        <h3 class="text-center blinking-text">Processing</h3>
+                        <div class="d-flex align-items-center justify-content-center">
+                          <div class="box box__large">
+                            <div class="box box__midium">
+                              <div class="face front"></div>
+                              <div class="face back"></div>
+                              <div class="face right"></div>
+                              <div class="face left"></div>
+                              <div class="face top"></div>
+                              <div class="face bottom"></div>
+
+                              <div class="box box__small">
+                                <div class="face front"></div>
+                                <div class="face back"></div>
+                                <div class="face right"></div>
+                                <div class="face left"></div>
+                                <div class="face top"></div>
+                                <div class="face bottom"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+        </ng-container>
+
       </div>
 
       <!-- Section: Spinner progress -->
@@ -1196,16 +1335,32 @@
                 <div
                   class="d-flex align-items-center justify-content-center vh-100"
                 >
-                  <div class="loader-container">
-                    <div class="loader">
-                      <div class="face1"></div>
-                      <div class="face2"></div>
-                      <div class="face3"></div>
-                      <div class="face4"></div>
-                      <div class="face5"></div>
-                      <div class="face6"></div>
+                <div class="box box__large">
+                  <div class="face front"></div>
+                  <div class="face back"></div>
+                  <div class="face right"></div>
+                  <div class="face left"></div>
+                  <div class="face top"></div>
+                  <div class="face bottom"></div>
+
+                  <div class="box box__midium">
+                    <div class="face front"></div>
+                    <div class="face back"></div>
+                    <div class="face right"></div>
+                    <div class="face left"></div>
+                    <div class="face top"></div>
+                    <div class="face bottom"></div>
+
+                    <div class="box box__small">
+                      <div class="face front"></div>
+                      <div class="face back"></div>
+                      <div class="face right"></div>
+                      <div class="face left"></div>
+                      <div class="face top"></div>
+                      <div class="face bottom"></div>
                     </div>
                   </div>
+                </div>
                 </div>
               </div>
             </ng-template>

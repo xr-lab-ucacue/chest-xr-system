@@ -38,12 +38,37 @@ export class ReferenceLinesToolComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
+
+
+
+  photoSelected!: string | ArrayBuffer | null;
+  photoSelected2!: string | ArrayBuffer | null;
+  evento(){
+    this.photoSelected = '../../assets/imgs/giphy.gif';
+  }
+  evento2(){
+      this.photoSelected2 = '../../assets/imgs/giphy.gif';
+  }
+
+
+    //variables subida de archivo y interfaz de radiologia
+    viewUpload: boolean = false;
+    loading() {
+      setTimeout(() => {
+        this.SyncCornerstone();
+      }, 1000);
+      this.viewUpload = true;
+    }
+
+
   file: File;
   file2: File;
 
   @ViewChild('input1', { read: ElementRef }) input1: ElementRef;
   @ViewChild('input2', { read: ElementRef }) input2: ElementRef;
   SyncCornerstone(): any {
+
     cornerstoneTools.external.cornerstone = cornerstone;
     cornerstoneTools.external.cornerstoneMath = cornerstoneMath;
     cornerstoneTools.external.Hammer = Hammer;
@@ -159,5 +184,8 @@ export class ReferenceLinesToolComponent implements OnInit {
       });
     });
   }
+
+
+
 
 }
