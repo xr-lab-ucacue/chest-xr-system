@@ -181,7 +181,7 @@
 .box__large {
   --duration: 20s;
   --size: 100;
-  --opacity: 0.3;
+  --opacity: 0.2;
   top: 0;
   left: 0;
 }
@@ -305,6 +305,7 @@
   0% {
     left: 0;
   }
+  10%{ left: -30px;}
   100% {
     left: calc(155% - 15px);
   }
@@ -314,15 +315,13 @@
   0% {
     right: 0;
   }
+  10%{ right: -10px;}
   100% {
     right: calc(180% - 15px);
   }
 }
 
 /*NEON*/
-
-
-
 .neon-border {
   position: relative;
   display: inline-block;
@@ -359,9 +358,9 @@
   border-top: none;
   border-bottom: none;
   border-right: none;
-  box-shadow: 5px 0 5px #fff, 7px 0 10px #fff, 10px 0 20px #fff, 45px 0px 90px #ff00de;
+  box-shadow: 5px 0 5px #fff, 7px 0 10px #fff, 10px 0 20px #fff, 45px 0px 90px rgb(100 149 237);
 
-  animation: neon-glow 3.8s ease-in-out infinite alternate;
+  animation: neon-glow 4.9s ease-in-out infinite alternate;
   border-top: none;
   border-bottom: none;
   border-right: none;
@@ -369,6 +368,71 @@
 }
 
 .neon-border::after {
+  opacity: 0.7;
+  mix-blend-mode: overlay;
+  border-top: none;
+  border-bottom: none;
+  border-right: none;
+  border-left: none;
+}
+
+@keyframes neon-glow {
+  25% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+
+}
+/*neon 2*/
+
+.neon-border2 {
+  position: relative;
+  display: inline-block;
+  padding: 10px;
+  border: none;
+  border-top: none;
+  border-bottom: none;
+  border-right: none;
+  border-left: none;
+  padding: 0 !important;
+}
+
+.neon-border2::before,
+.neon-border2::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-top: none;
+  border-bottom: none;
+  border-right: none;
+  border-left: none;
+  border-top-left-radius: 7%;
+  border-top-right-radius: 7%;
+  border-bottom-left-radius: 2%;
+  border-bottom-right-radius: 2%;
+  background-color: none;
+
+}
+/*50px 0 75px #ff00de, 50px 0 100px #ff00de;*/
+.neon-border2::before {
+  border-top: none;
+  border-bottom: none;
+  border-right: none;
+  box-shadow: -5px 0 5px #fff, -7px 0 10px #fff, -10px 0 20px #fff, -45px 0 90px rgb(237, 139, 100);
+
+  animation: neon-glow 4.9s ease-in-out infinite alternate;
+  border-top: none;
+  border-bottom: none;
+  border-right: none;
+  border-left: none;
+}
+
+.neon-border2::after {
   opacity: 0.7;
   mix-blend-mode: overlay;
   border-top: none;

@@ -12,7 +12,7 @@
         <div class="col-lg-4 mt-5 mx-auto card1">
           <!-- Card -->
           <div class="card perspective sombra">
-            <div class="neon-border">
+            <div class="neon-border" (click)="[evento(),input1.click()]">
               <!-- Header Card -->
               <div class="card-header text-center" style="padding: 1rem">
                 <i
@@ -30,7 +30,6 @@
                     [src]="photoSelected || '../../assets/imgs/no-image2.png'"
                     class="img-fluid"
                     alt="No image"
-                    (click)="[input1.click(), evento()]"
                   />
                   <h6 class="text-center txt-up">
                     Click on the image to upload a photo
@@ -122,6 +121,7 @@
         <div class="col-lg-4 mt-5 mx-auto card2">
           <!-- Card -->
           <div class="card perspective sombra">
+            <div class="neon-border2" (click)="[evento2(),input2.click()]">
             <!-- Header Card -->
             <div class="card-header text-center" style="padding: 1rem">
               <i
@@ -146,6 +146,7 @@
                 </h6>
               </div>
             </div>
+            </div>
           </div>
         </div>
       </div>
@@ -159,9 +160,77 @@
     </div>
   </ng-template>
 
+  <div *ngIf="viewTomo == true">
+    <div class="row" style="justify-content: center">
+      <div class="col-5 sombra">
+<div
+                class="d-flex align-items-center justify-content-center vh-100"
+              >
+              <div class="box box__large">
+                <div class="face front"></div>
+                <div class="face back"></div>
+                <div class="face right"></div>
+                <div class="face left"></div>
+                <div class="face top"></div>
+                <div class="face bottom"></div>
+
+                <div class="box box__midium">
+                  <div class="face front"></div>
+                  <div class="face back"></div>
+                  <div class="face right"></div>
+                  <div class="face left"></div>
+                  <div class="face top"></div>
+                  <div class="face bottom"></div>
+
+                  <div class="box box__small">
+                    <div class="face front"></div>
+                    <div class="face back"></div>
+                    <div class="face right"></div>
+                    <div class="face left"></div>
+                    <div class="face top"></div>
+                    <div class="face bottom"></div>
+                  </div>
+                </div>
+              </div>
+              </div>
+      </div>
+      <div class="col-5 sombra">
+       <div
+                class="d-flex align-items-center justify-content-center vh-100"
+              >
+              <div class="box box__large">
+                <div class="face front"></div>
+                <div class="face back"></div>
+                <div class="face right"></div>
+                <div class="face left"></div>
+                <div class="face top"></div>
+                <div class="face bottom"></div>
+
+                <div class="box box__midium">
+                  <div class="face front"></div>
+                  <div class="face back"></div>
+                  <div class="face right"></div>
+                  <div class="face left"></div>
+                  <div class="face top"></div>
+                  <div class="face bottom"></div>
+
+                  <div class="box box__small">
+                    <div class="face front"></div>
+                    <div class="face back"></div>
+                    <div class="face right"></div>
+                    <div class="face left"></div>
+                    <div class="face top"></div>
+                    <div class="face bottom"></div>
+                  </div>
+                </div>
+              </div>
+              </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Imagenes Cornerstone-->
   <ng-container *ngIf="viewUpload; else radiologyTZ">
-    <div>
       <div class="row" style="justify-content: center">
         <div class="col-5 sombra">
           <div class="image-canvas-wrapper my-5" id="element-1">
@@ -174,7 +243,6 @@
           </div>
         </div>
       </div>
-    </div>
   </ng-container>
 
 

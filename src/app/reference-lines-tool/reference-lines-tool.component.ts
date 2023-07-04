@@ -39,16 +39,16 @@ export class ReferenceLinesToolComponent implements OnInit {
   }
 
 
-
+  viewTomo: boolean = false;
 
 
   photoSelected!: string | ArrayBuffer | null;
   photoSelected2!: string | ArrayBuffer | null;
   evento(){
-    this.photoSelected = '../../assets/imgs/giphy.gif';
+    this.photoSelected = '../../assets/imgs/8ZBI.gif';
   }
   evento2(){
-      this.photoSelected2 = '../../assets/imgs/giphy.gif';
+      this.photoSelected2 = '../../assets/imgs/8ZBI.gif';
   }
 
 
@@ -57,8 +57,11 @@ export class ReferenceLinesToolComponent implements OnInit {
     loading() {
       setTimeout(() => {
         this.SyncCornerstone();
+        this.viewTomo = false;
       }, 1000);
       this.viewUpload = true;
+      this.viewTomo = true;
+
     }
 
 
