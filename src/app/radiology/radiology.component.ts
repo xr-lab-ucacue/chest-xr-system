@@ -120,7 +120,7 @@ export class RadiologyComponent implements OnInit {
       }
       this.cubeloading = false;
       this.viewConveret = false;
-    }, 5000);
+    }, 3000);
   }
 
   // Upload photo
@@ -710,6 +710,8 @@ export class RadiologyComponent implements OnInit {
         cornerstone.displayImage(element, image);
         cornerstoneTools.addStackStateManager(element, ['stack']);
         cornerstoneTools.addToolState(element, 'stack', stack);
+
+
       })
       .catch((e) => {
         Swal.fire(
@@ -898,10 +900,10 @@ export class RadiologyComponent implements OnInit {
     setTimeout(() => {
       var viewport = {
         invert: this.isInvierte,
-        translation: {
-          x: 0,
-          y: 0,
-        },
+        // translation: {
+        //   x: 0,
+        //   y: 0,
+        // },
       };
       cornerstone.setViewport(element, viewport);
       cornerstone.updateImage(element);
@@ -914,10 +916,10 @@ export class RadiologyComponent implements OnInit {
     setTimeout(() => {
       var viewport = {
         pixelReplication: this.isPixel,
-        translation: {
-          x: 0,
-          y: 0,
-        },
+        // translation: {
+        //   x: 0,
+        //   y: 0,
+        // },
       };
       cornerstone.setViewport(element, viewport);
       cornerstone.updateImage(element);
@@ -930,10 +932,10 @@ export class RadiologyComponent implements OnInit {
     setTimeout(() => {
       var viewport = {
         hflip: this.isFlipH, // verdadero si la imagen se voltea horizontalmente
-        translation: {
-          x: 0,
-          y: 0,
-        },
+        // translation: {
+        //   x: 0,
+        //   y: 0,
+        // },
       };
       cornerstone.setViewport(element, viewport);
       cornerstone.updateImage(element);
@@ -946,10 +948,10 @@ export class RadiologyComponent implements OnInit {
     setTimeout(() => {
       var viewport = {
         vflip: this.isFlipV, // si la imagen se voltea verticalmente
-        translation: {
-          x: 0,
-          y: 0,
-        },
+        // translation: {
+        //   x: 0,
+        //   y: 0,
+        // },
       };
       cornerstone.setViewport(element, viewport);
       cornerstone.updateImage(element);

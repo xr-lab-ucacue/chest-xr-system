@@ -131,16 +131,13 @@ export class ReferenceLinesToolComponent implements OnInit {
     elements.forEach((element) => {
       cornerstone.enable(element);
     });
+    this.Tools();
 
     // Add and activate tools
     cornerstoneTools.addTool(cornerstoneTools.StackScrollTool);
-    cornerstoneTools.addTool(cornerstoneTools.StackScrollMouseWheelTool);
     cornerstoneTools.addTool(cornerstoneTools.WwwcTool);
-    // cornerstoneTools.addTool(cornerstoneTools.PanTool);
-
 
     cornerstoneTools.setToolActive('StackScroll', { mouseButtonMask: 1 });
-    cornerstoneTools.setToolActive('StackScrollMouseWheel', {});
 
     // load images and set the stack
     const firstLoadImagePromise = cornerstone
@@ -149,7 +146,6 @@ export class ReferenceLinesToolComponent implements OnInit {
         cornerstone.displayImage(firstElement, image);
 
         cornerstoneTools.setToolActive('Wwwc', { mouseButtonMask: 2 });
-        // cornerstoneTools.setToolActive('Pan', { mouseButtonMask: 2 })
         synchronizer2.add(firstElement);
 
         // set the stack as tool state
@@ -161,13 +157,14 @@ export class ReferenceLinesToolComponent implements OnInit {
         cornerstoneTools.addToolState(firstElement, 'stack', firstStack);
       });
 
+
+
     const secondLoadImagePromise = cornerstone
       .loadImage(secondStack.imageIds[0])
       .then((image) => {
         cornerstone.displayImage(secondElement, image);
 
         cornerstoneTools.setToolActive('Wwwc', { mouseButtonMask: 2 });
-        // cornerstoneTools.setToolActive('Pan', { mouseButtonMask: 2 })
         synchronizer2.add(secondElement);
 
         // set the stack as tool state
@@ -186,7 +183,47 @@ export class ReferenceLinesToolComponent implements OnInit {
         synchronizationContext: synchronizer,
       });
     });
+
   }
+
+  Tools() {
+    // Style de tools
+    const fontFamily =
+      'Work Sans, Roboto, OpenSans, HelveticaNeue-Light, Helvetica Neue Light, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif';
+    cornerstoneTools.textStyle.setFont(`16px ${fontFamily}`);
+    // Set the tool width
+    cornerstoneTools.toolStyle.setToolWidth(1);
+    // Set color for inactive tools
+    cornerstoneTools.toolColors.setToolColor('rgb(255, 255, 0)');
+    // Set color for active tools
+    cornerstoneTools.toolColors.setActiveColor('rgb(0, 255, 0)');
+
+    // herramientas activadas
+    //const ZoomMouseWheelTool = cornerstoneTools.ZoomMouseWheelTool; // zoom
+    const MagnifyTool = cornerstoneTools.MagnifyTool; // lupa
+    const ScaleOverlayTool = cornerstoneTools.ScaleOverlayTool; // escala
+    const OrientationMarkersTool = cornerstoneTools.OrientationMarkersTool; // letras de orientacion
+
+    //const PanTool = cornerstoneTools.PanTool; // mover img por el canvas
+
+    //cornerstoneTools.addTool(PanTool);
+
+    //cornerstoneTools.addTool(ZoomMouseWheelTool);
+    cornerstoneTools.addTool(MagnifyTool);
+    cornerstoneTools.addTool(ScaleOverlayTool);
+    cornerstoneTools.addTool(OrientationMarkersTool);
+
+    //herramientas activas por defecto
+
+   // cornerstoneTools.setToolActive('Pan', { mouseButtonMask: 2 }); // mover
+    //cornerstoneTools.setToolActive('ZoomMouseWheel', { mouseButtonMask: 0 }); // rueda de maus
+    cornerstoneTools.setToolActive('Magnify', { mouseButtonMask: 4 }); // boton rueda
+    cornerstoneTools.setToolActive('ScaleOverlay', { mouseButtonMask: 0 });
+    cornerstoneTools.setToolActive('OrientationMarkers', {
+      mouseButtonMask: 0,
+    });
+  }
+
 
 
 
