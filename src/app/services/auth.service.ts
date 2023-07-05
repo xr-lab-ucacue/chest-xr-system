@@ -151,11 +151,11 @@ export class AuthService {
 
 
   // actualizar el usuario
-  aupdateUser(usuario: Usuario){
+  aupdateUser(usuario: Usuario, email:String){
     let json = JSON.stringify(usuario);
     let params = json;
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.put(environment.Url + `/usuario/${usuario.email}`, params, { headers: headers }).pipe(map((data) => { return data }));
+    return this.http.put(environment.Url + `/usuario/${email}`, params, { headers: headers }).pipe(map((data) => { return data }));
   }
 
 

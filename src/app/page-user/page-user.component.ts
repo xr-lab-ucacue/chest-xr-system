@@ -19,6 +19,8 @@ export class PageUserComponent implements OnInit {
   haveRols: any[] = [];
   usuario: Usuario = new Usuario();
 
+  emailOriginal: string;
+
   getDataUser() {
     this.profileID = Number(this.idRoute.snapshot.paramMap.get('id'));
     this.authService.getUser(this.profileID).subscribe(
@@ -30,6 +32,11 @@ export class PageUserComponent implements OnInit {
         });
 
         this.userData.push({ ...todo });
+
+        //capturo el email para poder actualizar
+        this.userData.map((data) => {
+          return  this.emailOriginal = data.email;
+         })
       },
       (err) => {
         console.log('ERROR: ', err);
@@ -163,7 +170,7 @@ export class PageUserComponent implements OnInit {
             direccion: data.direccion,
             estado: data.estado,
           };
-          this.authService.aupdateUser(UpdateUsuario).subscribe(
+          this.authService.aupdateUser(UpdateUsuario, this.emailOriginal).subscribe(
             (resp: any) => {
               const Toast = Swal.mixin({
                 toast: true,
@@ -180,6 +187,7 @@ export class PageUserComponent implements OnInit {
                 icon: 'success',
                 title: `${resp.mensaje}`,
               });
+              return this.emailOriginal = UpdateUsuario.email;
             },
             (err) => {
               console.log('Error: ', err);

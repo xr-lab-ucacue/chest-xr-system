@@ -16,7 +16,7 @@ export class AdminComponent implements OnInit {
   dataUsers: any[] = [];
   allUsers: number = 0;
 
-  // elemntos de paginacion background-color: rgb(226, 55, 55); border-radius: 10px; width: 40px; height: 25px;
+  // elemntos de paginacion
   p: number = 1;
   itemsPage: number = 6;
   // filtro
@@ -34,7 +34,9 @@ export class AdminComponent implements OnInit {
     )
   }
 
-  async updateUser(usuario:Usuario){
+  async updateUser(usuario:Usuario, email:string){
+    let emailOriginal = email
+    console.log(emailOriginal);
 
     const { value: formValues } = await Swal.fire({
       title: 'Editar Usuario',
@@ -111,9 +113,9 @@ export class AdminComponent implements OnInit {
           direccion: (<HTMLInputElement>document.getElementById('swal-direccion')!).value,
           estado: (<HTMLInputElement>document.getElementById('swal-estado')!).value as any
         };
-        this.usersService.aupdateUser(UpdateUsuario).subscribe(
+        this.usersService.aupdateUser(UpdateUsuario, emailOriginal).subscribe(
             (resp: any) => {
-              this.ngOnInit();
+              this.getUsers();
               const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
@@ -225,8 +227,15 @@ export class AdminComponent implements OnInit {
     })
   }
 
+  texto = 'Hola desde el componente padre';
+
+  handleOutputEvent(event: any) {
+    console.log('Evento recibido en el componente padre:', event);
+  }
+
   ngOnInit(): void {
     this.getUsers();
+    this.emailCapturado;
   }
 
 }

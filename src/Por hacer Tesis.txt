@@ -1,7 +1,13 @@
-*** Problemas al editar usaurio solo en el admin (No value present)
-*** Problemas perfiles de usuario (Pueden ver los demas perfiles) siendo usuarios
+- Mejorar al regresar de page-user la tabla de usuarios vuelve a la primera pagina
+(solucion crear decoradores @Input y @Output)
+
+*** Problemas perfiles de usuario (Pueden ver los demas perfiles) siendo usuarios --Interceptor o Guard puede ayduar
 
 
+*** Al momento de convertir de JPG to dicom
+    -enviar el jpg directo al servidor de prediccion(Modificar flask para esto - solo acepta .dcm)
+    -el .dcm convertidor pasarle directo a la variable File() del meotodo  "stackDicom()"
+    -se renderiza primero el dicom y luego la prediccion
 
 
 
