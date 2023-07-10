@@ -1,9 +1,20 @@
 - Mejorar al regresar de page-user la tabla de usuarios vuelve a la primera pagina
 (solucion crear decoradores @Input y @Output)
 
--imagen de 3 a 5 ver (No respeta colores de Ngchart y tarjetas no renderiza)
+-imagen de carpeta(x-chert-small) 3 a 5 ver (No respeta colores de Ngchart y tarjetas no renderiza)
 
 *** Problemas perfiles de usuario (Pueden ver los demas perfiles) siendo usuarios --Interceptor o Guard puede ayduar
+(O capturar los datos del usuario solo con el findByemail para guardarlos en una clase o variable y mostrarlos--- no poner parametros en la ruta de profile)
+
+
+
+
+
+
+
+
+
+
 
 
 ////////-------- CODIGO PARA VER TODO DATA DEL CANVAS-------------/////////////////////
@@ -13,6 +24,6 @@ const enabledElements = cornerstone.getEnabledElements();
       console.log("datos del canvas: ", ee);
       ee.image.imageId === 'dicomfile:0'
       console.log("Numero de Archivo actual: ", ee.image.imageId);
-
     })
+
 ////////^^^^^^^ CODIGO PARA VER TODO DATA DEL CANVAS ^^^^^^^ /////////////////////
