@@ -82,11 +82,15 @@ export class RadiologyComponent implements OnInit {
       return (this.photoSelectedDicom = null);
     }
   }
+
   viewCardConvert(estado: boolean) {
     this.viewConveret = estado;
   }
+
   //Cobertir a formato .dcm
-  selectedFile: File | undefined;
+  convertedDicomFile: Blob; // Variable para almacenar el archivo DICOM convertido
+  convertedDicomFileList: FileList; // Variable para almacenar el archivo DICOM convertido como tipo FileList
+  selectedFile: File; //archivo por procesar a dicom (jpg, png, jpeg)
   convertAndDownload(): void {
     this.cubeloading = true;
     setTimeout(() => {
@@ -98,17 +102,71 @@ export class RadiologyComponent implements OnInit {
 
         if (allowedExtensions.includes(fileExtension)) {
           this.uploadFileService
-            .convertToDicom(this.selectedFile)
-            .then((blob: Blob) => {
-              const downloadUrl = URL.createObjectURL(blob);
-              const a = document.createElement('a');
-              a.href = downloadUrl;
-              a.download = 'converted.dcm';
-              document.body.appendChild(a);
-              a.click();
-              document.body.removeChild(a);
+            .convertToDicom2(this.selectedFile)
+            .then((convertedFile: File) => {
+              console.log('Archivo DICOM convertido:', convertedFile);
 
-              URL.revokeObjectURL(downloadUrl);
+              //cargar Predicciones
+              this.uploadFileService.uploadFile(this.selectedFile).subscribe(
+                async (res: any) => {
+                  // Guardo todo los datos del servidor
+                  console.log('res', res);
+
+                  const resultAllArray = res.map((obj: Diaseases) => ({
+                    imagen: obj.imagen,
+                    nombre: obj.nombre,
+                    porcentaje: (obj.porcentaje * 100).toFixed(2),
+                  }));
+                  this.diseasesAll = resultAllArray;
+
+                  //Guardo datos solo para grafico de Barras
+                  const resultArray = res.map((obj: any) => ({
+                    name: obj.nombre,
+                    value: obj.porcentaje * 100,
+                  }));
+                  this.diseasesNGX = resultArray;
+                  await this.myColor();
+
+                  //Cargo los datos y cambio el Placeholders
+                  this.isDataLoaded = true;
+                  this.isDataLoadedBar = true;
+                },
+                (err) => {
+                  console.log('ERROR: ', err);
+                  if (err.error.error === 'Internal Server Error') {
+                    Swal.fire({
+                      title: 'An error occurred',
+                      text: 'Server Error',
+                      icon: 'warning',
+                      showCancelButton: false,
+                      confirmButtonColor: '#3085d6',
+                      confirmButtonText: 'Ok',
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        location.reload();
+                      }
+                    });
+                  } else {
+                    Swal.fire('An error occurred', `${err.error}`, 'warning').then(
+                      (result) => {
+                        if (result.isConfirmed) {
+                          location.reload();
+                        }
+                      }
+                    );
+                  }
+                  this.isDataLoaded = true;
+                  this.isDataLoadedBar = true;
+                }
+              );
+
+              //cargar cornerstone
+              this.hiddenSpinner = true;
+              setTimeout(() => {
+                this.stackDicom(convertedFile);
+              }, 2500);
+              this.viewUpload = true;
+              this.MiniTutorial();
             })
             .catch((error) => {
               console.error('Error al convertir el archivo:', error);
@@ -120,7 +178,63 @@ export class RadiologyComponent implements OnInit {
       }
       this.cubeloading = false;
       this.viewConveret = false;
-    }, 3000);
+    }, 2000);
+  }
+
+  //Cargar al sevidor de predicciones
+  UploadServicePrediction(fileUpload: File) {
+  this.uploadFileService.uploadFile(fileUpload[0]).subscribe(
+    async (res: any) => {
+      // Guardo todo los datos del servidor
+      console.log('res', res);
+
+      const resultAllArray = res.map((obj: Diaseases) => ({
+        imagen: obj.imagen,
+        nombre: obj.nombre,
+        porcentaje: (obj.porcentaje * 100).toFixed(2),
+      }));
+      this.diseasesAll = resultAllArray;
+
+      //Guardo datos solo para grafico de Barras
+      const resultArray = res.map((obj: any) => ({
+        name: obj.nombre,
+        value: obj.porcentaje * 100,
+      }));
+      this.diseasesNGX = resultArray;
+      await this.myColor();
+
+      //Cargo los datos y cambio el Placeholders
+      this.isDataLoaded = true;
+      this.isDataLoadedBar = true;
+    },
+    (err) => {
+      console.log('ERROR: ', err);
+      if (err.error.error === 'Internal Server Error') {
+        Swal.fire({
+          title: 'An error occurred',
+          text: 'Server Error',
+          icon: 'warning',
+          showCancelButton: false,
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'Ok',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            location.reload();
+          }
+        });
+      } else {
+        Swal.fire('An error occurred', `${err.error}`, 'warning').then(
+          (result) => {
+            if (result.isConfirmed) {
+              location.reload();
+            }
+          }
+        );
+      }
+      this.isDataLoaded = true;
+      this.isDataLoadedBar = true;
+    }
+  );
   }
 
   // Upload photo
@@ -217,7 +331,7 @@ export class RadiologyComponent implements OnInit {
         this.displayButton = false;
 
         //Consumo el servicio de Flask
-        this.uploadFileService.uploadFile(this.file[0]).subscribe(
+        /* this.uploadFileService.uploadFile(this.file[0]).subscribe(
           async (res: any) => {
             // Guardo todo los datos del servidor
             console.log('res', res);
@@ -268,7 +382,8 @@ export class RadiologyComponent implements OnInit {
             this.isDataLoaded = true;
             this.isDataLoadedBar = true;
           }
-        );
+        ); */
+        this.UploadServicePrediction(this.file)
       } else {
         const nameInvalids = invalidFiles
           .map((element) => element.name)
@@ -690,6 +805,23 @@ export class RadiologyComponent implements OnInit {
       imageIds.push(imageId);
     });
 
+    if (uploadFiles.length > 1) {
+      // Hacer algo cuando haya más de un archivo
+      console.log('Hay más de un archivo');
+      Array.prototype.forEach.call(uploadFiles, function (file) {
+      const imageId = cornerstoneWADOImageLoader.wadouri.fileManager.add(file);
+      imageIds.push(imageId);
+    });
+    } else {
+      // Hacer algo cuando no haya más de un archivo
+      console.log('No hay más de un archivo');
+      const file = uploadFiles; // Obtén el primer archivo de la lista
+      const imageId = cornerstoneWADOImageLoader.wadouri.fileManager.add(file);
+      imageIds.push(imageId);
+    }
+
+    console.log("ImageIDS: ", imageIds);
+
     // Add our tool, and set it's mode
     const StackScrollMouseWheelTool =
       cornerstoneTools.StackScrollMouseWheelTool;
@@ -710,8 +842,6 @@ export class RadiologyComponent implements OnInit {
         cornerstone.displayImage(element, image);
         cornerstoneTools.addStackStateManager(element, ['stack']);
         cornerstoneTools.addToolState(element, 'stack', stack);
-
-
       })
       .catch((e) => {
         Swal.fire(
@@ -743,26 +873,6 @@ export class RadiologyComponent implements OnInit {
         }
       });
     } else {
-      // Swal.fire({
-      //   title: 'Are you sure to continue?',
-      //   text: "Solo subiste un .dcm, no podrás usar la herramienta Stack",
-      //   icon: 'warning',
-      //   showCancelButton: true,
-      //   confirmButtonColor: '#3085d6',
-      //   cancelButtonColor: '#d33',
-      //   confirmButtonText: 'Yes continue!',
-      //   cancelButtonText: 'No, cancel!',
-      //   allowOutsideClick: false,
-      //   allowEscapeKey: false,
-      //   allowEnterKey: false,
-      // }).then((result) => {
-      //   if (result.isConfirmed) {
-      //     this.MiniTutorial();
-      //   } else if (result.dismiss === Swal.DismissReason.cancel) {
-      //     window.location.reload();
-      //   }
-      // });
-
       const Toast = Swal.mixin({
         toast: true,
         position: 'top-end',

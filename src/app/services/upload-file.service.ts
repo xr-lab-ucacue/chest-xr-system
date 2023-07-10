@@ -32,4 +32,25 @@ export class UploadFileService {
         throw error; // O maneja el error de otra forma según tus necesidades
       });
   }
+
+  convertToDicom2(file: File): Promise<File> {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return this.http
+      .post(environment.Flask + '/convert', formData, {
+        responseType: 'blob',
+        headers: new HttpHeaders().append('Accept', 'application/octet-stream'),
+      })
+      .toPromise()
+      .then((response: Blob) => {
+        // Crear un nuevo objeto File a partir del Blob
+        const convertedFile = new File([response], 'converted.dcm', { type: 'application/octet-stream' });
+        return convertedFile;
+      })
+      .catch((error: any) => {
+        console.error('Error al convertir el archivo:', error);
+        throw error; // O maneja el error de otra forma según tus necesidades
+      });
+  }
 }

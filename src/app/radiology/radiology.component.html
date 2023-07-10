@@ -112,7 +112,7 @@
                             Click on the image to upload a photo
                           </h6>
 
-                        <input type="file" accept=".jpg, .jpeg, .png" class="d-none" #photoInputDicom (change)="onFileSelectedDicomConvert($event)">
+                        <input type="file" accept=".jpg, .jpeg, .png" class="d-none" #photoInputDicom multiple (change)="onFileSelectedDicomConvert($event)">
                         <div class="input-group flex-nowrap mt-2">
                           <span class="input-group-text" id="addon-wrapping"><i class="bi bi-card-image"> <label>Your File:</label></i></span>
                           <input type="text" disabled class="form-control" placeholder="File Name" aria-label="File Name" aria-describedby="addon-wrapping" [ngModel]="fileNmae">
