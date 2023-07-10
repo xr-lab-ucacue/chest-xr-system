@@ -13,7 +13,6 @@ import { PageUserComponent } from './page-user/page-user.component';
 import { ProfileComponent } from './profile/profile.component';
 import { CanDeactivateGuardGuard } from './auth/can-deactivate-guard.guard';
 import { ReferenceLinesToolComponent } from './reference-lines-tool/reference-lines-tool.component';
-import { PruebaComponent } from './prueba/prueba.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -34,6 +33,7 @@ const routes: Routes = [
     path: 'userPage/:id',
     component: PageUserComponent,
     canActivate: [RoleGuard],
+    canDeactivate: [CanDeactivateGuardGuard],
   },
   {
     path: 'profile/:id',
@@ -48,10 +48,6 @@ const routes: Routes = [
   {
     path: 'referenceLines',
     component: ReferenceLinesToolComponent,
-  },
-  {
-    path: 'prueba',
-    component: PruebaComponent,
   },
   { path: '', pathMatch: 'full', component: LoginComponent },
   { path: '**', pathMatch: 'full', component: LoginComponent },
