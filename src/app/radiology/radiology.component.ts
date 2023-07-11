@@ -1068,6 +1068,14 @@ export class RadiologyComponent implements OnInit {
     }, 100);
   }
 
+  //Imagen to Default
+  defaultXray() {
+    var element = document.getElementById('element');
+    setTimeout(() => {
+    cornerstone.reset(element);
+    }, 100);
+  }
+
   //ejemplos de perzonalizacion de herramienta
   infoToolModal(tipo: string) {
     if (tipo === 'Inactive') {
