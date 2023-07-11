@@ -3,11 +3,6 @@
 
 -imagen de carpeta(x-chert-small) 3 a 5 ver (No respeta colores de Ngchart y tarjetas no renderiza)
 
-*** Problemas perfiles de usuario (Pueden ver los demas perfiles) siendo usuarios --Interceptor o Guard puede ayduar
-(O capturar los datos del usuario solo con el findByemail para guardarlos en una clase o variable y mostrarlos--- no poner parametros en la ruta de profile)
-
-
-
 
 
 

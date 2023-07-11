@@ -23,12 +23,13 @@ export class ProfileComponent implements OnInit {
   newPassword: string = '';
 
   emailOriginal: string;
-  getDataUser() {
-    //traigo los datos del usaurio
-    this.profileID = Number(this.idRoute.snapshot.paramMap.get('id'));
-    this.authService.getUser(this.profileID).subscribe(
-      (resp) => {
-        let { roles, ...todo } = resp;
+  // this.profileID = Number(this.idRoute.snapshot.paramMap.get('id'));
+
+  getDataUser2(email: string) {
+      this.authService.getUserByEmail(email).subscribe(
+        (res: Usuario) => {
+          console.log("Respuesta Profile : ", res);
+          let { roles, ...todo } = res;
 
         roles!.forEach((item: any) => {
           this.haveRols.push(item.nombre);
@@ -40,17 +41,21 @@ export class ProfileComponent implements OnInit {
         this.userData.map((data) => {
          return  this.emailOriginal = data.email;
         })
-
-      },
-      (err) => {
-        console.log('ERROR: ', err);
-        if (err.status == 0) {
-          Swal.fire('Servicio', 'No esta Disponible', 'error');
+        }, (err) => {
+          console.log("ERROR-Profile: ",err);
         }
-      },
-      () => {}
-    );
+      )
   }
+
+  UserNav(){
+    try{
+        let payload = this.authService.obtenerDatosToken(this.authService.tokencito!);
+        const email= payload.user_name;
+        this.getDataUser2(email);
+    } catch(e) {
+    }
+  }
+
   verificarCel(texto: string) {
     const letras = 'abcdefghyjklmnñopqrstuvwxyz';
     texto = texto.toLowerCase();
@@ -317,6 +322,6 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getDataUser();
+    this.UserNav();
   }
 }

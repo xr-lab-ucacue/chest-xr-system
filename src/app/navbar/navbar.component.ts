@@ -26,9 +26,9 @@ export class NavbarComponent implements OnInit {
     this.authService.getUserByEmail(email).subscribe(
       (res: Usuario) => {
         this.idUser = res.id;
-        // console.log("idActual: ", this.idUser);
+        // console.log("Respuesta Navbar: ", res);
       }, (err) => {
-        console.log("ERROR: ",err);
+        console.log("ERROR-Navbar: ",err);
       }
     )
   }

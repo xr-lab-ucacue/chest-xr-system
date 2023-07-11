@@ -38,7 +38,7 @@ import { ReferenceLinesToolComponent } from './reference-lines-tool/reference-li
     ProfileComponent,
     LostPasswordComponent,
     ReferenceLinesToolComponent,
-    
+
   ],
   imports: [
     BrowserModule,
