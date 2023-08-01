@@ -1232,7 +1232,7 @@ export class RadiologyComponent implements OnInit {
                             Swal.fire({
                               html: `<h1 style="color: white;">🎊🎉Congratulations!🎉🎊</h1> <br> <h4 style="color: white;">Now you can start working.</h4>`,
                               background: '#212529',
-                              imageUrl: '../../assets/imgs/medicalXray.png',
+                              imageUrl: '../../assets/imgs/PortadaX-Ray.jpg',
                               imageWidth: 400,
                               imageHeight: 200,
                               imageAlt: 'Congratulations For end turial',
