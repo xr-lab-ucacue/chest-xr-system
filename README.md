@@ -42,19 +42,19 @@
 
 #### Subida de Imágenes y Convertidor
 
-![Subida y Convertidor](src/vista_Previa/SubidaImagenes.jpeg)
+![Subida y Convertidor](src/assets/vista_Previa/SubidaImagenes.jpeg)
 
 En esta vista previa, los profesionales médicos tendrán la capacidad de cargar radiografías en formato DICOM, así como de utilizar el convertidor de imágenes para transformar archivos en formato JPG a DICOM. Este proceso es fundamental para iniciar el análisis y detección de enfermedades pulmonares a partir de imágenes médicas.
 
 #### Visualización de Radiografía
 
-![Vista de Radiografía](src/vista_Previa/VistaInterfaz.jpeg)
+![Vista de Radiografía](src/assets/vista_Previa/VistaInterfaz.jpeg)
 
 Esta captura de pantalla muestra la interfaz de visualización de la radiografía de tórax junto con los porcentajes de probabilidad de las enfermedades más comunes. Estos porcentajes brindan a los médicos información clave sobre la gravedad y la distribución de las enfermedades, como Atelectasis, Cardiomegalia, Consolidación, Edema y Derrame pleural. Además, la ubicación de las enfermedades se representa gráficamente, lo que permite un diagnóstico más preciso.
 
 ### Ubicación de Enfermedades
 
-![Ubicación de Enfermedades](src/vista_Previa/UbicacionEnfermedad.jpeg)
+![Ubicación de Enfermedades](src/assets/vista_Previa/UbicacionEnfermedad.jpeg)
 
 En esta imagen, se presenta un modal que se expande para mostrar de manera más detallada la ubicación de las distintas enfermedades dentro de la radiografía. Esta función proporciona a los profesionales médicos la capacidad de examinar con mayor precisión las áreas afectadas y tomar decisiones informadas sobre el tratamiento.
 
@@ -62,7 +62,7 @@ En esta imagen, se presenta un modal que se expande para mostrar de manera más 
 
 #### Administración de Usuarios
 
-![Módulo de Administrador](src/vista_Previa/vistaAdmin.jpeg)
+![Módulo de Administrador](src/assets/vista_Previa/vistaAdmin.jpeg)
 
 Esta vista previa muestra la interfaz de administración de usuarios, donde los administradores pueden gestionar y supervisar el acceso al sistema. Los administradores podrán ver una lista de usuarios con sus respectivos roles y detalles. Además, tendrán la opción de editar la información de los usuarios y asignar roles adecuados para garantizar una colaboración efectiva en el entorno médico.
 
