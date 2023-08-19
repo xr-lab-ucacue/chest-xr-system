@@ -79,3 +79,5 @@ Esperamos que esta interfaz facilite la colaboración médica y el análisis de 
 **El Equipo de Desarrollo:**
 - Jose Roman
 - Sebastian Quevedo
+
+[Enlace al Repositorio del Back-end](https://github.com/PePeWee07/chest-xr-system-back-end)
