@@ -66,8 +66,6 @@ En esta imagen, se presenta un modal que se expande para mostrar de manera más 
 
 Esta vista previa muestra la interfaz de administración de usuarios, donde los administradores pueden gestionar y supervisar el acceso al sistema. Los administradores podrán ver una lista de usuarios con sus respectivos roles y detalles. Además, tendrán la opción de editar la información de los usuarios y asignar roles adecuados para garantizar una colaboración efectiva en el entorno médico.
 
-Recuerda que, junto con las imágenes, puedes agregar estas descripciones en tu archivo README.md utilizando el formato Markdown. Esto ayudará a los usuarios a comprender las características y funcionalidades de tu proyecto de manera clara y concisa. ¡Buena suerte con tu proyecto!
-
 ## Contribución
 
 Apreciamos cualquier contribución que pueda mejorar la experiencia de la interfaz gráfica. Si tienes ideas para mejorar la visualización de enfermedades, optimizar la experiencia de usuario o agregar nuevas características, no dudes en crear un fork del repositorio y enviar un pull request.
