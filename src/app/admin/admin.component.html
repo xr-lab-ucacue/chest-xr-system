@@ -80,7 +80,7 @@
                  <div *ngIf="data.estado == false" class="estado-false">{{ data.estado }}</div>
               </td>
               <td>
-                <button type="button" class="btn btn-warning btn_pencil" (click)="updateUser(data)">
+                <button type="button" class="btn btn-warning btn_pencil" (click)="updateUser(data, data.email)">
                   <i class="bi bi-pencil"></i>
                 </button>
               </td>
@@ -123,6 +123,9 @@
 
       </div>
     </div>
+
+
+
 
   </div>
 </div>

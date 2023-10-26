@@ -1,0 +1,249 @@
+<div class="fondo">
+  <!-- inputs ocultos -->
+  <div>
+    <input type="file" class="d-none" #input1 id="foto1" />
+    <input type="file" class="d-none" #input2 id="fotos2" multiple />
+  </div>
+
+  <ng-template #radiologyTZ>
+    <div class="container">
+      <div class="row">
+        <!-- Solo un Dicon -->
+        <div class="col-lg-4 mt-5 mx-auto card1">
+          <!-- Card -->
+          <div class="card perspective sombra">
+            <div class="neon-border" (click)="[evento(),input1.click()]">
+              <!-- Header Card -->
+              <div class="card-header text-center" style="padding: 1rem">
+                <i
+                  class="bi bi-cloud-arrow-up-fill"
+                  style="font-size: 5rem; color: white"
+                >
+                  <h4>Upload a Dicom</h4></i
+                >
+              </div>
+              <!-- Body Card -->
+              <div class="card-body" style="background-color: white">
+                <!-- Img -->
+                <div class="img-upload">
+                  <img
+                    [src]="photoSelected || '../../assets/imgs/no-image2.png'"
+                    class="img-fluid"
+                    alt="No image"
+                  />
+                  <h6 class="text-center txt-up">
+                    Click on the image to upload a photo
+                  </h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 mt-5 mx-auto">
+          <div class="" style="margin-top: 40%;">
+            <div class="row">
+              <div class="col-4 mt-5 border-col-left ">
+                <div class="linea-color">
+                <div class="circulo-color">
+                    <div class="face front"></div>
+                    <div class="face back"></div>
+                    <div class="face right"></div>
+                    <div class="face left"></div>
+                    <div class="face top"></div>
+                    <div class="face bottom"></div>
+
+                    <div class="box box__small">
+                      <div class="face front"></div>
+                      <div class="face back"></div>
+                      <div class="face right"></div>
+                      <div class="face left"></div>
+                      <div class="face top"></div>
+                      <div class="face bottom"></div>
+                    </div>
+                </div>
+              </div>
+              </div>
+              <div class="col-4">
+                <div class="box box__large">
+                  <div class="face front"></div>
+                  <div class="face back"></div>
+                  <div class="face right"></div>
+                  <div class="face left"></div>
+                  <div class="face top"></div>
+                  <div class="face bottom"></div>
+
+                  <div class="box box__midium">
+                    <div class="face front"></div>
+                    <div class="face back"></div>
+                    <div class="face right"></div>
+                    <div class="face left"></div>
+                    <div class="face top"></div>
+                    <div class="face bottom"></div>
+
+                    <div class="box box__small">
+                      <div class="face front"></div>
+                      <div class="face back"></div>
+                      <div class="face right"></div>
+                      <div class="face left"></div>
+                      <div class="face top"></div>
+                      <div class="face bottom"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-4 mt-5 border-col-right">
+                <div class="linea-color">
+                <div class="circulo-color2">
+                  <div class="face front"></div>
+                    <div class="face back"></div>
+                    <div class="face right"></div>
+                    <div class="face left"></div>
+                    <div class="face top"></div>
+                    <div class="face bottom"></div>
+
+                    <div class="box box__small">
+                      <div class="face front"></div>
+                      <div class="face back"></div>
+                      <div class="face right"></div>
+                      <div class="face left"></div>
+                      <div class="face top"></div>
+                      <div class="face bottom"></div>
+                    </div>
+                </div>
+              </div>
+              </div>
+            </div>
+    </div>
+        </div>
+
+        <!-- Varios Dicom -->
+        <div class="col-lg-4 mt-5 mx-auto card2">
+          <!-- Card -->
+          <div class="card perspective sombra">
+            <div class="neon-border2" (click)="[evento2(),input2.click()]">
+            <!-- Header Card -->
+            <div class="card-header text-center" style="padding: 1rem">
+              <i
+                class="bi bi-cloud-arrow-up-fill"
+                style="font-size: 5rem; color: white"
+              >
+                <h4>Upload multiple Dicom</h4></i
+              >
+            </div>
+            <!-- Body Card -->
+            <div class="card-body" style="background-color: white">
+              <!-- Img -->
+              <div class="img-upload">
+                <img
+                  [src]="photoSelected2 || '../../assets/imgs/no-image2.png'"
+                  class="img-fluid"
+                  alt="No image"
+                  (click)="[input2.click(), evento2()]"
+                />
+                <h6 class="text-center txt-up">
+                  Click on the image to upload a photo
+                </h6>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Buttton -->
+      <div class="alinearBtn">
+        <button class="btn btn-success btn-block mt-3 mx-3" (click)="loading()">
+          Load Synchronization
+        </button>
+      </div>
+    </div>
+  </ng-template>
+
+  <div *ngIf="viewTomo == true">
+    <div class="row" style="justify-content: center">
+      <div class="col-5 sombra">
+<div
+                class="d-flex align-items-center justify-content-center vh-100"
+              >
+              <div class="box box__large">
+                <div class="face front"></div>
+                <div class="face back"></div>
+                <div class="face right"></div>
+                <div class="face left"></div>
+                <div class="face top"></div>
+                <div class="face bottom"></div>
+
+                <div class="box box__midium">
+                  <div class="face front"></div>
+                  <div class="face back"></div>
+                  <div class="face right"></div>
+                  <div class="face left"></div>
+                  <div class="face top"></div>
+                  <div class="face bottom"></div>
+
+                  <div class="box box__small">
+                    <div class="face front"></div>
+                    <div class="face back"></div>
+                    <div class="face right"></div>
+                    <div class="face left"></div>
+                    <div class="face top"></div>
+                    <div class="face bottom"></div>
+                  </div>
+                </div>
+              </div>
+              </div>
+      </div>
+      <div class="col-5 sombra">
+       <div
+                class="d-flex align-items-center justify-content-center vh-100"
+              >
+              <div class="box box__large">
+                <div class="face front"></div>
+                <div class="face back"></div>
+                <div class="face right"></div>
+                <div class="face left"></div>
+                <div class="face top"></div>
+                <div class="face bottom"></div>
+
+                <div class="box box__midium">
+                  <div class="face front"></div>
+                  <div class="face back"></div>
+                  <div class="face right"></div>
+                  <div class="face left"></div>
+                  <div class="face top"></div>
+                  <div class="face bottom"></div>
+
+                  <div class="box box__small">
+                    <div class="face front"></div>
+                    <div class="face back"></div>
+                    <div class="face right"></div>
+                    <div class="face left"></div>
+                    <div class="face top"></div>
+                    <div class="face bottom"></div>
+                  </div>
+                </div>
+              </div>
+              </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Imagenes Cornerstone-->
+  <ng-container *ngIf="viewUpload; else radiologyTZ">
+      <div class="row" style="justify-content: center">
+        <div class="col-5 sombra">
+          <div class="image-canvas-wrapper my-5" id="element-1">
+            <div id="element1" class="cornerstone-element"></div>
+          </div>
+        </div>
+        <div class="col-5 sombra">
+          <div class="image-canvas-wrapper my-5" id="element-1">
+            <div id="element2" class="cornerstone-element"></div>
+          </div>
+        </div>
+      </div>
+  </ng-container>
+
+
+</div>

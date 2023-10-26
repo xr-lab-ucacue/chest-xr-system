@@ -1,18 +1,18 @@
 <div class="fondo">
-  <ng-container *ngIf="viewUpload == true">
-    <div class="fondo">
+  <ng-template #radiologyTZ>
+    <div class="card-fondo-upload">
       <div class="container">
         <div class="row">
           <div class="col-lg-4 mx-auto mt-5" *ngIf="hiddenSpinner != true">
             <!-- Card -->
-            <div class="card sombra">
+            <div class="card perspective sombra">
               <!-- Header Card -->
               <div class="card-header text-center" style="padding: 1rem">
                 <i
                   class="bi bi-cloud-arrow-up-fill"
                   style="font-size: 5rem; color: white"
                 >
-                  <h4>Upload a Photo</h4></i
+                  <h4>Upload a Dicom</h4></i
                 >
               </div>
               <!-- Body Card -->
@@ -32,9 +32,10 @@
                     class="img-fluid"
                     alt="No image"
                     (click)="photoInput.click()"
+                    [style]="controlImg"
                   />
                   <h6 *ngIf="hiddenTxt != false" class="text-center txt-up">
-                    Clik en la imagen para subir una foto
+                    Click on the image to upload a photo
                   </h6>
                 </div>
                 <!-- Buttton -->
@@ -49,6 +50,144 @@
             </div>
           </div>
         </div>
+
+        <!-- Tajeta disparadora de convertidor -->
+        <ng-template #convert>
+          <div class="row">
+            <div class="col-lg-5 mx-auto mt-2">
+          <div class="card perspective sombra mb-3" style="max-width: 640px;">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img src="../../assets/imgs/convert.png" style="height: 100%; width: 100%;" class="img-fluid rounded-start" alt="...">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body" style="background-color: white; border-top-right-radius: 5%; border-bottom-right-radius: 5%;">
+                  <h3 class="card-title text-center my-5"><b>Do you have another format?</b> </h3>
+                  <p class="card-text mt-5">Do you have a JPG or PNG format? You can convert them by <mark (click)="viewCardConvert(true)" style="cursor: pointer;">Click here!</mark>.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+            </div>
+          </div>
+        </ng-template>
+
+
+        <!-- Tarjeta de convertidor a .DCM -->
+        <ng-container *ngIf="viewConveret; else convert">
+
+          <ng-template #loadCube>
+            <div class="row">
+              <div class="col-lg-7 mx-auto mt-2">
+                <div class="card sombra mb-3 perspective" style="max-width: 740px;">
+                  <div class="row g-0">
+                    <div class="col-md-4 card-left-convert" style="border-top-left-radius: 8%; border-bottom-left-radius: 3%;">
+                      <div class="container">
+                        <button type="button" class="btn-close" aria-label="Close" (click)="viewCardConvert(false)"></button>
+                        <div class="d-flex justify-content-center aling-items-center mt-5">
+                          <i
+                              class="bi bi-cloud-arrow-down-fill"
+                              style="font-size: 5rem; color: white"
+                            >
+                            <h4> <b>Converter</b> </h4>
+                          </i>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-header text-center" style="padding: 1rem; background-color: rgb(237, 139, 100);">
+                        <i class="bi bi-file-earmark-image"  style="font-size: 5rem; color: white"> <h4><b>Upload File</b></h4></i>
+                      </div>
+                      <div class="card-body" style="background-color: white; border-bottom-right-radius: 2%;">
+                        <h3 class="card-title text-center">Convert an <strong>image</strong> to <strong>dicom</strong> format here!.</h3>
+
+                          <img
+                            [src]="photoSelectedDicom|| '../../assets/imgs/no-image2.png'"
+                            class="img-fluid"
+                            alt="No image"
+                            (click)="photoInputDicom.click()"
+                            style="cursor: pointer;"
+                          />
+                          <h6 *ngIf="hiddenTxtDicom != false" class="text-center txt-up">
+                            Click on the image to upload a photo
+                          </h6>
+
+                        <input type="file" accept=".jpg, .jpeg, .png" class="d-none" #photoInputDicom multiple (change)="onFileSelectedDicomConvert($event)">
+                        <div class="input-group flex-nowrap mt-2">
+                          <span class="input-group-text" id="addon-wrapping"><i class="bi bi-card-image"> <label>Your File:</label></i></span>
+                          <input type="text" disabled class="form-control" placeholder="File Name" aria-label="File Name" aria-describedby="addon-wrapping" [ngModel]="fileNmae">
+                        </div>
+                        <button
+                          class="btn btn-success btn-block mt-3"
+                          [disabled]="displayButton2"
+                          (click)="convertAndDownload()"
+                        >
+                        Convert DICOM
+                    </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+
+          <!-- CARGA DE CONVERCION Cubo-->
+          <ng-container *ngIf="cubeloading; else loadCube">
+            <div class="row">
+              <div class="col-lg-7 mx-auto mt-2">
+                <div class="card sombra mb-3" style="max-width: 740px;">
+                  <div class="row g-0">
+                    <div class="col-md-4 card-left-convert" style="border-top-left-radius: 8%; border-bottom-left-radius: 3%;">
+                      <div class="container">
+                        <button type="button" class="btn-close" aria-label="Close" (click)="viewCardConvert(false)"></button>
+                        <div class="d-flex justify-content-center aling-items-center mt-5">
+                          <i
+                              class="bi bi-cloud-arrow-down-fill"
+                              style="font-size: 5rem; color: white"
+                            >
+                            <h4> <b>Converter</b> </h4>
+                          </i>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-header text-center" style="padding: 1rem; background-color: rgb(237, 139, 100);">
+                        <i class="bi bi-file-earmark-image"  style="font-size: 5rem; color: white"> <h4><b>Upload File</b></h4></i>
+                      </div>
+                      <div class="card-body" style="background-color: white; border-bottom-right-radius: 2%;">
+                        <h3 class="text-center blinking-text">Processing</h3>
+                        <div class="d-flex align-items-center justify-content-center">
+                          <div class="box box__large">
+                            <div class="box box__midium">
+                              <div class="face front"></div>
+                              <div class="face back"></div>
+                              <div class="face right"></div>
+                              <div class="face left"></div>
+                              <div class="face top"></div>
+                              <div class="face bottom"></div>
+
+                              <div class="box box__small">
+                                <div class="face front"></div>
+                                <div class="face back"></div>
+                                <div class="face right"></div>
+                                <div class="face left"></div>
+                                <div class="face top"></div>
+                                <div class="face bottom"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+        </ng-container>
+
       </div>
 
       <!-- Section: Spinner progress -->
@@ -69,17 +208,18 @@
         </div>
       </div>
     </div>
-  </ng-container>
+  </ng-template>
 
-  <ng-container *ngIf="viewRadiology == true">
+  <ng-container *ngIf="viewUpload; else radiologyTZ">
     <div class="container-fluid text-center">
       <div class="row">
         <!-- tools de Cornerstone>>>>>> -->
         <div class="my-3">
-
           <!-- btn-ctrl-desactive -->
           <ng-container *ngIf="CtrlActive == true">
-            <button class="btn-CtrlDesactive" (click)="desactiveAltKey()">Crtl</button>
+            <button class="btn-CtrlDesactive" (click)="desactiveAltKey()">
+              Crtl
+            </button>
           </ng-container>
 
           <!-- btn Configuraciones OffCanvas-->
@@ -344,7 +484,6 @@
                     aria-labelledby="panelsStayOpen-headingFor"
                   >
                     <div class="accordion-body">
-                      <!-- poner img de botones aki -->
                       <div class="mb-2">
                         <h4><em>Tool buttons:</em></h4>
                         <label for="exampleColorInput" class="form-label"
@@ -359,7 +498,7 @@
                         >
                       </div>
 
-                      <div class="my-2">
+                      <!-- <div class="my-2">
                         <label for="exampleColorInput2" class="form-label"
                           >Advanced mouse:</label
                         >
@@ -369,6 +508,19 @@
                           style="font-size: 0.9rem; color: cornflowerblue"
                           (click)="infoToolModal('MausAdvanced')"
                           >Show buttons</i
+                        >
+                      </div> -->
+
+                      <div class="my-2">
+                        <label for="exampleColorInput3" class="form-label"
+                          >Tutorial:</label
+                        >
+                        <br />
+                        <i
+                          class="bi bi-info-square mx-2 change-puntero"
+                          style="font-size: 0.9rem; color: cornflowerblue"
+                          (click)="MiniTutorial()"
+                          >Show</i
                         >
                       </div>
                     </div>
@@ -595,7 +747,6 @@
               (click)="activateTools('WwwcRegion')"
               ><i class="bi bi-diamond-half"></i> SparkleRegion</label
             >
-
           </div>
 
           <!-- Filtros radiografia -->
@@ -883,30 +1034,90 @@
         <!-- <<<<<<<tools de Cornerstone -->
 
         <!-- tarjetas de enfermedad>>>> -->
-        <div class="col-2 col-xs-12 col-sm-12 col-md-12 col-lg-2 col-xl-2 col-xxl-2 cards-left">
+        <ng-container *ngIf="isDataLoaded; else placeholder">
+          <!-- Código HTML para mostrar los datos reales -->
           <div
-            class="container card my-3 card-container"
-            style="width: 18rem"
-            *ngFor="let disease of onlyDiseases"
+            class="col-2 col-xs-12 col-sm-12 col-md-12 col-lg-2 col-xl-2 col-xxl-2 cards-left"
           >
-            <img
-              src="{{ disease.photo }}"
-              class="card-img-top img-fluid img-card-radiology mt-1"
-              [alt]="disease.name"
-              (click)="
-                expandCardRadiology(disease.photo, disease.name, disease.value)
-              "
-            />
-            <div class="card-body txt-card">
-              <h2 class="card-title">{{ disease.name }}</h2>
-              <p>Percent: {{ disease.value }}%</p>
+            <div style="overflow-x: hidden;" *ngFor="let disease of diseasesAll">
+              <div
+                class="container card perspective my-3 card-container"
+                *ngIf="disease.porcentaje >= 50"
+              >
+                <img
+                  src="{{ 'data:image/png;base64,' + disease.imagen }}"
+                  class="card-img-top img-fluid img-card-radiology mt-1"
+                  [alt]="disease.nombre"
+                  (click)="
+                    expandCardRadiology(
+                      disease.imagen,
+                      disease.nombre,
+                      disease.porcentaje
+                    )
+                  "
+                />
+                <div class="card-body txt-card">
+                  <h2 class="card-title">{{ disease.nombre }}</h2>
+                  <p>Percent: {{ disease.porcentaje }}%</p>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        </ng-container>
+
+        <ng-template #placeholder>
+          <!-- Código HTML para mostrar el marcador de posición -->
+          <div
+            class="col-2 col-xs-12 col-sm-12 col-md-12 col-lg-2 col-xl-2 col-xxl-2 cards-left"
+          >
+            <div
+              class="container card my-3 card-container"
+              style="width: 18rem"
+              aria-hidden="true"
+              *ngFor="let uno of [1, 1, 1, 1]"
+            >
+            <div class="d-flex align-items-center justify-content-center">
+              <div class="box box__large">
+                <div class="box box__midium">
+                  <div class="face front"></div>
+                  <div class="face back"></div>
+                  <div class="face right"></div>
+                  <div class="face left"></div>
+                  <div class="face top"></div>
+                  <div class="face bottom"></div>
+
+                  <div class="box box__small">
+                    <div class="face front"></div>
+                    <div class="face back"></div>
+                    <div class="face right"></div>
+                    <div class="face left"></div>
+                    <div class="face top"></div>
+                    <div class="face bottom"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+              <div class="card-body">
+                <h5 class="card-title placeholder-glow">
+                  <span class="placeholder col-6"></span>
+                </h5>
+                <p class="card-text placeholder-glow">
+                  <span class="placeholder col-7"></span>
+                  <span class="placeholder col-4"></span>
+                  <span class="placeholder col-4"></span>
+                  <span class="placeholder col-6"></span>
+                  <span class="placeholder col-8"></span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </ng-template>
         <!-- <<<<tarjetas de enfermedad -->
 
         <!-- Radiologya y Data -->
-        <div class="col-10 col-xs-12 col-sm-12 col-md-12 col-lg-10 col-lxg10 col-lxxg10 ">
+        <div
+          class="col-10 col-xs-12 col-sm-12 col-md-12 col-lg-10 col-lxg10 col-lxxg10"
+        >
           <div class="row">
             <!-- Radiology Image>>>> -->
             <div class="col-8">
@@ -1013,9 +1224,32 @@
                             >
                           </div>
                         </li>
+
+                        <li><hr class="dropdown-divider" /></li>
+
+                        <!-- Reseteo de Rotacion por defecto-->
+                        <div class="mx-2">
+                          <button
+                            class="btn btn-sm btn-info"
+                            (click)="ResetRotate()"
+                          >
+                            <i class="bi bi-arrow-clockwise"></i> Reset Rotate
+                          </button>
+                        </div>
+
+                        <li><hr class="dropdown-divider" /></li>
+
+                        <!-- Reseteo de todo el elemnto de X-ray -->
+                        <div class="mx-2">
+                          <button class="btn btn-sm btn-info"
+                            (click)="defaultXray()">
+                            <i class="bi bi-card-image"></i> Reset Image
+                          </button>
+                        </div>
                       </ul>
                     </div>
                   </div>
+
                   <!-- nombre de enfermedad selecionada -->
                   <div class="col-md-10">
                     <div>
@@ -1030,7 +1264,12 @@
                   <!-- dropdown delete selectTools -->
                   <div class="col-md-1">
                     <div class="btn-group btn-group-switch">
-                      <button class="btn btn-sm btn-online-secondary dropdown-toggle dropwon-switch-toolDelete" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <button
+                        class="btn btn-sm btn-online-secondary dropdown-toggle dropwon-switch-toolDelete"
+                        type="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
                         <i
                           class="bi bi bi-x icon-dropwon-switch-deleteTool"
                         ></i>
@@ -1038,13 +1277,26 @@
                       <ul class="dropdown-menu dropdown-menu-dark p-2">
                         <h4 class="text-start m-0"><b>Clean Tools</b></h4>
                         <div *ngFor="let opcion of opciones">
-                          <input class="form-check-input" type="checkbox"  [(ngModel)]="opcion.seleccionado" id="flexCheckDefault">
-                          <label class="form-check-label ms-1" for="flexCheckDefault">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            [(ngModel)]="opcion.seleccionado"
+                            id="flexCheckDefault"
+                          />
+                          <label
+                            class="form-check-label ms-1"
+                            for="flexCheckDefault"
+                          >
                             {{ opcion.texto }}
                           </label>
                         </div>
                         <div class="d-flex justify-content-end">
-                          <button class="btn btn-sm btn-danger mt-4" (click)="toolSelectToDelete()"><i class="bi bi-x-lg"></i> Delete</button>
+                          <button
+                            class="btn btn-sm btn-danger mt-4"
+                            (click)="toolSelectToDelete()"
+                          >
+                            <i class="bi bi-x-lg"></i> Delete
+                          </button>
                         </div>
                       </ul>
                     </div>
@@ -1074,35 +1326,74 @@
             <!-- <<<<<Radiology Image -->
 
             <!-- Data Visual>>>>> -->
-            <div class="col-4" style="max-height: 860px;">
-              <!-- Therd Model Horizontal Bar -->
-              <div #containerRef class="sombra-card-data grafica">
-                <ngx-charts-bar-horizontal
-                  (window:resize)="onResize($event)"
-                  [scheme]="colorScheme"
-                  [results]="single"
-                  [gradient]="gradient"
-                  [xAxis]="showXAxis"
-                  [yAxis]="showYAxis"
-                  [showXAxisLabel]="showXAxisLabel"
-                  [showYAxisLabel]="showYAxisLabel"
-                  [xAxisLabel]="showXAxisHorizontal"
-                  [yAxisLabel]="showYAxisVertical"
-                  [showDataLabel]="showDataLabel"
-                  [xAxisTickFormatting]="formatPercent"
-                  [tooltipDisabled]="tooltipDisabled"
-                  [trimYAxisTicks]="trimYAxisTicks"
-                  [activeEntries]="activeEntries"
-                  [animations]="true"
-                  (select)="onSelect($event)"
-                  style="fill: #ffffff; font-size: 25px"
-                >
-                </ngx-charts-bar-horizontal>
+            <ng-container *ngIf="isDataLoadedBar; else placeholderBars">
+              <!-- Código HTML para mostrar los datos reales -->
+              <div class="col-4" style="max-height: 860px">
+                <!-- Therd Model Horizontal Bar -->
+                <div #containerRef class="sombra-card-data grafica">
+                  <ngx-charts-bar-horizontal
+                    (window:resize)="onResize($event)"
+                    [scheme]="colorScheme"
+                    [results]="diseasesNGX"
+                    [gradient]="gradient"
+                    [xAxis]="showXAxis"
+                    [yAxis]="showYAxis"
+                    [showXAxisLabel]="showXAxisLabel"
+                    [showYAxisLabel]="showYAxisLabel"
+                    [xAxisLabel]="showXAxisHorizontal"
+                    [yAxisLabel]="showYAxisVertical"
+                    [showDataLabel]="showDataLabel"
+                    [xAxisTickFormatting]="formatPercent"
+                    [tooltipDisabled]="tooltipDisabled"
+                    [trimYAxisTicks]="trimYAxisTicks"
+                    [animations]="true"
+                    (select)="onSelect($event)"
+                    style="fill: #ffffff; font-size: 25px"
+                  >
+                  </ngx-charts-bar-horizontal>
+                </div>
               </div>
-            </div>
+            </ng-container>
+
+            <ng-template #placeholderBars>
+              <!-- Código HTML para mostrar el marcador de posición -->
+              <div class="col-4" style="max-height: 860px">
+                <div
+                  class="d-flex align-items-center justify-content-center vh-100"
+                >
+                <div class="box box__large">
+                  <div class="face front"></div>
+                  <div class="face back"></div>
+                  <div class="face right"></div>
+                  <div class="face left"></div>
+                  <div class="face top"></div>
+                  <div class="face bottom"></div>
+
+                  <div class="box box__midium">
+                    <div class="face front"></div>
+                    <div class="face back"></div>
+                    <div class="face right"></div>
+                    <div class="face left"></div>
+                    <div class="face top"></div>
+                    <div class="face bottom"></div>
+
+                    <div class="box box__small">
+                      <div class="face front"></div>
+                      <div class="face back"></div>
+                      <div class="face right"></div>
+                      <div class="face left"></div>
+                      <div class="face top"></div>
+                      <div class="face bottom"></div>
+                    </div>
+                  </div>
+                </div>
+                </div>
+              </div>
+            </ng-template>
           </div>
         </div>
       </div>
     </div>
   </ng-container>
+
 </div>

@@ -1,7 +1,9 @@
+import { UploadFileService } from './../services/upload-file.service';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
 import { DiseasesService } from '../services/diseases.service';
 import { ViewChild, ElementRef } from '@angular/core';
+
 //Alertas sweealert
 import Swal from 'sweetalert2';
 
@@ -12,6 +14,10 @@ import cornerstoneWADOImageLoader from 'cornerstone-wado-image-loader';
 import * as dicomParser from 'dicom-parser';
 import cornerstoneMath from 'cornerstone-math';
 import 'hammerjs';
+import { Observable, async, connect, map } from 'rxjs';
+import { Diaseases } from '../interfaces/Diseases';
+import { CanDeactivateGuardGuard } from '../auth/can-deactivate-guard.guard';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 //Config Cornestone
 var config = {
@@ -33,47 +39,383 @@ cornerstoneWADOImageLoader.webWorkerManager.initialize(config);
   encapsulation: ViewEncapsulation.None,
 })
 export class RadiologyComponent implements OnInit {
-  constructor(private diseasesService: DiseasesService) {
+  constructor(
+    private diseasesService: DiseasesService,
+    private uploadFileService: UploadFileService,
+    private sanitizer: DomSanitizer
+  ) {
     // this.view = [innerWidth / 1.60, 600];
   }
 
-  //>>>>>>> Variables photo
-  viewUpload: boolean = true;
-  viewRadiology: boolean = false;
-
   file!: File;
+  diseasesAll: Diaseases[] = [];
+  diseasesNGX: any[] = [];
   photoSelected!: string | ArrayBuffer | null;
   hiddenTxt: boolean = true;
   hiddenSpinner: boolean = false;
   displayButton: boolean = true;
+  displayButton2: boolean = true;
+  fileNmae: string;
+  hiddenTxtDicom: boolean = true;
+  photoSelectedDicom!: any;
+  viewConveret: boolean = false;
+  cubeloading: boolean = false;
+  controlImg: any = "cursor: pointer;"
+
+  //Metodos de vizualisacion Card-Convert-Dicom
+  getSafeUrl(photo: File): SafeUrl {
+    return (this.photoSelectedDicom = this.sanitizer.bypassSecurityTrustUrl(
+      window.URL.createObjectURL(photo)
+    ));
+  }
+  onFileSelectedDicomConvert(event: any): void {
+    this.selectedFile = event.target.files[0];
+    if (event.target.files[0]) {
+      this.getSafeUrl(this.selectedFile);
+      this.displayButton2 = false;
+      this.hiddenTxtDicom = false;
+      this.fileNmae = event.target.files[0].name;
+    } else {
+      this.displayButton2 = true;
+      this.hiddenTxtDicom = true;
+      this.fileNmae = 'File Name';
+      return (this.photoSelectedDicom = null);
+    }
+  }
+
+  viewCardConvert(estado: boolean) {
+    this.viewConveret = estado;
+  }
+
+  //Cobertir a formato .dcm
+  convertedDicomFile: Blob; // Variable para almacenar el archivo DICOM convertido
+  convertedDicomFileList: FileList; // Variable para almacenar el archivo DICOM convertido como tipo FileList
+  selectedFile: File; //archivo por procesar a dicom (jpg, png, jpeg)
+  convertAndDownload(): void {
+    this.cubeloading = true;
+    setTimeout(() => {
+      if (this.selectedFile) {
+        const allowedExtensions = ['.jpg', '.jpeg', '.png'];
+        const fileExtension = this.selectedFile.name
+          .toLowerCase()
+          .substring(this.selectedFile.name.lastIndexOf('.'));
+
+        if (allowedExtensions.includes(fileExtension)) {
+          this.uploadFileService
+            .convertToDicom2(this.selectedFile)
+            .then((convertedFile: File) => {
+              console.log('Archivo DICOM convertido:', convertedFile);
+
+              //cargar Predicciones
+              this.uploadFileService.uploadFile(this.selectedFile).subscribe(
+                async (res: any) => {
+                  // Guardo todo los datos del servidor
+                  console.log('res', res);
+
+                  const resultAllArray = res.map((obj: Diaseases) => ({
+                    imagen: obj.imagen,
+                    nombre: obj.nombre,
+                    porcentaje: (obj.porcentaje * 100).toFixed(2),
+                  }));
+                  this.diseasesAll = resultAllArray;
+
+                  //Guardo datos solo para grafico de Barras
+                  const resultArray = res.map((obj: any) => ({
+                    name: obj.nombre,
+                    value: obj.porcentaje * 100,
+                  }));
+                  this.diseasesNGX = resultArray;
+                  await this.myColor();
+
+                  //Cargo los datos y cambio el Placeholders
+                  this.isDataLoaded = true;
+                  this.isDataLoadedBar = true;
+                },
+                (err) => {
+                  console.log('ERROR: ', err);
+                  if (err.error.error === 'Internal Server Error') {
+                    Swal.fire({
+                      title: 'An error occurred',
+                      text: 'Server Error',
+                      icon: 'warning',
+                      showCancelButton: false,
+                      confirmButtonColor: '#3085d6',
+                      confirmButtonText: 'Ok',
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        location.reload();
+                      }
+                    });
+                  } else {
+                    Swal.fire('An error occurred', `${err.error}`, 'warning').then(
+                      (result) => {
+                        if (result.isConfirmed) {
+                          location.reload();
+                        }
+                      }
+                    );
+                  }
+                  this.isDataLoaded = true;
+                  this.isDataLoadedBar = true;
+                }
+              );
+
+              //cargar cornerstone
+              this.hiddenSpinner = true;
+              setTimeout(() => {
+                this.stackDicom(convertedFile);
+              }, 2500);
+              this.viewUpload = true;
+              this.MiniTutorial();
+            })
+            .catch((error) => {
+              console.error('Error al convertir el archivo:', error);
+              Swal.fire('An error occurred', 'Error converting file', 'error');
+            });
+        } else {
+          Swal.fire('Error', 'Only JPG,PNG,JPEG files are allowed', 'warning');
+        }
+      }
+      this.cubeloading = false;
+      this.viewConveret = false;
+    }, 2000);
+  }
+
+  //Cargar al sevidor de predicciones
+  UploadServicePrediction(fileUpload: File) {
+  this.uploadFileService.uploadFile(fileUpload[0]).subscribe(
+    async (res: any) => {
+      // Guardo todo los datos del servidor
+      console.log('res', res);
+
+      const resultAllArray = res.map((obj: Diaseases) => ({
+        imagen: obj.imagen,
+        nombre: obj.nombre,
+        porcentaje: (obj.porcentaje * 100).toFixed(2),
+      }));
+      this.diseasesAll = resultAllArray;
+
+      //Guardo datos solo para grafico de Barras
+      const resultArray = res.map((obj: any) => ({
+        name: obj.nombre,
+        value: obj.porcentaje * 100,
+      }));
+      this.diseasesNGX = resultArray;
+      await this.myColor();
+
+      //Cargo los datos y cambio el Placeholders
+      this.isDataLoaded = true;
+      this.isDataLoadedBar = true;
+    },
+    (err) => {
+      console.log('ERROR: ', err);
+      if (err.error.error === 'Internal Server Error') {
+        Swal.fire({
+          title: 'An error occurred',
+          text: 'Server Error',
+          icon: 'warning',
+          showCancelButton: false,
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'Ok',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            location.reload();
+          }
+        });
+      } else {
+        Swal.fire('An error occurred', `${err.error}`, 'warning').then(
+          (result) => {
+            if (result.isConfirmed) {
+              location.reload();
+            }
+          }
+        );
+      }
+      this.isDataLoaded = true;
+      this.isDataLoadedBar = true;
+    }
+  );
+  }
 
   // Upload photo
+  isDataLoaded = false; //Placeholder Card
+  isDataLoadedBar = false; //Placeholder Grafica Barras
   onPhotoSelected(event: any): any {
-    if (event.target.files && event.target.files[0]) {
+    /* //Metodo para subir archivos JPG (Cambiar a app.py original)
       this.file = <File>event.target.files;
       this.photoSelected = '../../assets/imgs/giphy.gif';
 
       // hiddens
       this.hiddenTxt = false;
       this.displayButton = false;
+
+      //Consumo el servicio de Flask
+      this.uploadFileService.uploadFile(this.file[0]).subscribe(
+        async (res: any) => {
+          // Guardo todo los datos del servidor
+          console.log('res', res);
+
+          const resultAllArray = res.map((obj: Diaseases) => ({
+            imagen: obj.imagen,
+            nombre: obj.nombre,
+            porcentaje: (obj.porcentaje * 100).toFixed(2),
+          }));
+          this.diseasesAll = resultAllArray;
+
+          //Guardo datos solo para grafico de Barras
+          const resultArray = res.map((obj: any) => ({
+            name: obj.nombre,
+            value: obj.porcentaje * 100,
+          }));
+          this.diseasesNGX = resultArray;
+          await this.myColor();
+
+          //Cargo los datos y cambio el Placeholders
+          this.isDataLoaded = true;
+          this.isDataLoadedBar = true;
+        },
+        (err) => {
+          console.log('ERROR: ', err);
+          if (err.error.error === 'Internal Server Error') {
+            Swal.fire({
+              title: 'An error occurred',
+              text: 'Server Error',
+              icon: 'warning',
+              showCancelButton: false,
+              confirmButtonColor: '#3085d6',
+              confirmButtonText: 'Ok',
+            }).then((result) => {
+              if (result.isConfirmed) {
+                location.reload();
+              }
+            });
+          } else {
+            Swal.fire('An error occurred', `${err.error}`, 'warning').then(
+              (result) => {
+                if (result.isConfirmed) {
+                  location.reload();
+                }
+              }
+            );
+          }
+          this.isDataLoaded = true;
+          this.isDataLoadedBar = true;
+        }
+      ); */
+
+    if (event.target.files && event.target.files[0]) {
+      const files: File[] = event.target.files;
+      const invalidFiles: File[] = [];
+
+      //Recorremos todo los archivos y obtenemos los invalidos
+      for (const file of files) {
+        const fileName: string = file.name;
+        //Acepto solo archivos con extension .dcm o sin extension
+        if (fileName.endsWith('.dcm') || fileName.indexOf('.') === -1) {
+          ///
+        } else {
+          // Obtengo los archivos invalidos
+          invalidFiles.push(file);
+        }
+      }
+
+      //metodo para subir archivos
+      if (invalidFiles.length === 0) {
+        //Metodo para subir archivos
+        this.file = <File>event.target.files;
+        this.photoSelected = '../../assets/imgs/8ZBI.gif';
+        this.controlImg = "cursor: pointer; height: 100%; width: 100%;"
+
+        // hiddens
+        this.hiddenTxt = false;
+        this.displayButton = false;
+
+        //Consumo el servicio de Flask
+        /* this.uploadFileService.uploadFile(this.file[0]).subscribe(
+          async (res: any) => {
+            // Guardo todo los datos del servidor
+            console.log('res', res);
+
+            const resultAllArray = res.map((obj: Diaseases) => ({
+              imagen: obj.imagen,
+              nombre: obj.nombre,
+              porcentaje: (obj.porcentaje * 100).toFixed(2),
+            }));
+            this.diseasesAll = resultAllArray;
+
+            //Guardo datos solo para grafico de Barras
+            const resultArray = res.map((obj: any) => ({
+              name: obj.nombre,
+              value: obj.porcentaje * 100,
+            }));
+            this.diseasesNGX = resultArray;
+            await this.myColor();
+
+            //Cargo los datos y cambio el Placeholders
+            this.isDataLoaded = true;
+            this.isDataLoadedBar = true;
+          },
+          (err) => {
+            console.log('ERROR: ', err);
+            if (err.error.error === 'Internal Server Error') {
+              Swal.fire({
+                title: 'An error occurred',
+                text: 'Server Error',
+                icon: 'warning',
+                showCancelButton: false,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Ok',
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  location.reload();
+                }
+              });
+            } else {
+              Swal.fire('An error occurred', `${err.error}`, 'warning').then(
+                (result) => {
+                  if (result.isConfirmed) {
+                    location.reload();
+                  }
+                }
+              );
+            }
+            this.isDataLoaded = true;
+            this.isDataLoadedBar = true;
+          }
+        ); */
+        this.UploadServicePrediction(this.file)
+      } else {
+        const nameInvalids = invalidFiles
+          .map((element) => element.name)
+          .join(',\n');
+
+        Swal.fire(
+          'Invalid file format',
+          `Only ."dcm" formats are accepted and you have: ${nameInvalids}`,
+          'warning'
+        );
+      }
+    } else {
+      // hiddens
+      this.hiddenTxt = true;
+      this.displayButton = true;
+      this.photoSelected = null;
+      this.controlImg = "cursor: pointer;"
     }
   }
 
-  multipleFile() {}
+  //variables subida de archivo y interfaz de radiologia
+  viewUpload: boolean = false;
 
-  // Bar progress
   loading() {
     this.hiddenSpinner = true;
     setTimeout(() => {
-      // console.log('hello');
-      // this.files(this.file);
       this.stackDicom(this.file);
     }, 500);
-    this.viewUpload = false;
-    this.viewRadiology = true;
+    this.viewUpload = true;
     this.MiniTutorial();
   }
-  // <<<<<<<<<
+  //   *ngIf="viewUpload; else radiologyInterfaz" #radiologyInterfaz
 
   diseases: any[] = [];
 
@@ -98,23 +440,21 @@ export class RadiologyComponent implements OnInit {
   tooltipDisabled = false;
   //Recortar labels eje Y
   trimYAxisTicks = false;
-  //(No funcional)
-  activeEntries = [{ name: 'Edema', label: 'Edema', value: 50 }];
 
   backgroundColor: any[] = [];
   //Custom Color
-  myColor() {
-    this.diseases = [...this.diseasesService.diseasesData];
-    console.log('diseases', this.diseases);
-
+  async myColor() {
     const rojo = 'rgb(255, 0, 0)';
     const verde = 'rgb(0, 255, 14)';
     const amarillo = 'rgb(255, 242, 0)';
 
-    this.diseases.forEach((disease) => {
-      if (disease.value >= 51) {
+    this.diseasesNGX.forEach((disease) => {
+      if (parseFloat(disease.value) >= 51) {
         this.backgroundColor.push(rojo);
-      } else if (disease.value >= 21 && disease.value <= 50) {
+      } else if (
+        parseFloat(disease.value) >= 21 &&
+        parseFloat(disease.value) <= 50
+      ) {
         this.backgroundColor.push(amarillo);
       } else {
         this.backgroundColor.push(verde);
@@ -129,7 +469,7 @@ export class RadiologyComponent implements OnInit {
     domain: this.backgroundColor,
   };
 
-  // Obtener datos
+  //Obtener datos de emfermedades para la grafica
   get single() {
     return this.diseasesService.diseasesData;
   }
@@ -139,7 +479,7 @@ export class RadiologyComponent implements OnInit {
     return val + '%';
   }
 
-  // Datos seleccionados
+  // Datos seleccionados en la grafica de Barras (Por ve par aq usar)
   showDiseases = '';
   photo: string = '';
   diseasesSelect: string = '';
@@ -179,33 +519,32 @@ export class RadiologyComponent implements OnInit {
     }
   }
 
-  onlyDiseases: any[] = [];
-  diaseasesOnly() {
-    this.diseases.forEach((disease) => {
-      if (disease.value >= 51) {
-        this.onlyDiseases.push(disease);
-      }
-    });
-  }
-
+  //Tarjetas de predicion de enfermedades
   expandCardRadiology(urlPhoto: string, nameDisease: string, percent: number) {
+    const urlPhoto64 = 'data:image/png;base64,' + urlPhoto;
     Swal.fire({
-      //html
-      html: `<hr style="color: white;">
-          <h1 class="text-center" style="color: white; line-height:0.1;">${nameDisease}</h1>
-          <p class="text-start"  style="color: rgb(59, 86, 134); font-size: 15px; line-height:0.1;">Percent: ${percent}%</p>
-          `,
-      imageUrl: `${urlPhoto}`,
+      imageUrl: urlPhoto64,
+      imageWidth: '200%',
+      imageHeight: 750,
+      imageAlt: nameDisease,
+      html: `
+
+        <hr style="color: white;">
+        <h1 class="text-center" style="color: white; line-height:0.1;">${nameDisease}</h1>
+        <p class="text-start"  style="color: rgb(59, 86, 134); font-size: 15px; line-height:0.1;">Percent: ${percent}%</p>
+      `,
       backdrop: 'rgba(0, 0, 0, 0.7)',
-      imageHeight: 600,
-      imageWidth: 600,
       showConfirmButton: false,
-      imageAlt: 'Radiology',
       background: '#000000',
+      customClass: {
+        container: 'custom-swal-container',
+        popup: 'custom-swal-popup',
+      },
     });
   }
 
-  CtrlActive: boolean;
+  //Bandera para activar el stack de imagenes y para desactivarlo
+  CtrlActive: boolean = false;
   desactiveAltKey() {
     this.CtrlActive = false;
 
@@ -217,6 +556,7 @@ export class RadiologyComponent implements OnInit {
 
   //Borra las herramientas selecionadas (Tool Management)
   opciones = [
+    { texto: 'All', seleccionado: false },
     { texto: 'Length', seleccionado: false },
     { texto: 'EllipticalRoi', seleccionado: false },
     { texto: 'Angle', seleccionado: false },
@@ -227,7 +567,6 @@ export class RadiologyComponent implements OnInit {
     { texto: 'FreehandRoi', seleccionado: false },
     { texto: 'CobbAngle', seleccionado: false },
     { texto: 'Probe', seleccionado: false },
-    { texto: 'All', seleccionado: false },
   ];
   seleccionados: any[] = [];
   toolSelectToDelete() {
@@ -249,6 +588,7 @@ export class RadiologyComponent implements OnInit {
     this.opciones.forEach((e) => (e.seleccionado = false));
   }
 
+  //Activa las herramientas selecionadas (Tool Management)
   activateTools(toolActive: string) {
     const LengthTool = cornerstoneTools.LengthTool;
     const EllipticalRoiTool = cornerstoneTools.EllipticalRoiTool;
@@ -465,6 +805,23 @@ export class RadiologyComponent implements OnInit {
       imageIds.push(imageId);
     });
 
+    if (uploadFiles.length > 1) {
+      // Hacer algo cuando haya más de un archivo
+      console.log('Hay más de un archivo');
+      Array.prototype.forEach.call(uploadFiles, function (file) {
+      const imageId = cornerstoneWADOImageLoader.wadouri.fileManager.add(file);
+      imageIds.push(imageId);
+    });
+    } else {
+      // Hacer algo cuando no haya más de un archivo
+      console.log('No hay más de un archivo');
+      const file = uploadFiles; // Obtén el primer archivo de la lista
+      const imageId = cornerstoneWADOImageLoader.wadouri.fileManager.add(file);
+      imageIds.push(imageId);
+    }
+
+    console.log("ImageIDS: ", imageIds);
+
     // Add our tool, and set it's mode
     const StackScrollMouseWheelTool =
       cornerstoneTools.StackScrollMouseWheelTool;
@@ -497,40 +854,46 @@ export class RadiologyComponent implements OnInit {
 
     if (imageIds.length > 1) {
       window.addEventListener('keydown', (event) => {
-        if (event.ctrlKey) {
-          this.CtrlActive = true;
-          console.log('Frames Habilitado');
-          cornerstoneTools.addTool(StackScrollMouseWheelTool);
-          cornerstoneTools.setToolActive('StackScrollMouseWheel', {});
+        // Agrega un event listener para el evento 'keydown' en el objeto window.
+        if (event.key === 'Control') {
+          // Verifica si la tecla presionada es la tecla "Ctrl".
+          this.CtrlActive = !this.CtrlActive;
+          console.log(
+            this.CtrlActive ? 'Frames Habilitado' : 'Frames Deshabilitado'
+          );
+
+          if (this.CtrlActive) {
+            cornerstoneTools.addTool(StackScrollMouseWheelTool);
+            cornerstoneTools.setToolActive('StackScrollMouseWheel', {});
+          } else {
+            const ZoomMouseWheelTool = cornerstoneTools.ZoomMouseWheelTool; // zoom
+            cornerstoneTools.addTool(ZoomMouseWheelTool);
+            cornerstoneTools.setToolActive('ZoomMouseWheel', {});
+          }
         }
       });
     } else {
-      Swal.fire({
-        title: 'Are you sure to continue?',
-        text: "You only uploaded one .dcm, you won't be able to see the other frames",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes continue!',
-        cancelButtonText: 'No, cancel!',
-        allowOutsideClick: false,
-        allowEscapeKey: false,
-        allowEnterKey: false,
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.MiniTutorial();
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-          window.location.reload();
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 5000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
         }
-      });
+      })
+
+      Toast.fire({
+        icon: 'warning',
+        title: "You only uploaded a .dcm, you won't be able to use the Stack tool"
+      })
     }
   }
 
   changeColorXray(color: string) {
     var element = document.getElementById('element');
-
-    // cornerstone.displayImage(element, image);
     var viewport = {
       // invert: false,
       // pixelReplication: false,
@@ -548,9 +911,6 @@ export class RadiologyComponent implements OnInit {
 
     cornerstone.setViewport(element, viewport);
     cornerstone.updateImage(element);
-
-    // this.isInvierte = false;
-    // this.isPixel = false;
   }
 
   colorToolsInactive: any = '#FFFF00';
@@ -632,6 +992,16 @@ export class RadiologyComponent implements OnInit {
     cornerstoneTools.toolStyle.setToolWidth(this.lineWidhtTool);
   }
 
+  ResetRotate() {
+    var element = document.getElementById('element');
+    var viewport = {
+      rotation: 0,
+    };
+
+    cornerstone.setViewport(element, viewport);
+    cornerstone.updateImage(element);
+  }
+
   // dropdown de switchs
   isInvierte: boolean = false;
   // invierte colores de negro y blanco
@@ -640,10 +1010,10 @@ export class RadiologyComponent implements OnInit {
     setTimeout(() => {
       var viewport = {
         invert: this.isInvierte,
-        translation: {
-          x: 0,
-          y: 0,
-        },
+        // translation: {
+        //   x: 0,
+        //   y: 0,
+        // },
       };
       cornerstone.setViewport(element, viewport);
       cornerstone.updateImage(element);
@@ -656,10 +1026,10 @@ export class RadiologyComponent implements OnInit {
     setTimeout(() => {
       var viewport = {
         pixelReplication: this.isPixel,
-        translation: {
-          x: 0,
-          y: 0,
-        },
+        // translation: {
+        //   x: 0,
+        //   y: 0,
+        // },
       };
       cornerstone.setViewport(element, viewport);
       cornerstone.updateImage(element);
@@ -672,10 +1042,10 @@ export class RadiologyComponent implements OnInit {
     setTimeout(() => {
       var viewport = {
         hflip: this.isFlipH, // verdadero si la imagen se voltea horizontalmente
-        translation: {
-          x: 0,
-          y: 0,
-        },
+        // translation: {
+        //   x: 0,
+        //   y: 0,
+        // },
       };
       cornerstone.setViewport(element, viewport);
       cornerstone.updateImage(element);
@@ -688,16 +1058,25 @@ export class RadiologyComponent implements OnInit {
     setTimeout(() => {
       var viewport = {
         vflip: this.isFlipV, // si la imagen se voltea verticalmente
-        translation: {
-          x: 0,
-          y: 0,
-        },
+        // translation: {
+        //   x: 0,
+        //   y: 0,
+        // },
       };
       cornerstone.setViewport(element, viewport);
       cornerstone.updateImage(element);
     }, 100);
   }
 
+  //Imagen to Default
+  defaultXray() {
+    var element = document.getElementById('element');
+    setTimeout(() => {
+    cornerstone.reset(element);
+    }, 100);
+  }
+
+  //ejemplos de perzonalizacion de herramienta
   infoToolModal(tipo: string) {
     if (tipo === 'Inactive') {
       Swal.fire({
@@ -738,6 +1117,7 @@ export class RadiologyComponent implements OnInit {
     }
   }
 
+  //tutoriales de los botones y herramientas a usar
   MiniTutorial() {
     // BOTTOM DRAWER
     Swal.fire({
@@ -813,18 +1193,12 @@ export class RadiologyComponent implements OnInit {
                   if (result.isConfirmed) {
                     Swal.fire({
                       html: `
-                      <h2 style="color: white;">To see the frames you can do them in two ways:</h2>
-                      <ol >
-                        <li style="color: white;">Press <kbd style="background: grey;">CTRL</kbd> to activate it and use the mouse wheel.</li>
-                        <li style="color: white;">Click on the Stack button and left click to use.</li>
-                      </ol>
-                      <br>
-                      <h4 style="color: white;">If activated by keyboard, the zoom tool on the mouse wheel will be replaced by it. To deactivate it, press the red blinking button.</h4>
+                      <h2 style="color: white;">You can clear all tools from the radiograph by selecting it.</h2>
                       `,
-                      imageUrl: '../../assets/imgs/tutorial-Ctrl.png',
+                      imageUrl: '../../assets/imgs/SelectToolTuto.png',
                       imageWidth: 500,
                       imageHeight: 400,
-                      imageAlt: 'Ctrl Stack Frames Settings',
+                      imageAlt: 'Clean radiograph',
                       background: '#212529',
                       confirmButtonText: 'Next >',
                       showCancelButton: true,
@@ -834,12 +1208,36 @@ export class RadiologyComponent implements OnInit {
                     }).then((result) => {
                       if (result.isConfirmed) {
                         Swal.fire({
-                          html: `<h1 style="color: white;">🎊🎉Congratulations!🎉🎊</h1> <br> <h4 style="color: white;">Now you can start working.</h4>`,
+                          html: `
+                            <h2 style="color: white;">To see the frames you can do them in two ways:</h2>
+                            <ol >
+                              <li style="color: white;">Press <kbd style="background: grey;">CTRL</kbd> to activate or deactivate it and use the mouse wheel.</li>
+                              <li style="color: white;">Click on the Stack button and left click to use.</li>
+                            </ol>
+                            <br>
+                            <h4 style="color: white;">If activated by keyboard, the zoom tool on the mouse wheel will be replaced by it. To deactivate it, press the red blinking button.</h4>
+                          `,
+                          imageUrl: '../../assets/imgs/tutorial-Ctrl.png',
+                          imageWidth: 500,
+                          imageHeight: 400,
+                          imageAlt: 'Ctrl Stack Frames Settings',
                           background: '#212529',
-                          imageUrl: '../../assets/imgs/giphy.gif',
-                          imageWidth: 400,
-                          imageHeight: 200,
-                          imageAlt: 'Congratulations For end turial',
+                          confirmButtonText: 'Next >',
+                          showCancelButton: true,
+                          allowOutsideClick: false,
+                          allowEscapeKey: false,
+                          allowEnterKey: false,
+                        }).then((result) => {
+                          if (result.isConfirmed) {
+                            Swal.fire({
+                              html: `<h1 style="color: white;">🎊🎉Congratulations!🎉🎊</h1> <br> <h4 style="color: white;">Now you can start working.</h4>`,
+                              background: '#212529',
+                              imageUrl: '../../assets/imgs/PortadaX-Ray.jpg',
+                              imageWidth: 400,
+                              imageHeight: 200,
+                              imageAlt: 'Congratulations For end turial',
+                            });
+                          }
                         });
                       }
                     });
@@ -854,8 +1252,5 @@ export class RadiologyComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this.myColor();
-    this.diaseasesOnly();
-  }
+  ngOnInit(): void {}
 }

@@ -41,13 +41,13 @@ constructor(private _route: Router, private authService: AuthService) {}
       this.authService.guardarToken(resp.access_token);
     }, (err) => {
       if (err.status == 401) {
-        Swal.fire('Error', 'Usuario no existe!!', 'error');
+        Swal.fire('Error', 'User does not exist!!', 'error');
       }
       if (err.status == 400) {
-        Swal.fire('Error Login', 'Usuario o clave incorrectas!', 'error');
+        Swal.fire('Error Login', 'User not allowed or incorrect credentials!', 'error');
       }
       if (err.status == 0) {
-        Swal.fire('Servicio', 'No esta Disponible', 'error');
+        Swal.fire('Service', 'We are not available, wait a moment', 'error');
       }
     }, () => {
       const Toast = Swal.mixin({
@@ -63,7 +63,7 @@ constructor(private _route: Router, private authService: AuthService) {}
       })
       Toast.fire({
         icon: 'success',
-        title: 'Bienvenido'
+        title: 'Welcome'
       })
       this._route.navigateByUrl('/radiology');
     })

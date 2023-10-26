@@ -3,6 +3,7 @@ import { AuthService } from '../services/auth.service';
 import Swal from 'sweetalert2';
 import { Usuario } from '../interfaces/User';
 import { ActivatedRoute } from '@angular/router';
+import { map } from 'd3';
 
 @Component({
   selector: 'app-profile',
@@ -21,27 +22,40 @@ export class ProfileComponent implements OnInit {
   usuario: Usuario = new Usuario();
   newPassword: string = '';
 
-  getDataUser() {
-    this.profileID = Number(this.idRoute.snapshot.paramMap.get('id'));
-    this.authService.getUser(this.profileID).subscribe(
-      (resp) => {
-        let { roles, ...todo } = resp;
+  emailOriginal: string;
+  // this.profileID = Number(this.idRoute.snapshot.paramMap.get('id'));
+
+  getDataUser2(email: string) {
+      this.authService.getUserByEmail(email).subscribe(
+        (res: Usuario) => {
+          console.log("Respuesta Profile : ", res);
+          let { roles, ...todo } = res;
 
         roles!.forEach((item: any) => {
           this.haveRols.push(item.nombre);
         });
 
         this.userData.push({ ...todo });
-      },
-      (err) => {
-        console.log('ERROR: ', err);
-        if (err.status == 0) {
-          Swal.fire('Servicio', 'No esta Disponible', 'error');
+
+        //capturo el email para poder actualizar
+        this.userData.map((data) => {
+         return  this.emailOriginal = data.email;
+        })
+        }, (err) => {
+          console.log("ERROR-Profile: ",err);
         }
-      },
-      () => {}
-    );
+      )
   }
+
+  UserNav(){
+    try{
+        let payload = this.authService.obtenerDatosToken(this.authService.tokencito!);
+        const email= payload.user_name;
+        this.getDataUser2(email);
+    } catch(e) {
+    }
+  }
+
   verificarCel(texto: string) {
     const letras = 'abcdefghyjklmnñopqrstuvwxyz';
     texto = texto.toLowerCase();
@@ -176,7 +190,7 @@ export class ProfileComponent implements OnInit {
             direccion: data.direccion,
             estado: data.estado,
           };
-          this.authService.aupdateUser(UpdateUsuario).subscribe(
+          this.authService.aupdateUser(UpdateUsuario, this.emailOriginal).subscribe(
             (resp: any) => {
               const Toast = Swal.mixin({
                 toast: true,
@@ -193,6 +207,7 @@ export class ProfileComponent implements OnInit {
                 icon: 'success',
                 title: `${resp.mensaje}`,
               });
+              return this.emailOriginal = UpdateUsuario.email;
             },
             (err) => {
               console.log('Error: ', err);
@@ -307,6 +322,6 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getDataUser();
+    this.UserNav();
   }
 }

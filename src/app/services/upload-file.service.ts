@@ -10,22 +10,47 @@ export class UploadFileService {
   constructor(private http: HttpClient) {}
 
   uploadFile(file: File) {
-    let json = JSON.stringify(file);
-    let params = json;
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http
-      .post(environment.Url + 'uploadFile', params, { headers: headers })
-      .pipe(
-        map((data) => {
-          return data;
-        })
-      );
+    const formData = new FormData();
+    formData.append('file', file, file.name);
 
-    // const req = new HttpRequest('POST', `${environment.Url}/uploadFile`,
-    // {
-    //   reportProgress: true,
-    //   responseType: 'json'
-    // })
-    // return this.http.request(req);
+    return this.http.post(environment.Url + '/upload', formData);
+  }
+
+  convertToDicom(file: File): Promise<Blob> {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return this.http
+      .post(environment.Flask + '/convert', formData, {
+        responseType: 'blob',
+        headers: new HttpHeaders().append('Accept', 'application/octet-stream'),
+      })
+      .toPromise()
+      .then((response: Blob) => response)
+      .catch((error: any) => {
+        console.error('Error al convertir el archivo:', error);
+        throw error; // O maneja el error de otra forma según tus necesidades
+      });
+  }
+
+  convertToDicom2(file: File): Promise<File> {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return this.http
+      .post(environment.Flask + '/convert', formData, {
+        responseType: 'blob',
+        headers: new HttpHeaders().append('Accept', 'application/octet-stream'),
+      })
+      .toPromise()
+      .then((response: Blob) => {
+        // Crear un nuevo objeto File a partir del Blob
+        const convertedFile = new File([response], 'converted.dcm', { type: 'application/octet-stream' });
+        return convertedFile;
+      })
+      .catch((error: any) => {
+        console.error('Error al convertir el archivo:', error);
+        throw error; // O maneja el error de otra forma según tus necesidades
+      });
   }
 }

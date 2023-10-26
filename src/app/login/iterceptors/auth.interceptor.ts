@@ -35,14 +35,14 @@ export class AuthInterceptor implements HttpInterceptor {
         }
         if(e.status == 500){
           swal.fire(
-            "Información, Error",
-            'Estamos trabajando en ello ' ,
+            "An error occurred",
+            'We are working on it' ,
             "warning"
           );
         }if (e.status == 403) {
           swal.fire(
-            "Acceso denegado",
-            `Hola ${this.authService.usuario.email} no tienes acceso a este recurso!`,
+            "Access denied",
+            `Hello ${this.authService.usuario.email},you do not have access to this resource!`,
             "warning"
           );
           this.router.navigate(["/radiology"]);

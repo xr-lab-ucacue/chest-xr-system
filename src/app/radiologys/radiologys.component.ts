@@ -1,3 +1,4 @@
+import { map } from 'rxjs';
 import { Router } from '@angular/router';
 import {
   Component,
@@ -11,10 +12,18 @@ import cornerstoneTools from 'cornerstone-tools';
 import * as cornerstone from 'cornerstone-core';
 import * as dicomParser from 'dicom-parser';
 import cornerstoneWADOImageLoader from 'cornerstone-wado-image-loader';
-// import cornerstoneWADOImageLoader from 'cornerstone-wado-image-loader/dist/dynamic-import/cornerstoneWADOImageLoader.min.js';
 import cornerstoneMath from 'cornerstone-math';
 import 'hammerjs';
 import { UploadFileService } from '../services/upload-file.service';
+
+
+import { Color, ScaleType } from '@swimlane/ngx-charts';
+import { Diaseases } from '../interfaces/Diseases';
+
+
+// Importa las bibliotecas necesarias Para TRANFORMAR .DCM A .JPG
+
+
 
 var config = {
   webWorkerPath:
@@ -36,9 +45,14 @@ cornerstoneWADOImageLoader.webWorkerManager.initialize(config);
 export class RadiologysComponent implements OnInit {
   constructor(
     private router: Router,
-    private uploadService: UploadFileService
+    private uploadService: UploadFileService,
+    private uploadFileService: UploadFileService
   ) {}
   conditionView: number = 1;
+
+
+
+
 
   activateTools(toolActive: string) {
     const element = document.getElementById('element');
@@ -245,7 +259,7 @@ export class RadiologysComponent implements OnInit {
   file: File;
   file2: File;
 
-  files(event: any): any {
+   files(event: any): any {
     cornerstoneTools.external.cornerstone = cornerstone;
     cornerstoneTools.external.cornerstoneMath = cornerstoneMath;
     cornerstoneTools.external.Hammer = Hammer;
@@ -274,6 +288,7 @@ export class RadiologysComponent implements OnInit {
     const imageId = cornerstoneWADOImageLoader.wadouri.fileManager.add(
       this.file
     );
+
     console.log('-file:', this.file);
     console.log('ImageIDs: ', imageId);
 
@@ -629,116 +644,210 @@ export class RadiologysComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  // SyncCornerstone() {
-  //   cornerstoneTools.external.cornerstone = cornerstone;
-  //   cornerstoneTools.external.cornerstoneMath = cornerstoneMath;
-  //   cornerstoneTools.external.Hammer = Hammer;
-  //   cornerstoneTools.init({
-  //     showSVGCursors: true,
-  //     globalToolSyncEnabled: true,
-  //   });
+  /* SyncCornerstone() {
+    cornerstoneTools.external.cornerstone = cornerstone;
+    cornerstoneTools.external.cornerstoneMath = cornerstoneMath;
+    cornerstoneTools.external.Hammer = Hammer;
+    cornerstoneTools.init({
+      showSVGCursors: true,
+      globalToolSyncEnabled: true,
+    });
 
-  //   cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
-  //   cornerstoneWADOImageLoader.external.dicomParser = dicomParser;
+    cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
+    cornerstoneWADOImageLoader.external.dicomParser = dicomParser;
 
-  //   var firstElement = document.getElementById('element1');
-  //   var secondElement = document.getElementById('element2');
-  //   const elements = [firstElement, secondElement];
+    var firstElement = document.getElementById('element1');
+    var secondElement = document.getElementById('element2');
+    const elements = [firstElement, secondElement];
 
-  //   // image enable the dicomImage element and add canvas to it
-  //   elements.forEach(element => {
-  //     cornerstone.enable(element);
-  //   });
+    // image enable the dicomImage element and add canvas to it
+    elements.forEach(element => {
+      cornerstone.enable(element);
+    });
 
-  //   // Enable our elements
-  //   const scheme = 'wadouri';
-  //   // Create our Stack data
-  //   const firstSeries = ['../../assets/Dicom/cuerpo/IM0'];
+    // Enable our elements
+    const scheme = 'wadouri';
+    // Create our Stack data
+    const firstSeries = ['../../assets/Dicom/cuerpo/IM0'];
 
-  //   const secondSeries = [
-  //     '../../assets/Dicom/xr/IM0',
-  //     '../../assets/Dicom/xr/IM1',
-  //     '../../assets/Dicom/xr/IM2',
-  //     '../../assets/Dicom/xr/IM3',
-  //     '../../assets/Dicom/xr/IM4',
-  //     '../../assets/Dicom/xr/IM5',
-  //     '../../assets/Dicom/xr/IM6',
-  //     '../../assets/Dicom/xr/IM7',
-  //     '../../assets/Dicom/xr/IM8',
-  //     '../../assets/Dicom/xr/IM9',
-  //     '../../assets/Dicom/xr/IM10',
-  //     '../../assets/Dicom/xr/IM11',
-  //     '../../assets/Dicom/xr/IM12',
-  //     '../../assets/Dicom/xr/IM13',
-  //     '../../assets/Dicom/xr/IM14',
-  //     '../../assets/Dicom/xr/IM15',
-  //     '../../assets/Dicom/xr/IM16',
-  //     '../../assets/Dicom/xr/IM17',
-  //     '../../assets/Dicom/xr/IM18',
-  //     '../../assets/Dicom/xr/IM19',
-  //     '../../assets/Dicom/xr/IM20',
-  //   ];
+    const secondSeries = [
+      '../../assets/Dicom/xr/IM0',
+      '../../assets/Dicom/xr/IM1',
+      '../../assets/Dicom/xr/IM2',
+      '../../assets/Dicom/xr/IM3',
+      '../../assets/Dicom/xr/IM4',
+      '../../assets/Dicom/xr/IM5',
+      '../../assets/Dicom/xr/IM6',
+      '../../assets/Dicom/xr/IM7',
+      '../../assets/Dicom/xr/IM8',
+      '../../assets/Dicom/xr/IM9',
+      '../../assets/Dicom/xr/IM10',
+      '../../assets/Dicom/xr/IM11',
+      '../../assets/Dicom/xr/IM12',
+      '../../assets/Dicom/xr/IM13',
+      '../../assets/Dicom/xr/IM14',
+      '../../assets/Dicom/xr/IM15',
+      '../../assets/Dicom/xr/IM16',
+      '../../assets/Dicom/xr/IM17',
+      '../../assets/Dicom/xr/IM18',
+      '../../assets/Dicom/xr/IM19',
+      '../../assets/Dicom/xr/IM20',
+    ];
 
-  //   const firstStack = {
-  //     currentImageIdIndex: 0,
-  //     imageIds: firstSeries.map((seriesImage) => `${scheme}:${seriesImage}`),
-  //   };
+    const firstStack = {
+      currentImageIdIndex: 0,
+      imageIds: firstSeries.map((seriesImage) => `${scheme}:${seriesImage}`),
+    };
 
-  //   const secondStack = {
-  //     currentImageIdIndex: 0,
-  //     imageIds: secondSeries.map((seriesImage) => `${scheme}:${seriesImage}`),
-  //   };
+    const secondStack = {
+      currentImageIdIndex: 0,
+      imageIds: secondSeries.map((seriesImage) => `${scheme}:${seriesImage}`),
+    };
 
-  //   // Create the synchronizer
-  //   const synchronizer = new cornerstoneTools.Synchronizer(
-  //     // Cornerstone event that should trigger synchronizer
-  //     'cornerstonenewimage',
-  //     // Logic that should run on target elements when event is observed on source elements
-  //     cornerstoneTools.updateImageSynchronizer
-  //   );
+    // Create the synchronizer
+    const synchronizer = new cornerstoneTools.Synchronizer(
+      // Cornerstone event that should trigger synchronizer
+      'cornerstonenewimage',
+      // Logic that should run on target elements when event is observed on source elements
+      cornerstoneTools.updateImageSynchronizer
+    );
 
-  //   // Add and activate tools
-  //   cornerstoneTools.addTool(cornerstoneTools.StackScrollTool);
-  //   cornerstoneTools.addTool(cornerstoneTools.StackScrollMouseWheelTool);
+    // Add and activate tools
+    cornerstoneTools.addTool(cornerstoneTools.StackScrollTool);
+    cornerstoneTools.addTool(cornerstoneTools.StackScrollMouseWheelTool);
 
-  //   cornerstoneTools.setToolActive('StackScroll', { mouseButtonMask: 1 });
-  //   cornerstoneTools.setToolActive('StackScrollMouseWheel', {});
+    cornerstoneTools.setToolActive('StackScroll', { mouseButtonMask: 1 });
+    cornerstoneTools.setToolActive('StackScrollMouseWheel', {});
 
-  //   // load images and set the stack
-  //   const firstLoadImagePromise = cornerstone
-  //     .loadImage(firstStack.imageIds[0])
-  //     .then((image) => {
-  //       cornerstone.displayImage(firstElement, image);
+    // load images and set the stack
+    const firstLoadImagePromise = cornerstone
+      .loadImage(firstStack.imageIds[0])
+      .then((image) => {
+        cornerstone.displayImage(firstElement, image);
 
-  //       // set the stack as tool state
-  //       synchronizer.add(firstElement);
-  //       cornerstoneTools.addStackStateManager(firstElement, [
-  //         'stack',
-  //         'Crosshairs',
-  //       ]);
-  //       cornerstoneTools.addToolState(firstElement, 'stack', firstStack);
-  //     });
+        // set the stack as tool state
+        synchronizer.add(firstElement);
+        cornerstoneTools.addStackStateManager(firstElement, [
+          'stack',
+          'Crosshairs',
+        ]);
+        cornerstoneTools.addToolState(firstElement, 'stack', firstStack);
+      });
 
-  //   const secondLoadImagePromise = cornerstone
-  //     .loadImage(secondStack.imageIds[0])
-  //     .then((image) => {
-  //       cornerstone.displayImage(secondElement, image);
+    const secondLoadImagePromise = cornerstone
+      .loadImage(secondStack.imageIds[0])
+      .then((image) => {
+        cornerstone.displayImage(secondElement, image);
 
-  //       // set the stack as tool state
-  //       synchronizer.add(secondElement);
-  //       cornerstoneTools.addStackStateManager(secondElement, [
-  //         'stack',
-  //         'Crosshairs',
-  //       ]);
-  //       cornerstoneTools.addToolState(secondElement, 'stack', secondStack);
-  //     });
+        // set the stack as tool state
+        synchronizer.add(secondElement);
+        cornerstoneTools.addStackStateManager(secondElement, [
+          'stack',
+          'Crosshairs',
+        ]);
+        cornerstoneTools.addToolState(secondElement, 'stack', secondStack);
+      });
 
-  //   // After images have loaded, and our sync context has added both elements
-  //   Promise.all([firstLoadImagePromise, secondLoadImagePromise]).then(() => {
-  //     cornerstoneTools.addTool(cornerstoneTools.ReferenceLinesTool);
-  //     cornerstoneTools.setToolEnabled('ReferenceLines', {synchronizationContext: synchronizer,});
-  //   });
-  // }
+    // After images have loaded, and our sync context has added both elements
+    Promise.all([firstLoadImagePromise, secondLoadImagePromise]).then(() => {
+      cornerstoneTools.addTool(cornerstoneTools.ReferenceLinesTool);
+      cornerstoneTools.setToolEnabled('ReferenceLines', {synchronizationContext: synchronizer,});
+    });
+  } */
+
+
+  ///PRUEBA DE NGX-CHARTS Y FLASK
+  gradient: boolean = true;
+  showXAxis = true;
+  showYAxis = true;
+  showXAxisLabel = true;
+  xAxisLabel = 'Diseases';
+  showYAxisLabel = true;
+  yAxisLabel = 'Percent';
+  //Labels de los ejes X,Y
+  showYAxisVertical = 'Diseases';
+  showXAxisHorizontal = 'Percent';
+  //Nuemros al final de barras
+  showDataLabel = true;
+  //Desactiva los Poops de barras
+  tooltipDisabled = false;
+  //Recortar labels eje Y
+  trimYAxisTicks = false;
+
+  // Ejes X labels formateado a 0%
+  formatPercent(val: any) {
+    return val + '%';
+  }
+
+file3!: File;
+diseases1: Diaseases[] = [];
+diseases2: any[] = [];
+ data2 = [
+  { name: 'Item 1', value: 10 },
+  { name: 'Item 2', value: 20 },
+  { name: 'Item 3', value: 15 },
+  // ...
+];
+serverFlask(event: any): any{
+  this.file3 = <File>event.target.files;
+  console.log('file3', this.file3);
+
+  //prueba para server de flask
+  this.uploadFileService.uploadFile(this.file3[0]).subscribe(
+    async (res: any) => {
+      console.log('Respuesta de Flask: ', res);
+      //Guardo datos necesarios para la grafica de Barras
+      const resultArray = res.map(obj => ({
+        name: obj.nombre,
+        value: obj.porcentaje
+      }));
+      this.diseases2 = resultArray;
+
+      console.log('Par ala grafica: ',  this.diseases2);
+      await this.myColor();
+    },
+    (err) => {
+      console.log('ERROR FLASK: ', err.error);
+    }
+  );
+}
+
+
+
+backgroundColor: any[] = [];
+  async myColor() {
+    const rojo = 'rgb(255, 0, 0)';
+    const verde = 'rgb(0, 255, 14)';
+    const amarillo = 'rgb(255, 242, 0)';
+
+    this.diseases2.forEach((disease) => {
+      if (parseFloat(disease.porcentaje) >= 0.51) {
+        this.backgroundColor.push(rojo);
+      } else if (parseFloat(disease.porcentaje) >= 0.21 && parseFloat(disease.porcentaje) <= 0.50) {
+        this.backgroundColor.push(amarillo);
+      } else {
+        this.backgroundColor.push(verde);
+      }
+    });
+  }
+
+  colorScheme: Color = {
+    name: 'mycolor',
+    selectable: true,
+    group: ScaleType.Ordinal,
+    domain: this.backgroundColor,
+  };
+
+  //Obtener datos de emfermedades para la grafica
+ async single() {
+  const data1 = [
+    { name: 'Item 1', value: 10 },
+    { name: 'Item 2', value: 20 },
+    { name: 'Item 3', value: 15 },
+    // ...
+  ];
+    return data1;
+  }
 }
 
 /* modificado --> node_modules/dicom-parser/index.d.ts:104:92

@@ -1,9 +1,8 @@
 import  Swal  from 'sweetalert2';
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, CanDeactivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -24,7 +23,7 @@ export class RoleGuard implements CanActivate {
     if(this.authService.capturoRol() == true){
       return true
     } else {
-      Swal.fire('Sin Acceso', 'No esta Disponible para usuarios', 'error');
+      Swal.fire('No Access', 'Not Available to Users', 'error');
       this.router.navigate(["/login"]);
       return false;
     }

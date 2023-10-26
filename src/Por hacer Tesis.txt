@@ -1,20 +1,14 @@
+- Mejorar al regresar de page-user la tabla de usuarios vuelve a la primera pagina
+(solucion crear decoradores @Input y @Output)
 
-minitutorial Aumentar (Como eliminar herramientas)
+-imagen de carpeta(x-chert-small) 3 a 5 ver (No respeta colores de Ngchart y tarjetas no renderiza)
 
--- preguntar si esta seguro de cambiar de vista cuando este en /radiology
--- poner un odrby en el array donde estan los dicon para probar ordenar el stack
 
--- Stack en dicon controlar (Controla la opacidad el filtro-- http://45.116.32.158:5555/layeredImageStacks/index.html)
-options: {
-      opacity: 0.7,
-      visible: true,
-    }
 
-Herramientas nuevas
-(
-  -Save Image Example (descarga la imagen--probar si se descarga png o dicom)
 
-)
+
+
+
 
 
 
@@ -25,6 +19,6 @@ const enabledElements = cornerstone.getEnabledElements();
       console.log("datos del canvas: ", ee);
       ee.image.imageId === 'dicomfile:0'
       console.log("Numero de Archivo actual: ", ee.image.imageId);
-
     })
+
 ////////^^^^^^^ CODIGO PARA VER TODO DATA DEL CANVAS ^^^^^^^ /////////////////////
